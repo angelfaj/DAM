@@ -22,7 +22,7 @@ public class Ejercicio11 {
 				System.out.printf("%n");		
 			}	
 		} else {
-			System.out.println("El número introducido no es válido");
+			System.out.println("Por favor introduce un número entre 0 y 20");
 		}
 		
 	}

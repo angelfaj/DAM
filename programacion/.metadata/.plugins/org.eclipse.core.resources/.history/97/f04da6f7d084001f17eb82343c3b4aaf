@@ -14,16 +14,14 @@ public class Ejercicio11 {
 		numero = entrada.nextInt();
 		entrada.close();
 		
-		if ((numero >= 0) && (numero <= 20)) {
+		do {
 			for (contador = 1; contador <= numero; contador++) {						//Con este for imprimimos las lineas necesarias
 				for (int contador2 = 1; contador2 <= contador; contador2++) {			//Con este los numeros de cada linea
 					System.out.printf("%d",contador);
 				}
 				System.out.printf("%n");		
 			}	
-		} else {
-			System.out.println("El número introducido no es válido");
-		}
+		} while ((numero >= 0) && (numero <= 20));
 		
 	}
 
