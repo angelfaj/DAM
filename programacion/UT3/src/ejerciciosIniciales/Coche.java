@@ -1,17 +1,10 @@
 package ejerciciosIniciales;
 
-
-
-/*Crea la clase Coche con dos constructores. Uno no toma parámetros y el otro sí. Los
-dos constructores inicializarán los atributos marca y modelo de la clase. Crea dos
-objetos (cada objeto llama a un constructor distinto) y verifica que todo funciona
-correctamente. */
-
-
 public class Coche {
 		//Atributos
 		String marca;
 		String modelo;
+		int velocidad;
 		
 		//Constructores
 		public Coche() {
@@ -22,6 +15,20 @@ public class Coche {
 		public Coche(String mar, String mod) {
 			marca = mar;
 			modelo = mod;
+		}
+		
+		
+		//Metodos
+		public int getVelocidad() {
+			return velocidad;
+		}
+		
+		void acelera (int incremento)  {
+			velocidad += incremento;
+		}
+		
+		void frena (int decremento) {
+			velocidad -= decremento;
 		}
 
 }
