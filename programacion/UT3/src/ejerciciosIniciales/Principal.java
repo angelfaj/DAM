@@ -3,6 +3,15 @@ import java.util.Scanner;
 
 public class Principal {
 
+
+	//Ejemplo
+	static void cumpleaños (Edad años) {
+		int valor = años.getAños();
+		valor++;
+		
+		años.setAños(valor);
+	}
+	
 	public static void main(String[] args) {
 
 		Scanner entrada = new Scanner(System.in);
@@ -43,7 +52,6 @@ public class Principal {
 		
 		Minumero cuarenta = new Minumero(numero);
 		System.out.println("Doble:" + cuarenta.getDoble() + " triple:" + cuarenta.getTriple() + " cuadruple:" + cuarenta.getCuadruple());
-		 */
 		
 		//Ejercicio6
 		int numero;
@@ -65,6 +73,13 @@ public class Principal {
 		
 		primerNumero.añade(5);
 		System.out.println("Nuevo valor: " + primerNumero.getValor());
+		 */
+		//Ejemplo
+		Edad edad = new Edad(18);
+		cumpleaños(edad);
+		
+		System.out.println(edad.getAños());
+		
 		
 	}
 
