@@ -20,8 +20,9 @@ public class Empleado {
 	}
 	
 	//Metodos
-	public void getValues() {
-		System.out.println("Nombre empleado: " + nombre + " edad: " + edad + " numero de empleado: " + numeroEmpleado + " salario: " + salario);
+	public String getValues() {
+		String values = "Nombre empleado: " + nombre + " edad: " + edad + " numero de empleado: " + numeroEmpleado + " salario: " + salario; 
+		return values;
 	}
 	
 	public void setValues(String nom, int ed, int nEm, double sal) {
@@ -29,6 +30,18 @@ public class Empleado {
 		edad = ed;
 		numeroEmpleado = nEm;
 		salario = sal;
+	}
+	
+	public void plusSalario(double plus) {
+		if (edad >= 40) {
+			salario += plus;
+		}
+	}
+	
+	public void plusSalario(double plus, int retencion) {
+		if (edad >= 40) {
+			salario += plus - (plus * retencion / 100);
+		}
 	}
 	
 }

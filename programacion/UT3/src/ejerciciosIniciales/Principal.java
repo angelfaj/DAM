@@ -73,14 +73,40 @@ public class Principal {
 		
 		primerNumero.añade(5);
 		System.out.println("Nuevo valor: " + primerNumero.getValor());
-		 */
+
 		//Ejemplo
 		Edad edad = new Edad(18);
 		cumpleaños(edad);
 		
 		System.out.println(edad.getAños());
+		 */
+		
+		//PARTE II
+		//Ejercicio1
+		String nombre;
+		int edad, numeroEmpleado;
+		double salario;
 		
 		
+		System.out.println("Introduce numero de empleado, edad, salario y nombre en este orden separados por espacios: ");
+		numeroEmpleado = entrada.nextInt();
+		edad = entrada.nextInt();
+		salario = entrada.nextDouble();
+		nombre = entrada.nextLine();
+		
+//		System.out.println("Numero empleado: " + numeroEmpleado);
+//		System.out.println("Edad: " + edad);
+//		System.out.println("Salario: " + salario);
+//		System.out.println("Nombre: " + nombre);
+		
+		
+		
+		//Empleado empleado1 = new Empleado(nombre, edad, numeroEmpleado, salario);
+		Empleado empleadoVacio = new Empleado();
+		
+		System.out.println("Estos son los datos de empleadoVacio: "+ empleadoVacio.getValues());
+		
+		//empleadoVacio.setValues(nombre, edad, numeroEmpleado, salario);
 	}
 
 }
