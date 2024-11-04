@@ -27,17 +27,17 @@ public class CargamentoFruta {
 	
 	public boolean bajarPrecio(double rebaja) {
 		boolean centinela = true;
-		precioVentaKilo -= rebaja;
-		if (precioVentaKilo < precioCosteKilo) {
+		if ((precioVentaKilo - rebaja) < precioCosteKilo) {
 			centinela = false;
+		} else {
+			precioVentaKilo -= rebaja;
 		}
 		return centinela;
 	}
 	
 	public boolean comprobacionExistencias(double kil) {
 		boolean centinela = false;
-		if (kil < kilos) {
-			kilos -= kil;
+		if (kil <= kilos) {
 			centinela = true;
 		}
 		return centinela;
@@ -45,18 +45,22 @@ public class CargamentoFruta {
 	
 	public String vender(double kil) {
 		String resul;
-		double precioVenta;
+		double precioVenta, precioCoste;		//Alamacenaran el total de coste y la venta 
+		
 		if (comprobacionExistencias(kil)) {
-			precioVenta = kilos * precioVentaKilo;
-			resul = "Precio venta" + precioVenta;
-			beneficio += precioVenta;
+			kilos -= kil;
+			precioVenta = kil * precioVentaKilo;
+			precioCoste = kil * precioCosteKilo; 
+			resul = "Precio venta: " + precioVenta + "€";
+			beneficio += precioVenta - precioCoste;
 		} else {
 			resul = "[ERROR]-No hay existencias suficientes para la venta";
 		}
+		
 		return resul;
 	}
 	
-	public String compararaProcedencia(CargamentoFruta cargo1, CargamentoFruta cargo2) {
+	public static String compararaProcedencia(CargamentoFruta cargo1, CargamentoFruta cargo2) {
 		String resul;
 		if (cargo1.getProcedencia().equals(cargo2.getProcedencia())) {
 			resul = "COINCIDE la procedencia";

@@ -126,7 +126,17 @@ public class Principal {
 		System.out.println("---Cargamento2---" + cargo2.getAllValues());
 		System.out.println("---Cargamento3---" + cargo3.getAllValues());
 		
+		System.out.println(CargamentoFruta.compararaProcedencia(cargo1, cargo2));
 		
+		if (cargo3.bajarPrecio(0.3)) {			
+			System.out.println("El precio ha sido rebajado");
+		} else  {
+			System.out.println("El precio de venta no puede ser inferior al costo x kilo");
+		}
+		
+		System.out.println("Venta 100K cargo1-" + cargo1.vender(100) + "\nVenta 1000K cargo2-" + cargo2.vender(1000) + "\nVenta 10000K cargo3-" + cargo3.vender(10000));
+		
+		System.out.println("EL beneficio obtenido es de: " + CargamentoFruta.beneficio + "€");
 	}
 
 }
