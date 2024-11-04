@@ -1,5 +1,6 @@
 package ejerciciosIniciales;
 import java.util.Scanner;
+import java.lang.Math;
 
 public class Principal {
 
@@ -79,7 +80,6 @@ public class Principal {
 		cumpleaños(edad);
 		
 		System.out.println(edad.getAños());
-		 */
 		
 		//PARTE II
 		//Ejercicio1
@@ -93,20 +93,40 @@ public class Principal {
 		edad = entrada.nextInt();
 		salario = entrada.nextDouble();
 		nombre = entrada.nextLine();
-		
-//		System.out.println("Numero empleado: " + numeroEmpleado);
-//		System.out.println("Edad: " + edad);
-//		System.out.println("Salario: " + salario);
-//		System.out.println("Nombre: " + nombre);
-		
-		
-		
+				
 		//Empleado empleado1 = new Empleado(nombre, edad, numeroEmpleado, salario);
 		Empleado empleadoVacio = new Empleado();
 		
-		System.out.println("Estos son los datos de empleadoVacio: "+ empleadoVacio.getValues());
+		System.out.println("Estos son los datos de empleadoVacio: "+ empleadoVacio.getAllValues());
 		
-		//empleadoVacio.setValues(nombre, edad, numeroEmpleado, salario);
+		empleadoVacio.setAllValues(nombre, edad, numeroEmpleado, salario);
+		
+		//Ejercicio2
+		final int CONVERSION = 10;
+		int userElection, machineElection;
+		double doubleMachineElection;
+		
+		System.out.println("Introduce un numero del 1 al 3, PIEDRA = 1, PAPEL = 2, TIJERA = 3");
+		userElection = entrada.nextInt();
+		
+		do {														//Podemos cambiar el do while por machineElection = (int)Math.random()*(4-1)+1; 
+			doubleMachineElection = Math.random() * CONVERSION;
+			machineElection = (int)doubleMachineElection;	
+		} while ((machineElection > 3) || (machineElection == 0)); 
+		
+		System.out.println("Ahora elegiré yo..." + machineElection);
+		 */
+		
+		//Ejercicio3
+		CargamentoFruta cargo1 = new CargamentoFruta("Naranjas", "Valencia", 1000, 0.5, 1);
+		CargamentoFruta cargo2 = new CargamentoFruta("Peras", "Valencia", 10000, 0.2, 2);
+		CargamentoFruta cargo3 = new CargamentoFruta("Platanos", "Canarias", 10000, 0.2, 2);
+		
+		System.out.println("---Cargamento1---" + cargo1.getAllValues());
+		System.out.println("---Cargamento2---" + cargo2.getAllValues());
+		System.out.println("---Cargamento3---" + cargo3.getAllValues());
+		
+		
 	}
 
 }
