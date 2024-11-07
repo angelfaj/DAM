@@ -115,7 +115,6 @@ public class Principal {
 		} while ((machineElection > 3) || (machineElection == 0)); 
 		
 		System.out.println("Ahora elegiré yo..." + machineElection);
-		 */
 		
 		//Ejercicio3
 		CargamentoFruta cargo1 = new CargamentoFruta("Naranjas", "Valencia", 1000, 0.5, 1);
@@ -137,6 +136,22 @@ public class Principal {
 		System.out.println("Venta 100K cargo1-" + cargo1.vender(100) + "\nVenta 1000K cargo2-" + cargo2.vender(1000) + "\nVenta 10000K cargo3-" + cargo3.vender(10000));
 		
 		System.out.println("EL beneficio obtenido es de: " + CargamentoFruta.beneficio + "€");
+		
+		//Ejercicio 9
+		System.out.println(Ejercicios9y10.printPosition("Manolo", "Pepe", "Laura"));
+		
+		//Ejercicio10		
+		Ejercicios9y10.sumParam(9, 10, 11, 12);
+		System.out.println("La suma de los parametros recibidos es: " + Ejercicios9y10.getSuma());
+		
+		//Ej11
+		Ejercicios9al11.sumParam(10, 20, 11.32, 12.54);
+		System.out.println("La suma de los parametros recibidos es: " + Ejercicios9al11.getSuma());
+		 */
+		
+		//Ejercicio7
+		Billete billete1 = new Billete("Manolo", "45679801V");
+		
 	}
 
 }

@@ -27,17 +27,17 @@ public class CargamentoFruta {
 	
 	public boolean bajarPrecio(double rebaja) {
 		boolean centinela = true;
-		if ((precioVentaKilo - rebaja) < precioCosteKilo) {
+		precioVentaKilo -= rebaja;
+		if (precioVentaKilo < precioCosteKilo) {
 			centinela = false;
-		} else {
-			precioVentaKilo -= rebaja;
 		}
 		return centinela;
 	}
 	
 	public boolean comprobacionExistencias(double kil) {
 		boolean centinela = false;
-		if (kil <= kilos) {
+		if (kil < kilos) {
+			kilos -= kil;
 			centinela = true;
 		}
 		return centinela;
@@ -45,18 +45,14 @@ public class CargamentoFruta {
 	
 	public String vender(double kil) {
 		String resul;
-		double precioVenta, precioCoste;		//Alamacenaran el total de coste y la venta 
-		
+		double precioVenta;
 		if (comprobacionExistencias(kil)) {
-			kilos -= kil;
-			precioVenta = kil * precioVentaKilo;
-			precioCoste = kil * precioCosteKilo; 
-			resul = "Precio venta: " + precioVenta + "€";
-			beneficio += precioVenta - precioCoste;
+			precioVenta = kilos * precioVentaKilo;
+			resul = "Precio venta" + precioVenta;
+			beneficio += precioVenta;
 		} else {
 			resul = "[ERROR]-No hay existencias suficientes para la venta";
 		}
-		
 		return resul;
 	}
 	
