@@ -147,11 +147,23 @@ public class Principal {
 		//Ej11
 		Ejercicios9al11.sumParam(10, 20, 11.32, 12.54);
 		System.out.println("La suma de los parametros recibidos es: " + Ejercicios9al11.getSuma());
-		 */
 		
 		//Ejercicio7
 		Billete billete1 = new Billete("Manolo", "45679801V");
 		
+		//Ejercicio5- Lo omitimos por ser tremenda shit
+		Alumno a1 = new Alumno(456, 7, 8, 8);
+		Alumno a2 = new Alumno(457, 4, 5, 4);
+		Alumno a3 = new Alumno(458, 6, 5, 7);
+
+		Alumno.calculaMedia(a1, a2, a3);
+		System.out.println("Las medias son: " + Alumno.getMedias());
+		 */
+		
+		//Ejercicio6
+		
+		//Ejercicio8
+		//Ejercicio12
 	}
 
 }
