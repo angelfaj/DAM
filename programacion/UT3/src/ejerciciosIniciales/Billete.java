@@ -3,33 +3,82 @@ package ejerciciosIniciales;
 public class Billete {
 	//Atributos
 	public String nombre, nif, clase;
-	public int asiento, maletas;
+	public int asiento, maletas, totalBillete;
 	public boolean catering, baño;
 	
-	//Constructores
+	//Constructores	
 	public Billete(String nom, String dni) {
 		nombre = nom;
 		nif = dni;
 	}
 	
 	public Billete(String nom, String dni, String clas) {
-		this(nom, dni);
+		nombre = nom;
+		nif = dni;
 		clase = clas;
+		sumaClase();
 	}
 	
 	//Metodos
-	public void facturar(int as) {
+	public void facturar(int as, int mal) {
 		asiento = as;	
+		maletas = mal;
+		sumaMaletas();
 	}
 	
-	public void facturar(int as, boolean cat) {
-		facturar(as);
+//	public void facturar(int as, int mal, boolean cat) {
+//		facturar(as, mal);
+//		catering = cat;
+//		addExtras();
+//	}
+	
+	public void facturar(int as, int mal, boolean cat, boolean aseo) {			//Se decide que catering y baño se contratan a la vez
+		facturar(as, mal);
 		catering = cat;
+		baño = aseo;
+		addExtras();
 	}
 	
-	public void facturar(int as, boolean cat, boolean aseo) {
-		facturar(as, cat);
-		baño = aseo;
+	public void setClase(String clas) {
+		clase = clas;
+		sumaClase();
+	}
+	
+	public void setMaletas(int mal) {
+		maletas = mal;
+		sumaMaletas();
+	}
+	
+	public void sumaClase() {
+		switch (clase) {
+		case "turista":
+			totalBillete += 200;
+			break;
+		case "business":
+			totalBillete += 400;
+			break;
+		case "VIP":
+			totalBillete += 600;
+			break;
+		}
+	}
+	
+	public void addExtras() {
+		if ((clase == "turista") && (catering == true) && (baño == true)) {
+			totalBillete += 40; 
+		} else if ((clase == "turista") && (catering == true)) {
+			totalBillete += 20; 
+		} else if ((clase == "turista") && (baño == true)) {
+			totalBillete += 10; 
+		}
+	}
+	
+	public void sumaMaletas() {
+		if ((clase == "turista") && (maletas > 1 )) {
+			 totalBillete += (maletas - 1) * 50;
+		 } else if ((clase == "business") && (maletas > 3 )) {
+			 totalBillete += (maletas - 3) * 50;
+		 }
 	}
 	
 	public String getNombre() {
@@ -46,6 +95,10 @@ public class Billete {
 	
 	public int getAsiento() {
 		return asiento;		
+	}
+	
+	public int getTotal() {
+		return totalBillete;		
 	}
 	
 	public int getMaletas() {

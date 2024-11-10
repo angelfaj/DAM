@@ -148,22 +148,55 @@ public class Principal {
 		Ejercicios9al11.sumParam(10, 20, 11.32, 12.54);
 		System.out.println("La suma de los parametros recibidos es: " + Ejercicios9al11.getSuma());
 		
-		//Ejercicio7
+		//Ejercicio7 Resuelto en el 8
 		Billete billete1 = new Billete("Manolo", "45679801V");
 		
-		//Ejercicio5- Lo omitimos por ser tremenda shit
+		//Ejercicio5- OMITIDO - El profesorado quiere una soluciópn sin arrays y no estoy dispuesto a usar 30 if else, saludos.
 		Alumno a1 = new Alumno(456, 7, 8, 8);
 		Alumno a2 = new Alumno(457, 4, 5, 4);
 		Alumno a3 = new Alumno(458, 6, 5, 7);
 
 		Alumno.calculaMedia(a1, a2, a3);
 		System.out.println("Las medias son: " + Alumno.getMedias());
-		 */
 		
 		//Ejercicio6
+		Cliente c1 = new Cliente("Maria", "Barcelona", "56326792Z");
+		Carro p1 = new Carro();
+		Carro p2 = new Carro();
+		Carro p3 = new Carro();
+		Carro p4 = new Carro();
+		Carro p5 = new Carro();
+		Carro p6 = new Carro();
+		
+		
+		p1.addProduct("Platanos", 1.0, 10);
+		p2.addProduct("Peras", 2.0, 15);
+		p3.addProduct("Manzanas", 4.0, 20);
+		p4.addProduct("Melones", 3.0, 10);
+		p5.addProduct("Sandias", 4.5, 15);
+		p6.addProduct("Mangos", 6.2, 20);
+		
+		p1.removeProduct();
+		p3.removeProduct();
+		
+		System.out.println("CLiente: " + c1.getClientNif());
+		System.out.println(Carro.getLista(p1, p2, p3, p4, p5, p6));
 		
 		//Ejercicio8
+		Billete b1 = new Billete("Manolo", "45679801V", "turista");
+		Billete b2 = new Billete("Marta", "45679325V", "business");
+		
+		b1.facturar(346, 3);
+		b2.facturar(34, 5, true, false);
+		
+		System.out.println("Precio billete1: " + b1.getTotal());
+		System.out.println("Precio billete2: " + b2.getTotal());
+		 */				
+
 		//Ejercicio12
+		System.out.println("El numero mayor es: " + Calcula.mayor(3, 5, 7, 23));
+		System.out.println("La cadena mayor es: " + Calcula.mayor("hola", "holaa", "holaaaaaaa"));
+		System.out.println("El numero menor es: " + Calcula.menor(3, 5, 7, 23));
 	}
 
 }
