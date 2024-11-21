@@ -42,7 +42,7 @@ public class Contacto {
 		this.telefono = telefono;
 	}
 	
-	public boolean comprobarTelefono() {
+	public boolean comprobarTelefono() {		//Seria mas adecuado volverlo privado y pasarle como argumento el teefono, de este modo lo llamariamos directamente con el constructor y luego deberiamos meterlo en set telefono tambien
 		boolean esValido = false;
 		if (this.getTelefono().length() == 9) {
 			esValido = true;

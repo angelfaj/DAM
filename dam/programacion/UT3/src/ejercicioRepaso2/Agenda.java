@@ -2,7 +2,9 @@ package ejercicioRepaso2;
 
 public class Agenda {
 	//Atributos
-	public static int numeroContactos;
+	private static final int MAX_CONTACTOS = 3;
+
+	public int numeroContactos;
 	private Contacto c1, c2, c3;
 	
 	//Constructores
@@ -24,8 +26,12 @@ public class Agenda {
 	}
 	
 	//Metodos
+	public int getNumeroContactos() {
+		return numeroContactos;
+	}
+	
 	public void altaContacto(Contacto c, int i) {
-		if (numeroContactos < 3) {
+		if (numeroContactos < MAX_CONTACTOS) {
 			switch(i) {
 			case 1:
 				this.c1 = c;

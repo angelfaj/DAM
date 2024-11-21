@@ -15,21 +15,21 @@ public class TestAgenda {
 			System.out.println("EL telefono es incorrecto");			
 		}
 		
-		System.out.println("Numero de contactos; " + Agenda.numeroContactos);
+		System.out.println("Numero de contactos; " + agenda1.getNumeroContactos());
 		
 		agenda1.altaContacto(laura, 2);
-		System.out.println("Numero de contactos; " + Agenda.numeroContactos);
+		System.out.println("Numero de contactos; " + agenda1.getNumeroContactos());
 		Contacto paco = new Contacto("Paco", "6567680796");
 		agenda1.altaContacto(paco, 3);
-		System.out.println("Numero de contactos; " + Agenda.numeroContactos);
+		System.out.println("Numero de contactos; " + agenda1.getNumeroContactos());
 		System.out.println(agenda1);
 		Contacto ramon = new Contacto("ramon", "111222222");
-		agenda1.altaContacto(ramon, 4);
+		agenda1.altaContacto(ramon, 3);
 		
 		System.out.println(agenda1);
 		
 		agenda1.bajaContacto(3);
-		System.out.println("Numero de contactos; " + Agenda.numeroContactos);
+		System.out.println("Numero de contactos; " + agenda1.getNumeroContactos());
 		
 		
 		System.out.println(agenda1.modificaContacto(paco, 3));

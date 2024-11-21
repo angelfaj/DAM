@@ -57,10 +57,22 @@ public class Main {
 		System.out.println("Los datos de " + maria.getNombre() + " son" + maria.toString());
 		System.out.println("Los datos de " + pepe.getNombre() + " son" + pepe.toString());
 		System.out.println("Los datos de " + helena.getNombre() + " son" + helena.toString());
-		 */
 		
 		//Ejercicio4
+		Cuenta c1 = new Cuenta("Paca");
+		c1.ingresar(1000000);
 		
+		System.out.println("Cuenta c1: " + c1);
+		
+		Cuenta copiaC1 = new Cuenta(c1);
+		
+		System.out.println("Cuenta copia: " + copiaC1);
+		copiaC1.retirar(500000);
+		System.out.println("Cuenta copia: " + copiaC1);
+		 */
+		
+		//Ejercicio5
+//		Vehiculo v1 = new Vehiculo()
 	}
 
 }

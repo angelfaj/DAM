@@ -17,8 +17,7 @@ public class Cuenta {
 	
 	//Constructor copia
 	public Cuenta(Cuenta c) {
-		titular = c.getTitular();
-		cantidad = c.getCantidad();
+		this(c.getTitular(),c.getCantidad());
 	}
 	
 	//Metodos
@@ -50,5 +49,12 @@ public class Cuenta {
 			cantidad = 0;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Cuenta [titular=" + titular + ", cantidad=" + cantidad + "]";
+	}
+	
+	
 	
 }
