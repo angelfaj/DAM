@@ -37,6 +37,20 @@ public class Cuenta {
 		return iguales;
 	}
 	
+	@Override
+	public boolean equals(Object o) {		//Object hace referencia a cualquier objeto, es como un comodin
+		if (this == o) {					//Comprobamos si son el mismo objeto
+			return true;
+		}
+		if (getClass() == o.getClass()) {	
+			Cuenta otra = (Cuenta) o;		//Si son de la misma clase debemos castearlo para acceder a los metodos 
+			if (otra.getTitular().equals(this.getTitular())) {
+				return true;				
+			}
+		}
+		return false;
+	}
+	
 	public void ingresar(double cant) {
 		if (cant > 0) {
 			cantidad += cant;
