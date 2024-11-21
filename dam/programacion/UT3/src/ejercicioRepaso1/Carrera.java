@@ -1,4 +1,4 @@
-package ejerciciosRepaso;
+package ejercicioRepaso1;
 import java.lang.Math;
 
 public class Carrera {

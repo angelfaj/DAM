@@ -1,4 +1,4 @@
-package ejerciciosRepaso;
+package ejercicioRepaso1;
 
 public class Corredor {
 	//Atributos

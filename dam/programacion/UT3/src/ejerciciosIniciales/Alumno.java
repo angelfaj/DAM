@@ -29,19 +29,19 @@ public class Alumno {
 		return aprobados;
 	}
 	
-	public static void calculaMedia(Alumno... a1) {
-			for (int i = 0; i < a1.length; i++) {				
-				media += (a1[i].notaA1 + a1[i].notaA2 + a1[i].notaA3) / 3 ;
-			}
-	}
+//	public static void calculaMedia(Alumno... a1) {
+//			for (int i = 0; i < a1.length; i++) {				
+//				media += (a1[i].notaA1 + a1[i].notaA2 + a1[i].notaA3) / 3 ;
+//			}
+//	}
 	
-	public static String getMedias() {
-//		int comparador = 10;
-//		for (int i = 0; i < media.length(); i++) {
-//			media.indexOf(i);
-//		}
-		return media;
-	}
+//	public static String getMedias() {
+////		int comparador = 10;
+////		for (int i = 0; i < media.length(); i++) {
+////			media.indexOf(i);
+////		}
+//		return media;
+//	}
 	@Override
 	public String toString() {
 		return "Alumno [matricula=" + matricula + ", notaA1=" + notaA1 + ", notaA2=" + notaA2 + ", notaA3=" + notaA3
