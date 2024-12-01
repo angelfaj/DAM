@@ -1,4 +1,5 @@
 package ejerciciosArraysI;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -149,6 +150,8 @@ public class Main {
 		Test muestrario[] = {tema1, tema2, tema3, tema4, tema5, tema6, tema7, tema8, tema9, tema10};
 		
 		System.out.println(tema1.toString());
+		
+		INCOMPLETO
 		 */
 		
 		/*Hacer un programa en el que se declaren 3 vectores de nombres: nombre, apellido1 y
@@ -163,6 +166,45 @@ public class Main {
 		ordenados alfabéticamente
 		a) Repetir el apartado a) eligiendo los valores del vector nombresApellidos.
 		b) (opcional) Los nombres y apellidos no pueden estar repetidos.*/
+		
+		//Creamos los vectores
+		String nombre[] = {"Lucia", "Patricia", "Laura", "Maria", "Andrea", "Diana", "Veronica", "Raquel", "Carla", "Marta"};
+		String apellido1[] = {"Gómez", "Pérez", "Martínez", "López", "Sánchez", "Rodríguez", "Fernández", "García", "Martín", "Jiménez"};
+		String apellido2[] = {"Torres", "Vázquez", "Ramírez", "Moreno", "Muñoz", "Hernández", "Díaz", "Álvarez", "Ruiz", "Domínguez"};
+		
+		String nombresApellidos[] = new String [30];	
+		
+		//Recogemos los tres vectores en uno solo
+		System.arraycopy(nombre, 0, nombresApellidos, 0, 10);
+		System.arraycopy(apellido1, 0, nombresApellidos, 10, 10);
+		System.arraycopy(apellido2, 0, nombresApellidos, 20, 10);
+			
+		String nombreCompleto[] = new String[5];
+		
+		
+		//Sacamos valores aleatorios y los eliminamos del vector para conseguir nombres unicos
+			for (int i = 0; i < nombreCompleto.length; i++) {
+				int b = 0;
+				
+				do {
+					int c = (int)(Math.random()*10);
+					b = c;
+				} while (nombre[b] == null || apellido1[b] == null || apellido2[b] == null);
+				
+				String fullName = nombre[b] + " " + apellido1[b] + " " + apellido2[b];
+				nombre[b] = null;
+				apellido1[b] = null;
+				apellido2[b] = null;
+				nombreCompleto[i] = fullName;
+			}
+		
+		//Ordenamos e imprimimos
+		Arrays.sort(nombreCompleto);
+		 for (String s:nombreCompleto) {
+			 System.out.println(s);
+		 }
+			
+			
 	}
 
 }
