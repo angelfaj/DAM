@@ -1,6 +1,7 @@
 package ejerciciosArraysI;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Random; 
 
 public class Main {
 
@@ -165,7 +166,7 @@ public class Main {
 		previamente en un vector de 5 Strings de nombre nombresCompletos. Escribir los nombres
 		ordenados alfabéticamente
 		a) Repetir el apartado a) eligiendo los valores del vector nombresApellidos.
-		b) (opcional) Los nombres y apellidos no pueden estar repetidos.*/
+		b) (opcional) Los nombres y apellidos no pueden estar repetidos
 		
 		//Creamos los vectores
 		String nombre[] = {"Lucia", "Patricia", "Laura", "Maria", "Andrea", "Diana", "Veronica", "Raquel", "Carla", "Marta"};
@@ -175,9 +176,9 @@ public class Main {
 		String nombresApellidos[] = new String [30];	
 		
 		//Recogemos los tres vectores en uno solo
-		System.arraycopy(nombre, 0, nombresApellidos, 0, 10);
-		System.arraycopy(apellido1, 0, nombresApellidos, 10, 10);
-		System.arraycopy(apellido2, 0, nombresApellidos, 20, 10);
+		System.arraycopy(nombre, 0, nombresApellidos, 0, nombre.length);
+		System.arraycopy(apellido1, 0, nombresApellidos, nombre.length, nombre.length);
+		System.arraycopy(apellido2, 0, nombresApellidos, (nombre.length + apellido1.length), nombre.length);
 			
 		String nombreCompleto[] = new String[5];
 		
@@ -203,8 +204,143 @@ public class Main {
 		 for (String s:nombreCompleto) {
 			 System.out.println(s);
 		 }
+		.*/
+		
+		
+		/*Asignarle a un vector 100 valores de tipo entero comprendidos entre 1 y 200. Leer por teclado
+		un número y comprobar si coincide con alguno de los elementos del vector. Utilizar el método
+		binarySearch
+		
+		Scanner entrada = new Scanner(System.in);
+		int num;
+		int hundred[] = new int[100];
+
+		
+		
+		for (int i = 0; i < hundred.length; i++) {
+			int c = -1;
+			do {
+				c = (int)(Math.random()*hundred.length);
+				Arrays.sort(hundred);
+			} while (Arrays.binarySearch(hundred, c) >= 0);			//Revisar por que guarda ceros al principio
+			hundred[i] = c;				
+		}
 			
-			
+
+		System.out.println("introduce un numero: ");
+		num = entrada.nextInt();
+		entrada.close();
+		
+		if (Arrays.binarySearch(hundred, num) >= 0) {
+			System.out.println("El numero introducido SI se encuentra en el vector");
+		}else System.out.println("El numero introducido NO se encuentra en el vector");
+		
+		for (int n : hundred) {
+			System.out.println(n);
+		}
+		
+		Hacer un programa en el que se declare una matriz de dimensiones 5 x 8 (5 filas y 8 columnas)
+		de datos de tipo entero. Asignarle a los elementos de la matriz valores generados al azar y
+		comprendidos entre 20 y 40. Recorrer a continuación la matriz y escribir en pantalla el valor de
+		sus elementos.Calcular cuál es el elemento mas pequeño y mayor de la tabla.
+		Escribir también la tabla para comprobar los resultados. La salida tiene que tener el formato:
+		Elemento menor: XX Fila: XX Columna: XX
+		Elemento mayor: XX Fila: XX Columna: XX
+		
+		int FILAS = 5;
+		int COLUMNAS = 8;
+		int matriz[][] = new int[FILAS][COLUMNAS];
+		int posMenor[] = new int[2];
+		int posMayor[] = new int[2];
+		Random r = new Random();
+		int mayor = 0, menor = 100;
+		
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				int num = r.nextInt(20) + 20;
+				matriz[i][j] = num;
+			}
+		}
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				System.out.print(matriz[i][j] + " ");
+			}
+			System.out.println();
+		}
+		
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				if (matriz[i][j] < menor) {
+					menor = matriz[i][j];
+					posMenor[0] = i;
+					posMenor[1] = j;
+				}
+				if (matriz[i][j] > mayor) {
+					mayor = matriz[i][j];
+					posMayor[0] = i;
+					posMayor[1] = j;
+				}
+			}
+		}
+		
+		System.out.println("MENOR: " + menor + "\t" + "Fila: " + posMenor[0] + "\t" + "Columna: " + posMenor[1] + "\n" + "MAYOR: " + mayor + "\t" + "Fila: " + posMayor[0] + "\t" + "Columna: " + posMayor[1] + "\n");
+		
+		
+		Hacer un programa que genere y escriba una matriz unitaria de orden 10. Una matriz unitaria
+		de orden 10 es una matriz de 10x10 en la que todos los elementos valen 0, excepto los de la
+		diagonal principal que valen 1. La diagonal principal es la que va de la esquina superior
+		izquierda a la inferior derecha
+		
+		int unitaria[][] = new int[10][10];
+		
+		for (int i = 0; i < unitaria.length; i++) {
+			for (int j = 0; j < unitaria[i].length; j++) {
+				if (i == j) {
+					unitaria[i][j] = 1;					
+				} else {
+					unitaria[i][j] = 0;
+				}
+			}
+		}
+		for (int i = 0; i < unitaria.length; i++) {
+			for (int j = 0; j < unitaria[i].length; j++) {
+				System.out.print(unitaria[i][j] + " ");
+			}
+			System.out.println();
+		}
+		Hacer un programa que averigüe si una matriz cuadrada de orden 4 es simétrica. Una matriz es
+		simétrica cuando a[f][c]=a[c][f] para cualquier elemento de la matriz.
+		 */
+		
+		int cuadrada[][] = new int[4][4];
+		boolean flag = false;
+		
+		for (int i = 0; i < cuadrada.length; i++) {
+			for (int j = 0; j < cuadrada[i].length; j++) {
+				if (i == j) {
+					cuadrada[i][j] = 1;					
+				} else {
+					cuadrada[i][j] = 0;
+				}
+				if (cuadrada[i][j] != cuadrada[j][i]) {
+					flag = true;
+				}
+				System.out.print(cuadrada[i][j] + " ");
+			}
+			System.out.println();
+		}
+				
+		if (flag == true) {
+			System.out.println("La matriz no es simetrica");
+		}else {
+			System.out.println("La matriz es simetrica");
+		}
+		
+		
+		
 	}
 
 }
+
