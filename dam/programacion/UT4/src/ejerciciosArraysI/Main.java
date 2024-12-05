@@ -312,7 +312,6 @@ public class Main {
 		}
 		Hacer un programa que averigüe si una matriz cuadrada de orden 4 es simétrica. Una matriz es
 		simétrica cuando a[f][c]=a[c][f] para cualquier elemento de la matriz.
-		 */
 		
 		int cuadrada[][] = new int[4][4];
 		boolean flag = false;
@@ -338,6 +337,125 @@ public class Main {
 			System.out.println("La matriz es simetrica");
 		}
 		
+		
+		EJ 12-13
+		Hacer un programa que asigne números a una matriz de orden 4x5 comprendidos entre 1 y 10.
+		El programa tiene que escribir la suma de los elementos de cada fila y la suma de los números
+		que son pares de cada columna con el formato siguiente:
+		suma de los elementos de la fila 0 --> XX
+		suma de los elementos de la fila 1 --> XX
+		.................................................................
+		suma de los elementos de la fila 3 --> XX
+		-----------------------------------------
+		suma de los elementos pares de la columna 0 --> XX
+		suma de los elementos pares de la columna 1 --> XX
+		.....................................................................................
+		suma de los elementos pares de la columna 4 --> XX 
+		
+		int matriz[][] = new int[4][5];
+		Random r = new Random();
+		int sumaFila[] = new int[4];
+		int sumaColumna[] = new int[5];
+		
+		//Asignamos valores a nuestra matriz
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				matriz[i][j] = r.nextInt(10) + 1;
+				System.out.print(matriz[i][j] + "\t");
+				
+				switch (i) {							//Sumamos las filas
+				case 0:
+					sumaFila[i] += matriz[i][j];
+					break;
+				case 1:
+					sumaFila[i] += matriz[i][j];
+					break;
+				case 2:
+					sumaFila[i] += matriz[i][j];
+					break;
+				case 3:
+					sumaFila[i] += matriz[i][j];
+					break;			
+				
+				}
+				if (matriz[i][j] % 2 == 0) {			//Sumamos los valores pares de las columnas. J almacena el valor de cada columna en su lugar correspondiente y los va sumando 
+					sumaColumna[j] += matriz[i][j];					
+				}
+			}
+			
+			System.out.println();
+		}
+		
+		//Imprimo los resultados
+		for (int i = 0; i < sumaFila.length; i++) {
+			System.out.println("Suma fila " + i + ": " + sumaFila[i]);
+			
+		}
+		for (int i = 0; i < sumaColumna.length; i++) {
+			System.out.println("Suma de elementos pares de la columna " + i + ": " + sumaColumna[i]);
+		}
+		 
+		 
+		EJ 14:
+		Hacer un programa que genere e imprima un cuadrado latino de orden 10 (matriz 10x10). Un
+		cuadradado latino de orden n es aquel en el que la primera fila tiene los no naturales del 1 a n,
+		y cada una de las filas restantes de la matriz es igual a su fila superior desplazada una posicion
+		hacia la derecha, entrando por la izquierda el número que se pierde en el desplazamiento. Por
+		ejemplo, un cuadrado latino de orden 5 es:
+		
+		1	2	3	4	5		 
+		5	1	2	3	4
+		4	5	1	2	3
+		3	4	5	1	2
+		2	3	4	5	1
+		*/		
+		
+		int matriz[][] = new int[10][10];
+		boolean primeraVuelta = false;
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				do {
+					matriz[i][j] = j;
+					
+					switch (i) {
+					case 0:
+						
+						break;
+					case 1:
+						
+						break;
+					case 2:
+						
+						break;
+					case 3:
+						
+						break;
+					case 4:
+						
+						break;
+					case 5:
+						
+						break;
+					case 6:
+						
+						break;
+					case 7:
+						
+						break;
+					case 8:
+						
+						break;
+					case 9:
+						
+						break;
+					}
+					primeraVuelta = true;
+				}while(primeraVuelta);
+				System.out.print(matriz[i][j] + "\t");
+			}
+			System.out.println();
+		}
 		
 		
 	}
