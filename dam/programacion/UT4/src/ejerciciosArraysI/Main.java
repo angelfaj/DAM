@@ -409,55 +409,35 @@ public class Main {
 		3	4	5	1	2
 		2	3	4	5	1
 		*/		
+		int cuadradoLatino[][] = new int [10][10];
+		int numero = 1, ultimoValor = -1;				//Numero contemplará valores del 1-10, al llegar al 10 empezará en 1.
 		
-		int matriz[][] = new int[10][10];
-		boolean primeraVuelta = false;
-		
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[i].length; j++) {
-				do {
-					matriz[i][j] = j;
-					
-					switch (i) {
-					case 0:
-						
-						break;
-					case 1:
-						
-						break;
-					case 2:
-						
-						break;
-					case 3:
-						
-						break;
-					case 4:
-						
-						break;
-					case 5:
-						
-						break;
-					case 6:
-						
-						break;
-					case 7:
-						
-						break;
-					case 8:
-						
-						break;
-					case 9:
-						
-						break;
+		System.out.println();
+		for (int i = 0; i < cuadradoLatino.length; i++) {
+			for (int j = 0; j < cuadradoLatino[i].length; j++, numero++) {
+				if ( i != 0 ) {							//Entramos cuando se ha impreso la primera fila
+					if ( j == 0 ) {						//Comenzamos la fila con el ultimo valor de la anterior
+						numero = ultimoValor;
+						cuadradoLatino[i][j] = numero;
 					}
-					primeraVuelta = true;
-				}while(primeraVuelta);
-				System.out.print(matriz[i][j] + "\t");
+					if (numero > cuadradoLatino.length) { 		//Si llegamos al 10 reseteamos el numero
+						numero = 1;
+						cuadradoLatino[i][j] = numero;
+					}else								//Si no, seguimos imprimiendo valores
+						cuadradoLatino[i][j] = numero;
+				} else {								//Imprimimos la primera fila
+					cuadradoLatino[i][j] = numero;					
+				}
+				ultimoValor = numero;					//Actualizamos el ultimo valor
+				System.out.print(cuadradoLatino[i][j] + "\t");
 			}
 			System.out.println();
 		}
 		
 		
+		
+		
+	//FIN CLASE MAIN
 	}
 
 }

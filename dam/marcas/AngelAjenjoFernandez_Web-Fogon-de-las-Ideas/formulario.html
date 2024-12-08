@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Fogón de las Ideas - Web Oficial</title>
+</head>
+<body>
+    <h1>Registro - Fogón de las Ideas</h1>
+    <p>Por favor, completa tus datos para registrarte.</p>
+
+    <form action="#" method="post">
+        <!-- Nombre -->
+        <div>
+            <label for="nombre">Nombre</label><br>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+        </div>
+
+        <!-- Apellidos -->
+        <div>
+            <label for="apellidos">Apellidos</label><br>
+            <input type="text" id="apellidos" name="apellidos" required><br><br>
+        </div>
+
+        <!-- Fecha de nacimiento -->
+        <div>
+            <label for="fecha-nacimiento">Fecha de nacimiento</label><br>
+            <input type="date" id="fecha-nacimiento" name="fecha_nacimiento" required><br><br>
+        </div>
+
+        <!-- Estado civil -->
+        <fieldset>
+            <legend>Estado civil</legend>
+            <div>
+                <input type="radio" id="viudo" name="estado_civil" value="viudo">
+                <label for="viudo">Viudo</label>
+            </div>
+            <div>
+                <input type="radio" id="soltero" name="estado_civil" value="soltero">
+                <label for="soltero">Soltero</label>
+            </div>
+            <div>
+                <input type="radio" id="casado" name="estado_civil" value="casado">
+                <label for="casado">Casado</label>
+            </div>
+        </fieldset><br>
+
+        <!-- Sexo -->
+        <div>
+            <label for="sexo">Sexo</label><br>
+            <select id="sexo" name="sexo" required>
+                <option value="n/a">Prefiero no decirlo</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="otro">Otro</option>
+            </select><br><br>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+        </div>
+
+        <!-- Contraseña -->
+        <div>
+            <label for="contraseña">Contraseña</label><br>
+            <input type="password" id="contraseña" name="contraseña" required><br><br>
+        </div>
+
+        <!-- Verificar contraseña -->
+        <div>
+            <label for="verificar-contraseña">Verificar contraseña</label><br>
+            <input type="password" id="verificar-contraseña" name="verificar_contraseña" required><br><br>
+        </div>
+
+        <!-- Teléfono -->
+        <div>
+            <label for="telefono">Teléfono</label><br>
+            <input type="text" id="telefono" name="telefono" placeholder="+34"><br><br>
+        </div>
+
+        <!-- Observaciones -->
+        <div>
+            <label for="observaciones">Observaciones</label><br>
+            <textarea id="observaciones" name="observaciones" rows="4" placeholder="Opcional"></textarea><br><br>
+        </div>
+
+        <!-- Condiciones -->
+        <div>
+            <input type="checkbox" id="condiciones" name="condiciones" required>
+            <label for="condiciones">Acepto los términos y condiciones</label><br><br>
+        </div>
+
+        <!-- Botón de envío -->
+        <div>
+            <input type="submit" value="Crear cuenta">
+        </div>
+    </form>
+
+    <p>Recibirás un SMS para verificar tu teléfono.</p>
+</body>
+</html>

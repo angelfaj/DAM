@@ -79,6 +79,7 @@ public class Test {
 		System.out.println(presenta);
 	}
 	
+	/*
 	public String presenta(Test t[]) {					//la idea es que coja de forma aleatoria 5 objetos del array 
 		int numeroTotalPreguntas = 5;					//posteriormente imprimir en orden dichos objetos
 		Test p1, p2, p3, p4, p5;						//objetos temporales para almacenar las preguntas que incluire en el examen
@@ -112,7 +113,7 @@ public class Test {
 		}
 		return "";										//Aqui debo copiar el return del otro metodo
 	}
-
+*/
 
 	@Override
 	public String toString() {
