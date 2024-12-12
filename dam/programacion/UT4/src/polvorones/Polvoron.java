@@ -1,13 +1,9 @@
-package ejerciciosArraysI;
-
-import java.util.Scanner;
-import java.util.Arrays;
+package polvorones;
 
 public class Polvoron {
 	//Atributos
 	private String sabor;
 	private double precio;
-	private static String cesta[][] = new String[2][3];
 	
 	//Cosntructores
 	public Polvoron(String sabor, double precio) {

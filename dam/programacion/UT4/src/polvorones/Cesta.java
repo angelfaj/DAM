@@ -1,4 +1,4 @@
-package ejerciciosArraysI;
+package polvorones;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -14,20 +14,25 @@ public class Cesta {
 		boolean flag = false;
 		for (int i = 0; i < cesta.length; i++) {
 			for (int j = 0; j < cesta[i].length; j++) {
-				Polvoron p = cesta[i][j];
-				if (p.getSabor().equals(polvoron.getSabor())) {
-					System.out.println("Ya existe un polvorón del mismo sabor en la cesta");
+				if (cesta[i][j] ==null)  {
+					Scanner entrada = new Scanner(System.in);
+					System.out.println("Introduce la fila: ");
+					int indexFila = entrada.nextInt();
+					System.out.println("Introduce la columna: ");
+					int indexColumna = entrada.nextInt();
+					entrada.close();
+					
+					cesta[indexFila][indexColumna] = polvoron;
+				}else {
+					Polvoron p = cesta[i][j];
+					if (p.getSabor().equals(polvoron.getSabor())) {
+						System.out.println("Ya existe un polvorón del mismo sabor en la cesta");
+					}					
 				}
 			}
 		}
 		
-		Scanner entrada = new Scanner(System.in);
-		System.out.println("Introduce la fila: ");
-		int indexFila = entrada.nextInt();
-		System.out.println("Introduce la columna: ");
-		int indexColumna = entrada.nextInt();
 		
-		cesta[indexFila][indexColumna] = polvoron;
 	}
 	
 	public static boolean searchPolvoron(Polvoron polvoron) {
