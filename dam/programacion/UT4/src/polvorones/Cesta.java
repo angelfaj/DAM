@@ -12,22 +12,25 @@ public class Cesta {
 	//Metodos
 	public static void addPolvoron(Polvoron polvoron) {
 		boolean flag = false;
-		for (int i = 0; i < cesta.length; i++) {
-			for (int j = 0; j < cesta[i].length; j++) {
+		for (int i = 0; i < cesta.length && flag == false; i++) {
+			for (int j = 0; j < cesta[i].length && flag == false; j++) {
 				if (cesta[i][j] ==null)  {
-					Scanner entrada = new Scanner(System.in);
-					System.out.println("Introduce la fila: ");
-					int indexFila = entrada.nextInt();
-					System.out.println("Introduce la columna: ");
-					int indexColumna = entrada.nextInt();
-					entrada.close();
+//					Scanner entrada = new Scanner(System.in);
+//					System.out.println("Introduce la fila: ");
+//					int indexFila = entrada.nextInt();
+//					System.out.println("Introduce la columna: ");
+//					int indexColumna = entrada.nextInt();
+//					entrada.close();
 					
-					cesta[indexFila][indexColumna] = polvoron;
+					cesta[i][j] = polvoron;
+					
+					flag = true;
 				}else {
 					Polvoron p = cesta[i][j];
 					if (p.getSabor().equals(polvoron.getSabor())) {
 						System.out.println("Ya existe un polvorón del mismo sabor en la cesta");
-					}					
+					}
+					flag = true;
 				}
 			}
 		}
@@ -78,8 +81,13 @@ public class Cesta {
 	public static void showCesta() {
 		for (int i = 0; i < cesta.length; i++) {
 			for (int j = 0; j < cesta[i].length; j++) {
-				Polvoron p = cesta[i][j];
-				System.out.print(p.getSabor() + "\t");
+				if (cesta[i][j] == null) {
+					cesta[i][j] = null;
+					System.out.print(cesta[i][j] + "\t");
+				} else {
+					Polvoron p = cesta[i][j];
+					System.out.print(p.getSabor() + "\t");					
+				}
 				}
 			System.out.println();
 			}

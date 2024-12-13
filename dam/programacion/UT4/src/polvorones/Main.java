@@ -32,44 +32,48 @@ public class Main {
 		Polvoron almendra = new Polvoron("Almendra", 1.4);
 		Polvoron naranja = new Polvoron("Naranja", 3.0);
 		
+		boolean continuar = true;
 		
-		
-		System.out.println("*****************MENÚ CESTA*****************" + "\r" + "¿Qué deseas hacer?" +"\r" + "1- Añadir" + "\r" + "2- Buscar" + "\r" + "3- Eliminar" + "\r" + "4- Modificar" + "\r" + "5- Mostrar" + "\r" + "Introduce un numero para continuar: ");
-		opcion = entrada.nextInt();
-		
-		switch (opcion) {
-		case 1:
-			Cesta.addPolvoron(naranja);
-			Cesta.addPolvoron(limon);
-			Cesta.addPolvoron(chocolate);
-			Cesta.addPolvoron(almendra);
-			Cesta.addPolvoron(mantequilla);
-			break;
-		case 2:
-			if (Cesta.searchPolvoron(naranja)) {
-				System.out.println("El polvoron de " + naranja.getSabor() + " SI está en la cesta");
-			} else System.out.println("El polvoron de " + naranja.getSabor() + " NO está en la cesta");
-			break;
-		case 3:
-			if (Cesta.deletePolvoron(limon)) {
-				System.out.println("Se ha eliminado eel polvoron de " + limon.getSabor());
-			}else System.out.println("No se puede eliminar el polvoron de " + limon.getSabor() + " ya que no esta en la cesta");
-			break;
-		case 4:
-			if (Cesta.modifyPolvoron(naranja, chocolate)) {
-				System.out.println("Se ha modificado el polvoron de " + naranja.getSabor() + " por el de " + chocolate.getSabor());
-			}else System.out.println("No se ha podido modificar el polvoron");
-			break;
-		case 5:
-			Cesta.showCesta();
-			break;
+		while(continuar) {
+			System.out.println("*****************MENÚ CESTA*****************" + "\r" + "¿Qué deseas hacer?" +"\r" + "1- Añadir" + "\r" + "2- Buscar" + "\r" + "3- Eliminar" + "\r" + "4- Modificar" + "\r" + "5- Mostrar" + "\r" + "6- Terminar programa" + "\r" + "Introduce un numero para continuar: ");
+			opcion = entrada.nextInt();
+			
+			switch (opcion) {
+			case 1:
+				Cesta.addPolvoron(naranja);
+				Cesta.addPolvoron(limon);
+				Cesta.addPolvoron(chocolate);
+				Cesta.addPolvoron(almendra);
+				Cesta.addPolvoron(mantequilla);
+				break;
+			case 2:
+				if (Cesta.searchPolvoron(naranja)) {
+					System.out.println("El polvoron de " + naranja.getSabor() + " SI está en la cesta");
+				} else System.out.println("El polvoron de " + naranja.getSabor() + " NO está en la cesta");
+				break;
+			case 3:
+				if (Cesta.deletePolvoron(limon)) {
+					System.out.println("Se ha eliminado eel polvoron de " + limon.getSabor());
+				}else System.out.println("No se puede eliminar el polvoron de " + limon.getSabor() + " ya que no esta en la cesta");
+				break;
+			case 4:
+				if (Cesta.modifyPolvoron(naranja, chocolate)) {
+					System.out.println("Se ha modificado el polvoron de " + naranja.getSabor() + " por el de " + chocolate.getSabor());
+				}else System.out.println("No se ha podido modificar el polvoron");
+				break;
+			case 5:
+				Cesta.showCesta();
+				break;
+			case 6: 
+				continuar = false;
+				break;
+			}
+			
 		}
 		
 
 
+		
+		
 	}
-
-	
-	
-	
 }
