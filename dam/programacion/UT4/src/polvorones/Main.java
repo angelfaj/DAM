@@ -20,36 +20,47 @@ public class Main {
 		
 		5- Mostrar cesta
 
-			
+		Crea un método extra para saber el precio de la cesta calculaPrecio(). Sabiendo que la cesta donde se guardan los polvorones vale 3 euros y los polvorones el precio que tiene cada uno. Añade esta opción en tu menú para utilizar este método y ver el precio de la cesta en cada momento que el usuario lo solicite.	
 		*/
 		
-		int opcion, bucleActivo = 0;
+		int opcion;
 		Scanner entrada = new Scanner(System.in);
 		
 		Polvoron limon = new Polvoron("Limon", 2.2);
-		Polvoron mantequilla = new Polvoron("Mantequilla", 1.2);
+		Polvoron manteca = new Polvoron("Mantequilla", 1.2);
 		Polvoron chocolate = new Polvoron("Chocolate", 2.0);
 		Polvoron almendra = new Polvoron("Almendra", 1.4);
 		Polvoron naranja = new Polvoron("Naranja", 3.0);
+		Polvoron vegano = new Polvoron("Vegano", 3.0);
 		
 		boolean continuar = true;
+		boolean flag = false;
 		
 		while(continuar) {
-			System.out.println("*****************MENÚ CESTA*****************" + "\r" + "¿Qué deseas hacer?" +"\r" + "1- Añadir" + "\r" + "2- Buscar" + "\r" + "3- Eliminar" + "\r" + "4- Modificar" + "\r" + "5- Mostrar" + "\r" + "6- Terminar programa" + "\r" + "Introduce un numero para continuar: ");
+			System.out.print("\n" + "*****************MENÚ CESTA*****************" + "\r" + "¿Qué deseas hacer?" +"\r" + "1- Añadir" + "\r" + "2- Buscar" + "\r" + "3- Eliminar" + "\r" + "4- Modificar" + "\r" + "5- Mostrar" + "\r" + "6- Mostrar el valor de la cesta" + "\r" + "7- Terminar programa" + "\r" + "Introduce un numero para continuar: ");
 			opcion = entrada.nextInt();
 			
 			switch (opcion) {
 			case 1:
-				Cesta.addPolvoron(naranja);
-				Cesta.addPolvoron(limon);
-				Cesta.addPolvoron(chocolate);
-				Cesta.addPolvoron(almendra);
-				Cesta.addPolvoron(mantequilla);
+				if (!flag) {
+					Cesta.addPolvoron(limon);
+					Cesta.addPolvoron(vegano);
+					Cesta.addPolvoron(naranja);
+					Cesta.addPolvoron(manteca);
+					Cesta.addPolvoron(almendra);				
+					flag = true;
+				} else if (flag) {
+					Cesta.addPolvoron(manteca);
+				}
+				
 				break;
 			case 2:
-				if (Cesta.searchPolvoron(naranja)) {
-					System.out.println("El polvoron de " + naranja.getSabor() + " SI está en la cesta");
-				} else System.out.println("El polvoron de " + naranja.getSabor() + " NO está en la cesta");
+				int pos[] = Cesta.searchPolvoron(vegano);
+				if ((pos[0] < 0)) {
+					System.out.println("El polvorón " + vegano.getSabor() + " NO esta en la cesta");
+				} else {
+					System.out.println("El polvorón " + vegano.getSabor() + " esta en la fila: " + pos[0] + " y columna: " + pos[1]);
+				}
 				break;
 			case 3:
 				if (Cesta.deletePolvoron(limon)) {
@@ -64,12 +75,17 @@ public class Main {
 			case 5:
 				Cesta.showCesta();
 				break;
-			case 6: 
+			case 6:
+				System.out.println("El valor de la cesta es: " + Cesta.cestaPrice());
+				break;
+			case 7: 
+				System.out.println("Adiós!");
 				continuar = false;
 				break;
 			}
 			
 		}
+		entrada.close();
 		
 
 
