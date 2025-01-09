@@ -64,7 +64,41 @@ public class Main {
 		Precio final
 		35*/
 		
-		System.out.println("Introduce un numero ");
+		boolean continuar = true;
+		String nombre;
+		int cantidad, i = 0;
+		final int LIMITE = 8;
+		double precio;
+		ArrayList<Producto> listaProductos = new ArrayList<Producto>();		//Lista para manipular los productos en el main
+		
+		while (continuar & (i < LIMITE)) {
+			System.out.println("FIN para terminar" + "\n" + "Nombre del producto:");
+			nombre = entrada.nextLine();
+			if (nombre.equalsIgnoreCase("fin")) {
+				continuar = false;
+			} else {
+				System.out.println("Cantidad (int):");
+				cantidad = entrada.nextInt();
+				System.out.println("Precio (double):");
+				precio = entrada.nextDouble();
+				entrada.nextLine();
+				Producto p = new Producto(nombre, cantidad, precio);
+				listaProductos.add(p);
+			}
+			i++;
+		}
+		
+		System.out.println(Producto.showTicket());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 

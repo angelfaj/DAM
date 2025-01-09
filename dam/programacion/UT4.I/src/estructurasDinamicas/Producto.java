@@ -2,15 +2,15 @@ package estructurasDinamicas;
 
 import java.util.ArrayList;
 
-public class Productos {
+public class Producto {
 	//Atributos
 	private String nombre;
 	private int cantidad;
 	private double precio;
-	private ArrayList<Productos> listaProductos = new ArrayList<Productos>();
+	private static ArrayList<Producto> listaProductos = new ArrayList<Producto>();
 	
 	//Constructores
-	public Productos(String nombre, int cantidad, double precio) {
+	public Producto(String nombre, int cantidad, double precio) {
 		this.nombre = nombre;
 		this.cantidad = cantidad;
 		this.precio = precio;
@@ -47,14 +47,14 @@ public class Productos {
 		return total;
 	}
 	
-	public String showTicket() {
-		String ticket = "Producto" + "\t" + "Precio" + "\t" + "\t" + "Total";
+	public static String showTicket() {
+		String ticket = "Producto" + "\t" + "Cantidad" + "\t" + "Precio" + "\t" + "Total";
 		double total = 0;
-		for (Productos p: listaProductos) {
-			ticket += "\n" + p.getNombre() + "\t" + p.getCantidad() + "\t" + p.getPrecio() + "\t" + p.getSum();
+		for (Producto p: listaProductos) {
+			ticket += "\n" + p.getNombre() + "\t\t" + p.getCantidad() + "\t" + p.getPrecio() + "\t\t" + p.getSum();
 			total += p.getSum();
 		}
-		ticket += "\n" + "Precio final" + "\t" + "\t" + "\t" + "\t" + total;
+		ticket += "\n" + "Precio final" + "\t" + "\t" + "\t\t" + total;
 		return ticket;
 	}
 	
