@@ -62,7 +62,7 @@ public class Main {
 		Jamón 5 3.5 17.5
 		Queso 7 2.5 17.5
 		Precio final
-		35*/
+		35
 		
 		boolean continuar = true;
 		String nombre;
@@ -90,8 +90,52 @@ public class Main {
 		
 		System.out.println(Producto.showTicket());
 		
+		*/
+		
+		/*Ejercicio 3
+		Escribe un programa que contenga un método que acepte como
+		parámetro una lista (ArrayList) de números enteros mayores
+		que 0, pudiendo contener elementos duplicados. Implementa un método
+		que sustituya cada valor repetido por 0. Para terminar, realiza un método
+		que muestre el array modificado.
+		Nota: Necesitarás otro método para rellenar la lista de enteros. Le irá
+		pidiendo números al usuario hasta que este introduzca un número
+		negativo
 		
 		
+		
+		OperaArray listaEnteros = new OperaArray();
+		
+		listaEnteros.fillArray();
+
+		System.out.println("La lista original es: " + listaEnteros.toString());
+		listaEnteros.verifyArray();
+		System.out.println("La lista tras modificar los repes es: " + listaEnteros.toString());
+		.*/
+		
+		
+		/*EJERCICIO 1
+		Crea un programa en Java para la gestión de temperaturas. Inicialmente, se presenta un
+		menú en pantalla para elegir la opción deseada:
+		l.
+		2.
+		3.
+		4.
+		5.
+		6.
+		7.
+		Añadir temperatura
+		Mostrar temperatura media
+		Mostrar temperaturas extremas
+		Mostrar la lista de temperaturas
+		Busca la temperatura y muestra su posición
+		Borrar la temperatura
+		Salir
+		El menú se volverá a presentar de nuevo en la pantalla tras completar cualquiera de las 6
+		primeras opciones.
+		Cada número de menú se implementará en un método estático que nos permite llevar a cabo la
+		operación con la lista de temperaturas que se defina en el programa. Los datos se solicitarán al
+		usuario, utiliza la clase Scanner para ello. Se guardará en un ArrayList las temperaturas.*/
 		
 		
 		
