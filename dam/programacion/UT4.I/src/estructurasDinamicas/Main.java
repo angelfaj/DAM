@@ -1,5 +1,6 @@
 package estructurasDinamicas;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Main {
@@ -117,31 +118,120 @@ public class Main {
 		/*EJERCICIO 1
 		Crea un programa en Java para la gestión de temperaturas. Inicialmente, se presenta un
 		menú en pantalla para elegir la opción deseada:
-		l.
-		2.
-		3.
-		4.
-		5.
-		6.
-		7.
-		Añadir temperatura
-		Mostrar temperatura media
-		Mostrar temperaturas extremas
-		Mostrar la lista de temperaturas
-		Busca la temperatura y muestra su posición
-		Borrar la temperatura
-		Salir
+		1. Añadir temperatura
+		2. Mostrar temperatura media
+ 		3. Mostrar temperaturas extremas
+		4. Mostrar la lista de temperaturas
+		5. Busca la temperatura y muestra su posición
+		6. Borrar la temperatura
+		7. Salir
+		
 		El menú se volverá a presentar de nuevo en la pantalla tras completar cualquiera de las 6
 		primeras opciones.
 		Cada número de menú se implementará en un método estático que nos permite llevar a cabo la
 		operación con la lista de temperaturas que se defina en el programa. Los datos se solicitarán al
-		usuario, utiliza la clase Scanner para ello. Se guardará en un ArrayList las temperaturas.*/
+		usuario, utiliza la clase Scanner para ello. Se guardará en un ArrayList las temperaturas.
+		
+		int op;
+		boolean continuar = true;
+		
+		while (continuar) {
+			Temperatura.showMenu();
+			op = entrada.nextInt();
+			
+			switch (op) {
+			case 1:
+				System.out.println("Introduce la temperatura a continuacion: ");
+				Temperatura.addTemp(entrada.nextDouble());
+				break;
+			case 2: 
+				System.out.println("La temperatura media es: " + Temperatura.showAverage());
+				break;
+			case 3: 
+				System.out.println("Ls temperaturas extremas son: " + Temperatura.showExtreme());
+				break;
+			case 4: 
+				System.out.println("Las temperaturas almacenadas son: " + Temperatura.getListaTemperaturas());
+				break;
+			case 5: 
+				System.out.println("Introduce la temperatura a buscar: ");
+				int pos = Temperatura.searchTemp(entrada.nextDouble());
+				if (pos >= 0) {
+					System.out.println("La temperatura se encuentra en la posicion: " + pos);					
+				} else System.out.println("La temperatura no se encuentra en la lista");
+				break;
+			case 6: 
+				System.out.println("Introduce la temperatura a borrar: ");
+				Temperatura.deleteTemp(entrada.nextDouble());
+				break;
+			case 7: 
+				System.out.println("Fin del programa. Adiós!");
+				continuar = false;
+				break;
+			}
+		}
+		entrada.close();
+		
+		/*EJERCICIO 4
+		Crea un ArrayList con los nombres de 6 compañeros de clase. A continuación, muestra esos
+		nombres por pantalla. Utiliza para ello un bucle for que recorra todo el ArrayList sin usar ningún
+		índice.
+		
+		ArrayList<Alumno> lista= new ArrayList<Alumno>();
+		
+		EJERCICIO 5
+		Realiza un programa que introduzca valores aleatorios (entre 0 y 100) en un ArrayList y que
+		luego calcule la suma, la media, el máximo y el mínimo de esos números. El tamaño de la lista
+		también será aleatorio y podrá oscilar entre 10 y 20 elementos ambos inclusive. */
+
+		/*Ejercicio 8
+		Crea un conjunto (HashSet) al que se le va a llamar jugadores. Implementa
+		los siguientes métodos:
+		● Inserta en el conjunto los jugadores del FC Barcelona: Jordi Alba,
+		Pique, Busquets, Iniesta, Messi.
+		● Realiza un bucle sobre los jugadores del conjunto y muestra sus
+		nombres.
+		● Consulta si en el conjunto existe el jugador “Neymar JR”. Avisa si
+		existe o no.
+		● Crea un segundo conjunto jugadores2 con los jugadores “Piqué” y
+		“Busquets”.
+		● Consulta si todos los elementos de jugadores2 existen en jugadores.
+		● Realiza una unión de los conjuntos jugadores y jugadores2 y observa
+		el resultado.
+		● Elimina todos los jugadores del conjunto jugadores2 y muestra el
+		número de jugadores que tiene el conjunto jugadores2 (debería
+		ahora ser cero).*/
+		
+		Jugador alba = new Jugador("Jordi Alba");
+		Jugador pique = new Jugador("Piqué");
+		Jugador iniesta = new Jugador("Iniesta");
+		Jugador messi = new Jugador("Messi");
+		Jugador busquets = new Jugador("Busquets");
+		
+		Jugadores jugadores = new Jugadores();
+		
+		jugadores.addJugador(busquets);
+		jugadores.addJugador(iniesta);
+		jugadores.addJugador(pique);
+		jugadores.addJugador(alba);
+		jugadores.addJugador(messi);
+		
+		System.out.println(jugadores.showPlantilla());
+		
+		if (jugadores.searchJugador("Neymar JR")) {
+			System.out.println("El jugador está en la lista");
+		} else System.out.println("El jugador NO está en la lista");
 		
 		
+		Jugadores jugadores2 = new Jugadores();
+		jugadores2.addJugador(busquets);
+		jugadores2.addJugador(pique);
 		
+		Jugador neymar = new Jugador("Neymar JR");
 		
-		
-		
+//		if (jugadores.jugadorExist(neymar)) {
+//			System.out.println();
+//		}			FALTA TERMINAR!
 		
 		
 	}

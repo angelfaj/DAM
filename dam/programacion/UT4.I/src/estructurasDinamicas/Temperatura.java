@@ -1,21 +1,22 @@
 package estructurasDinamicas;
-
 import java.util.ArrayList;
 
 public class Temperatura {
 	//Atributos
-	private static ArrayList<Double> listaTemperaturas;
+	private static ArrayList<Double> listaTemperaturas = new ArrayList<Double>();
 	
 	//Constructores
-	public Temperatura() {
-		listaTemperaturas = new ArrayList<Double>();
-	}
+	
 	
 	//Metodos
 	public static void addTemp(double d) {
 		listaTemperaturas.add(d);
 	}
 	
+	public static ArrayList<Double> getListaTemperaturas() {
+		return listaTemperaturas;
+	}
+
 	public static double showAverage() {
 		double average = 0;
 		for (double d:listaTemperaturas) {
@@ -43,6 +44,7 @@ public class Temperatura {
 		while (i < listaTemperaturas.size() & continuar)
 			if (listaTemperaturas.get(i) == d) {
 				pos = i;
+				continuar = false;
 		}
 		return pos;
 	}
@@ -54,4 +56,7 @@ public class Temperatura {
 		}
 	}
 	
+	public static void showMenu() {
+		System.out.println("*****************MENU TEMPERATURA*****************" + "\n" + "1. Añadir temperatura" + "\n" + "2. Mostrar temperatra media" + "\n" + "3. Mostrar temperaturas extremas" + "\n" + "4. Mostrar la lista de temperaturas" + "\n" + "5. Busca la temperatura y muestra su posición" + "\n" + "6. Borrar la temperatura" + "\n" + "7. Salir");
+	}
 }
