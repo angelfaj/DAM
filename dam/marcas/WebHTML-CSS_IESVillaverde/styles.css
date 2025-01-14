@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Cabecera superior con logo */
+.top-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 10px 20px;
+}
+
+.top-header img {
+    height: 50px;
+}
+
+/* Cabecera principal con enlaces */
+.main-header {
+    background-color: #003366;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-header nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-header a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.main-header a:hover {
+    text-decoration: underline;
+}
+
+/* Imagen de fondo y letrero de bienvenida */
+.hero {
+    position: relative;
+    background-image: url('fondo.jpg'); /* Cambia 'fondo.jpg' por la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+/* Contenido principal */
+.content {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Sección de colaboradores */
+.collaborators {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+.collaborators h2 {
+    margin-bottom: 20px;
+}
+
+.collaborators img {
+    max-width: 100px;
+    margin: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
