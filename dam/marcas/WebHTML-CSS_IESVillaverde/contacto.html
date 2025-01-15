@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - IES Villaverde</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabecera superior con logo -->
+    <div class="top-header">
+        <a href="https://www.educa.madrid.org">
+            <img src="images/LOGO-educamadrid1.png" alt="Logo Educamadrid">
+        </a>
+    </div>
+
+    <!-- Cabecera principal con enlaces -->
+    <header class="main-header">
+        <a href="index.html">
+            <img src="images/LOGO-ies-villaverde.png" alt="Logo IES Villaverde">
+        </a>
+        <nav>
+            <a href="index.html">INICIO</a>
+            <a href="secretaria.html">SECRETARIA</a>
+            <div class="dropdown">
+                <span>ALUMNADO</span>
+                <div class="dropdown-content">
+                    <a href="https://aulavirtual32.educa.madrid.org/ies.villaverde.madrid/">Aula Virtual</a>
+                    <a href="https://raices.madrid.org/raiz_app/jsp/portal/portalraices.html">Raíces</a>
+                </div>
+            </div>
+            <a href="noticias.html">NOTICIAS</a>
+            <a href="contacto.html">CONTACTO</a>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <h1>Contacto</h1>
+        <div class="contact-info">
+            <h3>INFORMACIÓN DEL CENTRO</h3>
+            <ul>
+                <li>Teléfono: +34 917239181</li>
+                <li>Email General: ies.villaverde.madrid@educa.madrid.org</li>
+                <li>Email Secretaría: secretaria.ies.villaverde.madrid@educa.madrid.org</li>
+                <li>Web: <a href="index.html" target="_blank">iesvillaverde.es</a></li>
+                <li>Dirección: C/ Alianza 20-24, 28041 MADRID</li>
+                <li>Horario: 8:15 - 21:00</li>
+            </ul>
+        </div>
+
+        <div class="contact-form">
+            <h3>Formulario de Contacto</h3>
+            <form action="#" method="POST">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+                
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 IES Villaverde. Todos los derechos reservados.
+    </footer>
+</body>
+</html>
