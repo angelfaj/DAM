@@ -9,16 +9,28 @@
 <body>
     <!-- Cabecera superior con logo -->
     <div class="top-header">
-        <img src="logo.png" alt="Logo IES Villaverde"> <!-- Cambia 'logo.png' por la ruta de tu logo -->
+        <a href="https://www.educa.madrid.org">
+            <img src="images/LOGO-educamadrid1.png" alt="Logo Educamadrid">
+        </a>
     </div>
 
     <!-- Cabecera principal con enlaces -->
     <header class="main-header">
+        <a href="index.html">
+            <img src="images/LOGO-ies-villaverde.png" alt="Logo IES Villaverde">
+        </a>
         <nav>
-            <a href="index.html">Inicio</a>
-            <a href="secretaria.html">Secretaría</a>
-            <a href="sobre-nosotros.html">Sobre Nosotros</a>
-            <a href="alumnado.html">Alumnado</a>
+            <a href="index.html">INICIO</a>
+            <a href="secretaria.html">SECRETARIA</a>
+            <div class="dropdown">
+                <span>ALUMNADO</span>
+                <div class="dropdown-content">
+                    <a href="https://aulavirtual32.educa.madrid.org/ies.villaverde.madrid/">Aula Virtual</a>
+                    <a href="https://raices.madrid.org/raiz_app/jsp/portal/portalraices.html">Raíces</a>
+                </div>
+            </div>
+            <a href="noticias.html">NOTICIAS</a>
+            <a href="contacto.html">CONTACTO</a>
         </nav>
     </header>
 
@@ -30,15 +42,34 @@
     <!-- Contenido principal -->
     <div class="content">
         <p>El Instituto IES Villaverde es un centro educativo comprometido con la excelencia académica y el desarrollo integral de sus estudiantes.</p>
+        <div class="sections-container">
+            <div class="section">
+                <h3>NOTICIAS</h3>
+                <p>Abierto el plazo de presentaciones solicitudes de convalidaciones modalidad virtual / distancia</p>
+                <a href="noticias.html" class="button">Leer más</a>
+
+            </div>
+            <div class="section">
+                <h3>SECRETARIA</h3>
+                <p>Información sobre trámites y servicios administrativos.</p>
+                <a href="secretaria.html" class="button">Leer más</a>
+            </div>
+            <div class="section">
+                <h3>ALUMNADO</h3>
+                <p>Recursos y actividades para los estudiantes.</p>
+                <a href="https://aulavirtual32.educa.madrid.org/ies.villaverde.madrid/" class="button">Leer más</a>
+            </div>
+        </div>
+        
     </div>
 
     <!-- Colaboradores -->
     <div class="collaborators">
         <h2>Empresas Colaboradoras</h2>
         <!-- Aquí puedes añadir imágenes de las empresas colaboradoras -->
-        <img src="empresa1.png" alt="Empresa 1">
-        <img src="empresa2.png" alt="Empresa 2">
-        <img src="empresa3.png" alt="Empresa 3">
+        <img src="images/COLABORADOR-emlab.png" alt="Empresa 1">
+        <img src="images/COLABORADOR-extramus.png" alt="Empresa 2">
+        <img src="images/COLABORADOR_exe.png" alt="Empresa 3">
     </div>
 
     <!-- Footer -->
