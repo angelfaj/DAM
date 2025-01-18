@@ -183,7 +183,10 @@ public class Main {
 		Realiza un programa que introduzca valores aleatorios (entre 0 y 100) en un ArrayList y que
 		luego calcule la suma, la media, el máximo y el mínimo de esos números. El tamaño de la lista
 		también será aleatorio y podrá oscilar entre 10 y 20 elementos ambos inclusive. */
-
+		
+		
+		POR AQUI
+		
 		/*Ejercicio 8
 		Crea un conjunto (HashSet) al que se le va a llamar jugadores. Implementa
 		los siguientes métodos:
@@ -200,7 +203,7 @@ public class Main {
 		el resultado.
 		● Elimina todos los jugadores del conjunto jugadores2 y muestra el
 		número de jugadores que tiene el conjunto jugadores2 (debería
-		ahora ser cero).*/
+		ahora ser cero).
 		
 		Jugador alba = new Jugador("Jordi Alba");
 		Jugador pique = new Jugador("Piqué");
@@ -208,32 +211,37 @@ public class Main {
 		Jugador messi = new Jugador("Messi");
 		Jugador busquets = new Jugador("Busquets");
 		
-		Jugadores jugadores = new Jugadores();
+		HashSet<Jugador> jugadores = new HashSet<Jugador>();
 		
-		jugadores.addJugador(busquets);
-		jugadores.addJugador(iniesta);
-		jugadores.addJugador(pique);
-		jugadores.addJugador(alba);
-		jugadores.addJugador(messi);
+		jugadores.add(busquets);
+		jugadores.add(iniesta);
+		jugadores.add(pique);
+		jugadores.add(alba);
+		jugadores.add(messi);
 		
-		System.out.println(jugadores.showPlantilla());
-		
-		if (jugadores.searchJugador("Neymar JR")) {
-			System.out.println("El jugador está en la lista");
-		} else System.out.println("El jugador NO está en la lista");
-		
-		
-		Jugadores jugadores2 = new Jugadores();
-		jugadores2.addJugador(busquets);
-		jugadores2.addJugador(pique);
+		System.out.println(Jugador.showList(jugadores));
 		
 		Jugador neymar = new Jugador("Neymar JR");
 		
-//		if (jugadores.jugadorExist(neymar)) {
-//			System.out.println();
-//		}			FALTA TERMINAR!
+		if (jugadores.contains(neymar)) {
+			System.out.println("El jugador está en la lista");
+		} else System.out.println("El jugador NO está en la lista");
 		
+		HashSet<Jugador> jugadores2 = new HashSet<Jugador>();
 		
+		jugadores2.add(busquets);
+		jugadores2.add(pique);
+		
+		if (jugadores.containsAll(jugadores2)) {
+			System.out.println("Pique yt busquets estan en ambas listas");
+		}else System.out.println("Pique yt busquets NO estan en ambas listas");
+		
+		jugadores.addAll(jugadores2);
+		System.out.println(Jugador.showList(jugadores));
+		
+		jugadores2.clear();
+		System.out.println(jugadores2.size());
+		*/
 	}
 
 }

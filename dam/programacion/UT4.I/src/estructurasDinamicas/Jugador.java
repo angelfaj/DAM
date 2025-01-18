@@ -20,5 +20,13 @@ public class Jugador {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
+	public static String showList(HashSet<Jugador> h) {
+		String lista = "[";
+		for (Jugador j:h) {
+			lista += " : " + j.getNombre(); 
+		}
+		lista += " : ]";
+		return lista;
+	}
 }
