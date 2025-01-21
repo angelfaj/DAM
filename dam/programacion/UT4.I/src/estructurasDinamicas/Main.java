@@ -2,6 +2,7 @@ package estructurasDinamicas;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.math.*;
 
 public class Main {
 
@@ -178,16 +179,56 @@ public class Main {
 		índice.
 		
 		ArrayList<Alumno> lista= new ArrayList<Alumno>();
+		Alumno a1 = new Alumno("Adriano");
+		Alumno a2 = new Alumno("Filip");
+		Alumno a3 = new Alumno("Carla");
+		Alumno a4 = new Alumno("Andrea");
+		Alumno a5 = new Alumno("Adrian");
+		Alumno a6 = new Alumno("Moncef");
+		
+		lista.add(a1);
+		lista.add(a2);
+		lista.add(a3);
+		lista.add(a4);
+		lista.add(a5);
+		lista.add(a6);
+		
+		for (Alumno a:lista) {
+			System.out.println("Alumno: " + a.getNombre());
+		}
+		
 		
 		EJERCICIO 5
 		Realiza un programa que introduzca valores aleatorios (entre 0 y 100) en un ArrayList y que
 		luego calcule la suma, la media, el máximo y el mínimo de esos números. El tamaño de la lista
-		también será aleatorio y podrá oscilar entre 10 y 20 elementos ambos inclusive. */
+		también será aleatorio y podrá oscilar entre 10 y 20 elementos ambos inclusive. 
 		
 		
-		POR AQUI
+		ArrayList<Integer> randomList = new ArrayList<Integer>();
+		int n, suma = 0, media, maximo = 9, minimo = 21, tamanio = (int)(Math.random()*20+10);		
 		
-		/*Ejercicio 8
+		
+		for (int i = 0; i < tamanio; i++) {
+			n = (int)(Math.random()*100+0);
+			randomList.add(n);		
+			suma += n;
+			if (n > maximo) {
+				maximo = n;
+			} 
+			if (n < minimo) {
+				minimo = n;
+			}
+		}
+		
+		media = suma / tamanio;
+		
+		System.out.println("La suma es: " + suma);
+		System.out.println("La media es: " + media);
+		System.out.println("El maximo es: " + maximo);
+		System.out.println("El minimo es: " + minimo);
+		
+		
+		Ejercicio 8
 		Crea un conjunto (HashSet) al que se le va a llamar jugadores. Implementa
 		los siguientes métodos:
 		● Inserta en el conjunto los jugadores del FC Barcelona: Jordi Alba,
