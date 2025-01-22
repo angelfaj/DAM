@@ -6,6 +6,10 @@ public class Equipo {
 	private int ip[] = new int[4];
 	
 	//Constructores
+	public Equipo() {
+		
+	}
+	
 	public Equipo(String nombre) {
 		this.nombre = nombre;
 	}
@@ -36,6 +40,9 @@ public class Equipo {
 		}
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "[ " + this.getNombre() + ":" + this.getIp() + " ]";
+	}
 	
 }

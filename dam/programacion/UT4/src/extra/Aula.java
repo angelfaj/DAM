@@ -2,8 +2,13 @@ package extra;
 
 public class Aula {
 	//Atributos
-	private Equipo aula[][] = new Equipo[5][6];
-		
+	private Equipo aula[][];
+	
+	//Constructores
+	public Aula() {
+		 aula = new Equipo[5][6];
+	}
+	
 	//Metodos 
 	public void addPc(Equipo e) {					//alta (ultimo hueco libre)
 		int lastI = 0, lastJ = 0;
@@ -18,17 +23,17 @@ public class Aula {
 		aula[lastI][lastJ] = e;
 	}
 	
-	public void removePc(Equipo e) {
+	public void removePc(Equipo e) {				//transformamos a nulo la posicion del equipo dado
 		int posicion[] = selectPc(e);
 		aula[posicion[0]][posicion[1]] = null;
 	}
 	
-	public void modifyPc(Equipo e, Equipo f) {
+	public void modifyPc(Equipo e, Equipo f) {		//Sobreescribimos el equipo antiguoo con el nuevo
 		int posicion[] = selectPc(e);
 		aula[posicion[0]][posicion[1]] = f;
 	}
 	
-	public int[] selectPc(Equipo e) {
+	public int[] selectPc(Equipo e) {				//Buscamos y devolvemos la posicion del objeto pasado x parametro
 		boolean continuar = true;
 		int i = 0, j = 0;
 		int posicion [] = new int [2];
