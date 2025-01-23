@@ -1,6 +1,8 @@
 package estructurasDinamicas;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.math.*;
 
@@ -282,7 +284,122 @@ public class Main {
 		
 		jugadores2.clear();
 		System.out.println(jugadores2.size());
-		*/
+
+		
+		EJERCICIO 8
+		Implementa el control de acceso al área restringida de un
+		programa. Se debe pedir un
+		nombre de usuario y una contraseña. Si el usuario introduce los datos correctamente, el
+		programa dirá "Ha accedido al área restringida". El usuario tendrá un máximo de 3
+		oportunidades. Si se agotan las oportunidades el programa dirá "Lo siento, no tiene acceso al
+		área restringida". Los nombres de usuario con sus correspondientes contraseñas deben estar
+		almacenados en una estructura de la clase HasMap.
+		
+		HashMap<String, String> credentials = new HashMap<String, String>();
+		credentials.put("Manolo", "1234");
+		boolean continuar = true;
+		int intentos = 0;
+		
+		do {
+			intentos++;
+			System.out.println("Introduce el nombre de usuario: ");
+			String user = entrada.nextLine();
+			System.out.println("Introduce la contraseña: ");
+			String pass = entrada.nextLine();
+			
+			if ((credentials.get(user) != null) && (credentials.get(user).equals(pass))) {
+				System.out.println("Has accedido al area restringida!");
+				continuar = false;
+			} else {
+				System.out.println("Credenciales incorrectas, te quedan " + (3 - intentos) + " intentos");
+			}
+		}while (continuar & intentos < 3);
+
+		System.out.print("Adios!");
+		entrada.close(); 
+		
+		Ejercicio 11
+		Escribe un programa que utilizando una colección HashMap:
+		● Almacene los siguientes colores: Red, Green, Black, White y Blue. La
+		clave será un entero, de tal forma que, Red->1, Green-> 2, etc.
+		● Muestra la clave y su valor asociado (cada uno en una línea).
+		● Muestra el total de colores almacenados en el HashMap.
+		● Crea otro HashMap con los siguientes colores: Pink, Orange, Purple
+		y claves 6, 7 y 8, respectivamente. Copia todos los valores de este
+		HashMap en el primero (revisa la API). Muestra la información que
+		contiene ahora el primer HashMap (toda en la misma línea).
+		● Elimina todos los elementos del segundo HashMap (utilizando un
+		único método). Imprime su contenido.
+		● Crea un tercer HashMap igual que el primero, pero con los valores
+		invertidos, es decir, ahora la clave será el color y el valor la posición.
+		Comprueba si existe el color Green dentro de este HashMap y
+		muestra un mensaje al usuario informándole en qué posición se
+		encuentra. Idem para el color Brown.
+		● Comprueba ahora si el valor Green existe en el primer HashMap.
+		Idem con el color Brown. Informa al usuario.*/
+		
+		HashMap<Integer, String> colorsA = new HashMap<Integer, String>();
+		
+		colorsA.put(1, "Red");
+		colorsA.put(2, "Green");
+		colorsA.put(3, "Black");
+		colorsA.put(4, "White");
+		colorsA.put(5, "Blue");
+		
+		for (int key:colorsA.keySet()) {
+			System.out.println("Clave-valor: " + key + "-" + colorsA.get(key));
+		}
+		
+		System.out.println("Total colores almacenados: " + colorsA.size());
+		
+		
+		HashMap<Integer, String> colorsB = new HashMap<Integer, String>();
+		
+		colorsA.put(6, "Pink");
+		colorsA.put(7, "Orange");
+		colorsA.put(8, "Purple");
+		
+		colorsA.putAll(colorsB);
+		System.out.println("Valores tras juntar ambos maps");
+		for (int key:colorsA.keySet()) {
+			System.out.println("Clave-valor: " + key + "-" + colorsA.get(key));
+		}
+		
+		colorsB.clear();
+		System.out.println("Valores tras limpiar segundo map");
+		for (int key:colorsB.keySet()) {
+			System.out.println("Clave-valor: " + key + "-" + colorsB.get(key));
+		}
+		
+		
+		HashMap<String, Integer> colorsC = new HashMap<String, Integer>();
+		
+		colorsC.put("Red", 1);				//Esto lo puedo hacer con un for mendrugo
+		colorsC.put("Green", 2);
+		colorsC.put("Black", 3);
+		colorsC.put("White", 4);
+		colorsC.put("Blue", 5);
+		
+		System.out.println("Buscando el Green y el Brown en el tercer mapa");
+		for (String key:colorsC.keySet()) {
+			if (key.equalsIgnoreCase("Green")) {
+				System.out.println("El Green se encuentra en la posicion " + colorsC.get(key));
+			}
+			if (key.equalsIgnoreCase("Brown")) {
+				System.out.println("El Brown se encuentra en la posicion " + colorsC.get(key));
+			}
+		}
+		
+		System.out.println("Buscando el Green y el Brown en el primer mapa");
+		for (int key:colorsA.keySet()) {
+			if (colorsA.get(key).equalsIgnoreCase("Green")) {
+				System.out.println("El Green se encuentra en la posicion " + key);
+			}
+			if (colorsA.get(key).equalsIgnoreCase("Brown")) {
+				System.out.println("El Brown se encuentra en la posicion " + key);
+			}
+		}
+		
 	}
 
 }
