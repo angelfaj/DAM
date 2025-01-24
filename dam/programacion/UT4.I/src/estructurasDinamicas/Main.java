@@ -1,5 +1,6 @@
 package estructurasDinamicas;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -336,7 +337,7 @@ public class Main {
 		muestra un mensaje al usuario informándole en qué posición se
 		encuentra. Idem para el color Brown.
 		● Comprueba ahora si el valor Green existe en el primer HashMap.
-		Idem con el color Brown. Informa al usuario.*/
+		Idem con el color Brown. Informa al usuario.
 		
 		HashMap<Integer, String> colorsA = new HashMap<Integer, String>();
 		
@@ -400,6 +401,103 @@ public class Main {
 			}
 		}
 		
+		
+		EJERCICIO 1
+		Realiza un programa que escoja al azar 10 cartas de la baraja española (10 objetos de la clase
+		Carta). Emplea un objeto de la clase ArrayList para almacenarlas y asegúrate de que no se
+		repite ninguna. La clase Carta será:
+		private static String[] n = {"as", "dos", "tres", "cuatro", "cinco",
+		"seis", "siete", "sota", "caballo", "rey"};
+		private static String[] p = {"bastos", "copas", "espadas", "oros"};
+		private String numero;
+		private String palo;
+		public Carta() {
+		this.numero = n[(int)(Math.random()*10)];
+		this.palo = p[(int)(Math.random()*4)];
+		}
+		Incluye los métodos de los atributos número y palo. También sobrescribe el método toString y
+		el método equals.
+		
+		EJERCICIO 2
+		Modifica el programa anterior de tal forma que las cartas se muestren ordenadas. Primero se
+		ordenarán por palo: bastos, copas, espadas, oros. Cuando coincida el palo, se ordenará por
+		número: as, 2, 3, 4, 5, 6, 7, sota, caballo, rey.
+		
+
+		ArrayList<Carta> mano = new ArrayList<Carta>();
+		Carta c;
+		
+		for (int i = 0; i < 10; i ++) {
+			do {
+				c = new Carta();
+			}while (mano.contains(c));
+			mano.add(c);
+		}
+		
+		for (Carta aux:mano) {
+			System.out.println(aux);
+		}
+		
+		Collections.sort(mano);
+		System.out.println("\n" + "Tras ordenarlas por palo y numero");
+		for (Carta aux:mano) {
+			System.out.println(aux);
+		}
+		
+		
+		EJERCICIO 3
+		Escribe un programa que genere una secuencia de 5 cartas de la baraja española y que sume
+		los puntos según el juego de la brisca. El valor de las cartas se debe guardar en una estructura
+		HashMap que debe contener parejas (figura, valor), por ejemplo ("caballo", 3).
+		La secuencia de cartas debe ser una estructura de la clase ArrayList que con ene objetos de la
+		clase Carta. El valor de las cartas es el siguiente: as → 11, tres →10, sota → 2, caballo → 3, rey
+		→ 4; el resto de cartas no vale nada.
+		Ejemplo:
+		as de oros
+		cinco de bastos
+		caballo de espadas
+		sota de copas
+		tres de oros
+		Tienes 26 puntos*/
+		
+		HashMap<String, Integer> valores = new HashMap<String, Integer>();
+		valores.put("as", 11);
+		valores.put("tres", 10);
+		valores.put("sota", 2);
+		valores.put("caballo", 3);
+		valores.put("rey", 4);
+		
+		ArrayList<Carta> mano = new ArrayList<Carta>();
+		Carta c;
+		int total = 0;
+		for (int i = 0;i < 5;i++) {
+			mano.add(c = new Carta());
+			switch (c.getNumero()) {
+			case 0:
+				total += valores.get("as");
+				break;
+			case 3:
+				total += valores.get("tres");
+				break;
+			case 7:
+				total += valores.get("sota");
+				break;
+			case 8: 
+				total += valores.get("caballo");
+				break;
+			case 9:
+				total += valores.get("rey");
+			}
+		}
+		
+		for (Carta d:mano) {
+			System.out.println(d);
+		}
+		
+		System.out.println("Tienes " + total + " puntos");
+		
+		
+
 	}
 
 }
