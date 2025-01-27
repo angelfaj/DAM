@@ -458,7 +458,7 @@ public class Main {
 		caballo de espadas
 		sota de copas
 		tres de oros
-		Tienes 26 puntos*/
+		Tienes 26 puntos
 		
 		HashMap<String, Integer> valores = new HashMap<String, Integer>();
 		valores.put("as", 11);
@@ -490,14 +490,185 @@ public class Main {
 			}
 		}
 		
+		
 		for (Carta d:mano) {
 			System.out.println(d);
 		}
 		
 		System.out.println("Tienes " + total + " puntos");
 		
+		EJERCICIO 4
+		Escribe un programa de una enda ecológica donde se venden los siguientes productos al
+		precio que indica la tabla:
+		
+		PRODUCTO									PRECIO
+		AVENA										2.21
+		GARBANZOS									2.39
+		TOMATE										1.59
+		JENGIBRE									3.13
+		QUINOA										4.5
+		GUISANTES									1.6
+		
+		Guarda esta información en un HashMap. Después pide al usuario introducir el nombre del
+		producto y la can dad del mismo por teclado hasta que escriba la palabra fin. Ves guardando
+		en unos ArrayList los productos y can dades que se van introduciendo.
+		Por úl mo, muestra la factura a pagar indicando: el producto, el precio, la can dad y el
+		subtotal de cada producto que ha pedido y al final muestra el total a pagar.
 		
 
+		HashMap<String, Double> productos = new HashMap<String, Double>();
+		productos.put("avena", 2.21);
+		productos.put("garbanzos", 2.39);
+		productos.put("tomate", 1.59);
+		productos.put("jengibre", 3.13);
+		productos.put("quinoa", 4.5);
+		productos.put("guisantes", 1.6);
+		
+		ArrayList<String> productNom= new ArrayList<String>();
+		ArrayList<Integer> productCant= new ArrayList<Integer>();
+		
+		boolean continuar = true;
+		String nombre = "";
+		int cantidad = 0;
+		double subtotal = 0, total = 0;
+		
+		do {
+			System.out.println("Producto: ");
+			nombre = entrada.next();
+			
+			if (nombre.equalsIgnoreCase("fin")) {
+				continuar = false;
+				break;
+			} else productNom.add(nombre);
+			
+			System.out.println("Cantidad: ");
+			cantidad = entrada.nextInt();
+			productCant.add(cantidad);
+			entrada.nextLine();
+		}while (continuar);
+		
+		System.out.println("Producto" + "\t" + "Precio" + "\t" + "Cantidad" + "\t" + "Subtotal" + "\n" + "---------------------------------------------------------");
+		for (int i = 0; i < productNom.size(); i++) {
+			subtotal = productCant.get(i) * productos.get(productNom.get(i));
+			System.out.println(productNom.get(i) + "\t" + "\t" + productos.get(productNom.get(i)) + "\t" + productCant.get(i) + "\t" + "\t" + subtotal);
+			total += subtotal;
+		}
+		System.out.print("\n" + "---------------------------------------------------------" + "\n" + "TOTAL: " + total);
+
+
+		EJERCICIO 5
+		Actualiza el programa anterior, verificando si ya existe el producto que solicita el cliente
+		comprar antes de incluirlo en la lista. En caso de exis r, incrementa la can dad del producto
+		que tenía pedido en las unidades pedidas ahora.
+		Además, antes de mostrar el total a pagar, solicita al usuario si ene un cupón descuento
+		“ECODTO”, en caso de tenerlo, aplícale el 10% de descuento al total de su compra.
+		
+//		rehacer con indexof y sin el segundo mapa!!!!
+
+		HashMap<String, Double> productos = new HashMap<String, Double>();
+		productos.put("avena", 2.21);
+		productos.put("garbanzos", 2.39);
+		productos.put("tomate", 1.59);
+		productos.put("jengibre", 3.13);
+		productos.put("quinoa", 4.5);
+		productos.put("guisantes", 1.6);
+		
+		HashMap<String, Integer> cesta = new HashMap<String, Integer>();
+		
+		boolean continuar = true;
+		String desc = "", nombre = "";
+		int cantidad = 0;
+		double subtotal = 0, total = 0, descuento = 0;
+		final String DESCUENTO = "ECODTO"; 
+		
+		do {
+			System.out.println("Producto: ");
+			nombre = entrada.next();
+			
+			if (nombre.equalsIgnoreCase("fin")) {
+				entrada.nextLine();
+				System.out.println("Introduzca un codigo de descuento (INTRO si no tiene ninguno): ");
+				desc = entrada.nextLine();
+				continuar = false;
+				break;
+			} else if (cesta.containsKey(nombre)) {
+				System.out.println("Cantidad: ");
+				cantidad = entrada.nextInt();
+				cantidad += cesta.get(nombre);
+				cesta.replace(nombre, cesta.get(nombre), cantidad);
+			} else {
+				System.out.println("Cantidad: ");
+				cantidad = entrada.nextInt();
+				cesta.put(nombre, cantidad);
+			}			
+			entrada.nextLine();
+		}while (continuar);
+		
+		System.out.println("Producto" + "\t" + "Precio" + "\t" + "Cantidad" + "\t" + "Subtotal" + "\n" + "---------------------------------------------------------");
+		for (String s:cesta.keySet()) {
+			subtotal = cesta.get(s) * productos.get(s);
+			System.out.println(s + "\t" + "\t" + productos.get(s) + "\t" + cesta.get(s) + "\t" + "\t" + subtotal);
+			total += subtotal;
+		}
+		if (desc.equalsIgnoreCase(DESCUENTO)) {
+			descuento = total * 0.1;
+			total -= descuento;
+		}
+		System.out.print("\n" + "---------------------------------------------------------" + "\n" + "Descuento: " + descuento + "\n" + "---------------------------------------------------------" + "\n" + "TOTAL: " + total);		
+		
+		
+		//Creando la clase producto seria mas sencillo :)
+		
+		
+		Ejercicio 1
+		Tenemos un taller de reparación de coches y queremos realizar un programa con el que gestionar los coches que entran, salen y están en el taller.
+		Los datos de cada coche que queremos registrar son: propietario, matricula, marca y si está reparado.
+		Las opciones que queremos dar son:
+		1.- Entrada nueva reparación: Se registran todos los datos del coche que se recepciona. Se recepciona como reparado = false
+		2.- Salida de coche reparado: Se busca el coche en el taller por el nombre de propietario. Localizado el coche, se cambia a reparado = true y se entrega al propietario, saliendo del taller. En caso de haber más de un coche de ese propietario, se realiza con el primero que encuentre.
+		3.- Listado de vehículos: Se listan todos los vehículos en el taller, mostrando todos los parámetros
+		4.- Ordena los coches por marca y en caso de tener varios iguales, por matrícula en los iguales.
+		5.- Ordena los coches por matrícula.
+		6.- Salir: salir del programa		
+		 */
+		
+		boolean continuar = true;
+		int opcion;
+		
+		
+		do {
+			String propietario = "";
+			Taller.showMenu();
+			System.out.println("Opcion: ");
+			opcion = entrada.nextInt();
+			
+			switch (opcion) {
+			case 1:
+				break;
+			case 2:
+				System.out.println("Qué coche quieres sacar: ");
+				propietario = entrada.nextLine();
+				
+				break;
+			case 3:
+				System.out.println(Taller.show());
+				break;
+			case 4:
+				Taller.sortMarcaTaller();
+				break;
+			case 5:
+				
+				break;
+			case 6:
+				System.out.println("Fin del programa, adios!");
+				continuar = false;
+				break;
+				
+			}
+			
+		}while (continuar);
+		
+		
 	}
 
 }
