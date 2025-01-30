@@ -37,10 +37,18 @@ public class Taller {
 		return mensaje;
 	}
 	
-	public static int findCoche(String propietario) {
-		
-		return 1;
+	public static Coche findCoche(String propietario) {
+		Coche c = null;
+		boolean encontrado = false;
+		int i = -1;
+		while (!encontrado && i < taller.size()) {
+			i++;
+			if (taller.get(i).getPropietario().equalsIgnoreCase(propietario)) {
+				encontrado = true;
+				c = taller.get(i);
+			}
+		}
+		return c;
 	}
-	
-	
+
 }

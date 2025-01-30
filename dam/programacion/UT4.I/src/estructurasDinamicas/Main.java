@@ -634,21 +634,33 @@ public class Main {
 		
 		boolean continuar = true;
 		int opcion;
-		
+		Coche c;
 		
 		do {
-			String propietario = "";
+			String matricula = "", marca = "", propietario = "";
 			Taller.showMenu();
 			System.out.println("Opcion: ");
 			opcion = entrada.nextInt();
+			entrada.nextLine();
 			
 			switch (opcion) {
 			case 1:
+				System.out.println("Propietario:");
+				propietario = entrada.nextLine();
+				System.out.println("Matricula:");
+				matricula = entrada.nextLine();
+				System.out.println("Marca:");
+				marca = entrada.nextLine();
+				System.out.println("Los datos del coche son: propietario-" + propietario + " matricula-" + matricula + " marca-" + marca);
+				
+				c = new Coche(propietario, matricula, marca);
+				Taller.carIn(c);
 				break;
 			case 2:
-				System.out.println("Qué coche quieres sacar: ");
+				System.out.println("Nombre del propietario del vehículo a sacar?: ");
 				propietario = entrada.nextLine();
-				
+				Taller.carOut(Taller.findCoche(propietario));
+				System.out.println("El coche ha salido del taller su estado reparado es: " );
 				break;
 			case 3:
 				System.out.println(Taller.show());
