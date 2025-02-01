@@ -18,6 +18,7 @@ public class Main {
 		while (continuar) {
 			System.out.print("\n" + "*****************MENU*****************" + "\n" + "1. Generar equipo" + "\n" + "2. Añadir equipo al aula" + "\n" + "3. Buscar un equipo en el aula" + "\n" + "4. Eliminar equipo del aula" + "\n" + "5. Modificar equipo en el aula" + "\n" + "6. Mostrar aula" + "\n" + "7. Terminar programa" + "\n" + "Opcion: ");
 			op = entrada.nextInt();
+			entrada.nextLine();
 			int ip[] = new int [4];
 			String pcName = "";
 			
@@ -29,7 +30,6 @@ public class Main {
 				
 				while (bucle) {
 					ipCompleta = "";
-					entrada.nextLine();
 					System.out.println("Introduce el nombre del equipo: ");
 					pcName = entrada.nextLine();
 					System.out.println("Introduce su ip x partes de izq a dch(ej. 192 + enter, 168 + enter, 56 + enter, 1 + enter: ");
@@ -40,6 +40,7 @@ public class Main {
 					}
 					System.out.println("El nombre del equipo es: " + pcName + " y su ip es: " + ipCompleta + "\n" + "Es correcto?(1-si, 0-no): ");
 					int correcto = entrada.nextInt();
+					entrada.nextLine();
 					if (correcto == 1) {
 						bucle = false;
 					}
@@ -53,16 +54,22 @@ public class Main {
 				System.out.println("Equipo " + e.getNombre() + " añadido");
 				break;
 			case 3:								//Buscar equipo en el aula
-				
+				System.out.println("Nombre del equipo:");
+				pcName = entrada.nextLine();
+				int pos[] = a1.selectPc(pcName);
+				System.out.println("El equipo se encuentra en la posicion: " + pos[0] + ":" + pos[1]); 
 				break;
 			case 4:								//Eliminar equipo del aula
-				
+				System.out.println("Nombre del equipo:");
+				pcName = entrada.nextLine();
+				a1.removePc(pcName);
+				System.out.println("Equipo " + pcName + " eliminado");
 				break;
 			case 5:								//Modificar equipo del aula
 				
 				break;
 			case 6:								//Mostrar aula
-				
+				a1.showAula();
 				break;
 			case 7:								//Fin del programa
 				System.out.println("Adio!");

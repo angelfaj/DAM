@@ -23,23 +23,23 @@ public class Aula {
 		aula[lastI][lastJ] = e;
 	}
 	
-	public void removePc(Equipo e) {				//transformamos a nulo la posicion del equipo dado
+	public void removePc(String e) {				//transformamos a nulo la posicion del equipo dado
 		int posicion[] = selectPc(e);
 		aula[posicion[0]][posicion[1]] = null;
 	}
 	
 	public void modifyPc(Equipo e, Equipo f) {		//Sobreescribimos el equipo antiguoo con el nuevo
-		int posicion[] = selectPc(e);
+		int posicion[] = selectPc(e.getNombre());
 		aula[posicion[0]][posicion[1]] = f;
 	}
 	
-	public int[] selectPc(Equipo e) {				//Buscamos y devolvemos la posicion del objeto pasado x parametro
+	public int[] selectPc(String e) {				//Buscamos y devolvemos la posicion del objeto pasado x parametro
 		boolean continuar = true;
 		int i = 0, j = 0;
 		int posicion [] = new int [2];
 		while (i < aula.length & continuar) {
 			while (j < aula[i].length & continuar) {
-				if (aula[i][j] != null & aula[i][j] == e) {
+				if (aula[i][j] != null && aula[i][j].getNombre().equalsIgnoreCase(e)) {
 					posicion[0] = i;
 					posicion[1] = j;
 					continuar = false;

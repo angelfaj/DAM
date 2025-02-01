@@ -30,7 +30,11 @@ public class Equipo {
 		this.nombre = nombre;
 	}
 
-	public int[] getIp() {
+	public String getIp() {
+		String ip = "";
+		for (int i:this.ip) {
+			ip += i + ".";
+		}
 		return ip;
 	}
 
