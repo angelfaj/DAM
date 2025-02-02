@@ -630,7 +630,6 @@ public class Main {
 		4.- Ordena los coches por marca y en caso de tener varios iguales, por matrícula en los iguales.
 		5.- Ordena los coches por matrícula.
 		6.- Salir: salir del programa		
-		 */
 		
 		boolean continuar = true;
 		int opcion;
@@ -679,6 +678,80 @@ public class Main {
 			}
 			
 		}while (continuar);
+		 */
+		
+		/*Repaso
+		Ejercicio 3
+		Escribe un programa que contenga un método que acepte como
+		parámetro una lista (ArrayList) de números enteros mayores
+		que 0, pudiendo contener elementos duplicados. Implementa un método
+		que sustituya cada valor repetido por 0. Para terminar, realiza un método
+		que muestre el array modificado.
+		Nota: Necesitarás otro método para rellenar la lista de enteros. Le irá
+		pidiendo números al usuario hasta que este introduzca un número
+		negativo.
+		
+		ArrayList<Integer> enteros = new ArrayList<Integer>();
+		
+		int tamanio = (int) (Math.random()*10);
+		int entero = (int) (Math.random()*10);
+		
+		for (int i = 0; i < tamanio; i ++) {
+			enteros.add(entero);
+			entero = (int) (Math.random()*10);
+		}
+		
+		for (int i:enteros) {
+			System.out.print(i + "\t");
+		}
+			
+		int aux;
+		int contador;
+		
+		for (int i:enteros) {
+			aux = i;
+			contador = 0;
+			for (int j = 0; j < enteros.size(); j++) {
+				int numero = enteros.get(j);
+				if (aux == numero) {
+					contador++;
+					if (contador > 1) {
+						enteros.set(j, 0);
+					}
+				}
+			}
+		}
+		
+		System.out.println();
+		for (int i:enteros) {
+			System.out.print(i + "\t");
+		}
+		
+		
+		EJERCICIO 1
+		Realiza un programa que escoja al azar 10 cartas de la baraja española (10 objetos de la clase
+		Carta). Emplea un objeto de la clase ArrayList para almacenarlas y asegúrate de que no se
+		repite ninguna. La clase Carta será:
+		private static String[] n = {"as", "dos", "tres", "cuatro", "cinco",
+		"seis", "siete", "sota", "caballo", "rey"};
+		private static String[] p = {"bastos", "copas", "espadas", "oros"};
+		private String numero;
+		private String palo;
+		public Carta() {
+		this.numero = n[(int)(Math.random()*10)];
+		this.palo = p[(int)(Math.random()*4)];
+		}
+		Incluye los métodos de los atributos número y palo. También sobrescribe el método toString y
+		el método equals.
+		
+		EJERCICIO 2
+		Modifica el programa anterior de tal forma que las cartas se muestren ordenadas. Primero se
+		ordenarán por palo: bastos, copas, espadas, oros. Cuando coincida el palo, se ordenará por
+		número: as, 2, 3, 4, 5, 6, 7, sota, caballo, rey.
+		*/
+		
+		
+		
 		
 		
 	}
