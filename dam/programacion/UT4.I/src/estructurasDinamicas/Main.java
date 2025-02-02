@@ -748,8 +748,95 @@ public class Main {
 		Modifica el programa anterior de tal forma que las cartas se muestren ordenadas. Primero se
 		ordenarán por palo: bastos, copas, espadas, oros. Cuando coincida el palo, se ordenará por
 		número: as, 2, 3, 4, 5, 6, 7, sota, caballo, rey.
-		*/
 		
+		ArrayList<RepasoCarta> mano = new ArrayList<RepasoCarta>();
+		int tamanioMano = 10;
+		RepasoCarta c;
+		
+		for (int i = 0; i < tamanioMano; i++) {
+			do {
+				c = new RepasoCarta();
+			}while (mano.contains(c));
+			mano.add(c);
+		}
+		
+		for (RepasoCarta e:mano) {
+			System.out.println(e);
+		}
+		System.out.println();
+		
+		Collections.sort(mano);
+		System.out.println("==========Mano ordenanda==========");
+		for (RepasoCarta e:mano) {
+			System.out.println(e);
+		}
+		
+		
+		EJERCICIO 9
+		Crea un mini-diccionario español-inglés que contenga, al menos, 20 palabras (con su
+		traducción). <p> Utiliza un objeto de la clase <code>HashMap</code> para almacenar las
+		parejas de palabras. El programa pedirá una palabra en español y dará la correspondiente
+		traducción en inglés.
+		EJERCICIO 10
+		Realiza un programa que escoja al azar 5 palabras en español del minidiccionario del ejercicio
+		anterior. El programa irá pidiendo que el usuario teclee la traducción al inglés de cada una de
+		las palabras y comprobará si son correctas. Al final, el programa deberá mostrar cuántas
+		respuestas son válidas y cuántas erróneas. */
+		
+		HashMap<String, String> diccionario = new HashMap<String, String>();
+		
+		diccionario.put("Hola", "Hi");
+		diccionario.put("Mano", "Hand");
+		diccionario.put("Pie", "Foot");
+		diccionario.put("Puño", "Fist");
+		diccionario.put("Azul", "Blue");
+		diccionario.put("Rojo", "Red");
+		diccionario.put("Amarillo", "Yellow");
+		diccionario.put("Adios", "Bye");
+		
+		boolean continuar = true;
+		int opcion;
+		
+		do {
+			System.out.println("==========MENU==========" + "\n" + "1. El programa traduce" + "\n" + "2. Yo traduzco" + "\n" + "3. Fin");
+			opcion = entrada.nextInt();
+			entrada.nextLine();
+			
+			switch(opcion) {
+			case 1:
+				Iterator<String> it;
+				boolean traducir;
+				
+				do  {
+					it = diccionario.keySet().iterator();
+					traducir = true;
+					System.out.println("Diccionario:");
+					while (it.hasNext()) {
+						System.out.print(it.next() + "\t");				
+					}
+					System.out.print("\n" + "Traductor: ");
+					String respuesta = entrada.nextLine();
+					if (respuesta.equalsIgnoreCase("fin")) {
+						traducir = false;
+					} else {
+						System.out.println("La traduccion es: " + diccionario.get(respuesta));
+					}				
+				}while (traducir);
+				break;
+			case 2:
+				int correctas = 0;
+				int erroneas = 0;
+				
+				int palabras[] = new int[5];
+				//POR AQUI
+				
+				break;
+			case 3:
+				System.out.println("Fin del programa, Adios!");
+				continuar = false;
+				break;
+			}
+		}while (continuar);
 		
 		
 		
