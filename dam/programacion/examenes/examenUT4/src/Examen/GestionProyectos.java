@@ -12,7 +12,7 @@ public class GestionProyectos {
 	//Atributos
 	private static ArrayList<Proyecto> listaProyectos = new ArrayList<Proyecto>();
 	private static HashMap<Integer, Double> mapaProyectos = new HashMap<Integer, Double>();
-	private static double arrayProyectos[] = new double[10];
+	private static double arrayProyectos[] = new double[100];
 	
  	//Metodos
 	public static void altaProyecto() {
