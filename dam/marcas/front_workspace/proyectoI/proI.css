@@ -1,5 +1,14 @@
-input {
+#incrementButon {
+    background-color: green;
+    color: white;
+}
+
+#decrementButon {
+    background-color: red;
+    color: white;
+}
+
+#initButon {
     background-color: blue;
     color: white;
-    border-radius: 20%;
 }
