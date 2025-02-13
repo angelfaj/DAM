@@ -71,7 +71,7 @@ public class Main {
 		● Se creen tres discos y se añadan a la lista.
 		● Se muestre la lista por pantalla.● Se cree un objeto de tipo Disco, introduciendo el título y el autor de
 		uno de los elementos de la lista. Para el resto de los argumentos se
-		utilizan valores no significativos.*/
+		utilizan valores no significativos.
 		
 		ListaMultimedia listaB = new ListaMultimedia(20);
 		Disco a = new Disco ("Alicia en el pais de las maravillas", "Eminem", Formato.MP3, 12.5, Genero.FUNKY);
@@ -87,6 +87,99 @@ public class Main {
 		Disco d = new Disco (listaB.get(0).getTitulo(), listaB.get(0).getAutor(), Formato.MP3, 12.5, Genero.CLASICA);
 		listaB.add(d);
 		
+		
+		
+		Ejercicio 6
+		Se pretende realizar una aplicación para esta facultad que gestione la
+		información sobre las personas vinculadas con la misma, que se pueden
+		clasificar en tres tipos: estudiantes, profesores y personal de servicio. A
+		continuación, se detalla qué tipo de información debe gestionar esta
+		aplicación:
+		● Por cada persona, se debe conocer, al menos, su nombre y apellidos,
+		su número de identificación y su estado civil.
+		● Con respecto a los empleados, sean del tipo que sean, hay que
+		saber su año de incorporación a la facultad y qué número de
+		despacho tienen asignado.
+		● En cuanto a los estudiantes, se requiere almacenar el curso en el
+		que están matriculados.
+		● Por lo que se refiere a los profesores, es necesario gestionar a qué
+		departamento pertenecen (lenguajes, matemáticas, arquitectura,
+		...).
+		● Sobre el personal de servicio, hay que conocer a qué sección están
+		asignados (biblioteca, decanato, secretaría, ...).
+		El ejercicio consiste, en primer lugar, en definir la jerarquía de clases de
+		esta aplicación. A continuación, debe programar las clases definidas en las
+		que, además de los constructores, hay que desarrollar los métodos
+		correspondientes a las siguientes acciones:
+		●
+		●
+		●
+		●
+		●
+		●
+		Cambio del estado civil de una persona.
+		Reasignación de despacho a un empleado.
+		Matriculación de un estudiante en un nuevo curso.
+		Cambio de departamento de un profesor.
+		Traslado de sección de un empleado del personal de servicio.
+		Imprimir toda la información de cada tipo de individuo.
+		Incluya un programa de prueba que instancie objetos de los distintos tipos
+		y pruebe los métodos desarrollados.
+		
+		
+		Persona persona1 = new Persona("Pepe", "Perez", "Villanueva", "123456789B", Estado.SOLTERO);
+		Empleado empleado1= new Empleado("Manolo", "Perez", "Villanueva", "123456789B", Estado.SOLTERO, 1, 1);
+		Estudiante estudiante1 = new Estudiante("Lucas", "Perez", "Villanueva", "123456789B", Estado.SOLTERO, "Primero");
+		Profesor profesor1 = new Profesor("Laura", "Perez", "Villanueva", "123456789B", Estado.SOLTERO, 1, 1, Departamento.ARQUITECTURA);
+		Personal empleado2= new Personal("Marta", "Perez", "Villanueva", "123456789B", Estado.SOLTERO, 1, 1, Seccion.BIBLIOTECA);
+		
+		persona1.setEstado(Estado.CASADO);
+		
+		empleado1.setNumeroDespacho(4);
+		estudiante1.setCurso("Segundo");
+		profesor1.setDepartamento(Departamento.FISICA);
+		empleado2.setSeccion(Seccion.AULAS);
+		
+		System.out.println(persona1);
+		System.out.println(empleado1);
+		System.out.println(estudiante1);
+		System.out.println(profesor1);
+		System.out.println(empleado2);
+
+		 
+		
+		 Amplíe el ejercicio anterior creando una clase Universidad cuyo atributo
+		será un array de 8 posiciones donde se almacenarán objetos de tipo
+		Persona. Almacena en las posiciones 0, 1 y 6 objetos Profesor, en lasposiciones 2, 3 y 7 objetos Estudiante y en el resto de posiciones objetos
+		PersonalServicios.
+		A continuación, implementa los siguientes métodos en la clase
+		Universidad:
+		● cambiarCurso (dni, nuevoCurso): cambiará el curso a un Estudiante.
+		Si el dni no existe o no pertenece a un estudiante, se devuelve false
+		(true en caso contrario).
+		departamento):
+		cambiará
+		el
+		● cambiarDepartamento(dni,
+		departamento a un Profesor. Si el dni no existe o no pertenece a un
+		profesor, se devuelve false (true en caso contrario).
+		● cambiarSeccion(dni, seccion): cambiará la seccion a un Personal de
+		Servicios. Si el dni no existe o no pertenece a un personal de
+		servicios, se devuelve false (true en caso contrario).
+		● listarEmpleados(): mostrará los empleados que trabajan en la
+		Universidad.
+		mostrará
+		los
+		● listarProfesoresDepartamento(departamento):
+		profesores que pertenezcan al departamento pasado como
+		parámetro.
+		Implementa una clase de prueba para probar la clase Universidad y sus
+		métodos.
+		 */
+		
+		
+		Persona p = new Persona("Pepe", "Perez", "Villanueva", "123456789B", Estado.SOLTERO);
+		 System.out.println(p.getClass());
 		
 		
 		
