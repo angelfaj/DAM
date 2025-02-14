@@ -178,11 +178,36 @@ public class Main {
 		 */
 		
 		
-		Persona p = new Persona("Pepe", "Perez", "Villanueva", "123456789B", Estado.SOLTERO);
-		 System.out.println(p.getClass());
+		Estudiante estudiante1 = new Estudiante("Carla", "Perez", "Villanueva", "123456789B", Estado.SOLTERO, "Primero");
+		Estudiante estudiante2 = new Estudiante("Lucas", "Perez", "Villanueva", "456789B", Estado.SOLTERO, "Primero");
+		Estudiante estudiante3 = new Estudiante("Paco", "Perez", "Villanueva", "23456789B", Estado.SOLTERO, "Primero");
+		Profesor profesor1 = new Profesor("Laura", "Perez", "Villanueva", "1234589B", Estado.SOLTERO, 1, 1, Departamento.ARQUITECTURA);
+		Profesor profesor2 = new Profesor("Maria", "Perez", "Villanueva", "1234567B", Estado.SOLTERO, 1, 1, Departamento.ARQUITECTURA);
+		Profesor profesor3 = new Profesor("Ramon", "Perez", "Villanueva", "12345679B", Estado.SOLTERO, 1, 1, Departamento.ARQUITECTURA);
+		Personal empleado1 = new Personal("Ines", "Perez", "Villanueva", "123489B", Estado.SOLTERO, 1, 1, Seccion.BIBLIOTECA);
+		Personal empleado2 = new Personal("Pepe", "Perez", "Villanueva", "12345B", Estado.SOLTERO, 1, 1, Seccion.BIBLIOTECA);
 		
 		
+		Universidad.fillUniversidad(estudiante1);
+		Universidad.fillUniversidad(estudiante2);
+		Universidad.fillUniversidad(estudiante3);
+		Universidad.fillUniversidad(profesor1);
+		Universidad.fillUniversidad(profesor2);
+		Universidad.fillUniversidad(profesor3);
+		Universidad.fillUniversidad(empleado1);
+		Universidad.fillUniversidad(empleado2);
 		
+		Universidad.cambiarCurso("123456789B", "segundo");
+		Universidad.cambiarDepartamento("1234567B", Departamento.BIOLOGIA);
+		Universidad.cambiarSeccion("12345B", Seccion.JARDIN);
+		Universidad.listarEmpleado();
+		System.out.println();
+		System.out.println("***********************UNI COMPLETA***********************");
+		Universidad.showUni();
+		System.out.println();
+		System.out.println();
+		
+		Universidad.listarProfesoresDepartamento(Departamento.BIOLOGIA);
  	}
 
 }

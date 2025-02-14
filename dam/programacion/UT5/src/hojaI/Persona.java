@@ -28,6 +28,11 @@ public class Persona {
 		this.estado = estado;
 	}
 
+	public String getDni() {
+		return dni;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "[nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", dni=" + dni
