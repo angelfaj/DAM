@@ -4,13 +4,13 @@ public class Satelite extends Astro{
 	//Atributos
 	private double distanciaAlPlaneta;
 	private double orbitaPlanetaria;
-	private String planetaPertenece;
+	private Planeta planetaPertenece;
 	
 	//COnstructores
 	public Satelite() {}
 	
-	public Satelite(Double radioEcuatorial, double rotacionEje, double masa, double temperaturaMedia, double gravedad, double distanciaAlPlaneta, double OrbitaPlanetaria, String planetaPertenece) {
-		super(radioEcuatorial, rotacionEje, masa, temperaturaMedia, gravedad);
+	public Satelite(Double radioEcuatorial, double rotacionEje, double masa, double temperaturaMedia, double gravedad, double distanciaAlPlaneta, double orbitaPlanetaria, Planeta planetaPertenece, double distanciaAlSol, double orbitalAlsol, boolean tieneSatelites, double diametroMedio, double traslacion, double distanciaMediaAlCuerpo) {
+		super(radioEcuatorial, rotacionEje, masa, temperaturaMedia, gravedad, diametroMedio, traslacion, distanciaMediaAlCuerpo);
 		this.distanciaAlPlaneta = distanciaAlPlaneta;
 		this.orbitaPlanetaria = orbitaPlanetaria;
 		this.planetaPertenece = planetaPertenece;
@@ -33,11 +33,11 @@ public class Satelite extends Astro{
 		this.orbitaPlanetaria = orbitaPlanetaria;
 	}
 
-	public String getPlanetaPertenece() {
+	public Planeta getPlanetaPertenece() {
 		return planetaPertenece;
 	}
 
-	public void setPlanetaPertenece(String planetaPertenece) {
+	public void setPlanetaPertenece(Planeta planetaPertenece) {
 		this.planetaPertenece = planetaPertenece;
 	}
 	

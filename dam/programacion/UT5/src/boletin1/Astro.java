@@ -7,18 +7,46 @@ public abstract class Astro {
 	private double masa;
 	private double temperaturaMedia;
 	private double gravedad;
+	private double diametroMedio, traslacion, distanciaMediaAlCuerpo;
 	
 	//Constructores
 	public Astro() {}
 	
-	public Astro(Double radioEcuatorial, double rotacionEje, double masa, double temperaturaMedia, double gravedad) {
+	public Astro(Double radioEcuatorial, double rotacionEje, double masa, double temperaturaMedia, double gravedad, double diametroMedio, double traslacion, double distanciaMediaAlCuerpo) {
 		this.radioEcuatorial = radioEcuatorial;
 		this.rotacionEje = rotacionEje;
 		this.masa = masa;
 		this.temperaturaMedia = temperaturaMedia;
 		this.gravedad = gravedad;
+		this.diametroMedio = diametroMedio;
+		this.traslacion = traslacion;
+		this.distanciaMediaAlCuerpo = distanciaMediaAlCuerpo;
 	}
 	
+	public double getDiametroMedio() {
+		return diametroMedio;
+	}
+
+	public void setDiametroMedio(double diametroMedio) {
+		this.diametroMedio = diametroMedio;
+	}
+
+	public double getTraslacion() {
+		return traslacion;
+	}
+
+	public void setTraslacion(double traslacion) {
+		this.traslacion = traslacion;
+	}
+
+	public double getDistanciaMediaAlCuerpo() {
+		return distanciaMediaAlCuerpo;
+	}
+
+	public void setDistanciaMediaAlCuerpo(double distanciaMediaAlCuerpo) {
+		this.distanciaMediaAlCuerpo = distanciaMediaAlCuerpo;
+	}
+
 	//Metodos
 	public double getRadioEcuatorial() {
 		return radioEcuatorial;
