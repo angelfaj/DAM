@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ajenjo Fernández Ángel">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="styles.css">
+<script type="text/javascript" src="code.js"></script>
+</head>
+<body>
+    <table class="calculadora">
+            <tr>
+                <td colspan="4"><div class="textDisplay" id="resultado">TOTAL: </div></td>
+            </tr>
+            <!--Display de operaciones-->
+            <tr>
+                <td colspan="2"><input class="textInput" id="textInput1" type="text" placeholder="Número 1"></td>
+                <td colspan="2"><input class="textInput" id="textInput2" type="text" placeholder="Número 2"></td>
+            </tr>
+            <!--1º fila-->
+            <tr>
+                <td colspan="2"><button class="buttons" data-text="MULTIPLICAR" data-symbol="x" onclick="calcular('multiplicar')"></button></td>
+                <td><button class="buttons" data-text="EXPONENTE" data-symbol="^" onclick="calcular('potencia')"><button</td>
+                <td><button class="buttons" data-text="DIVIDIR" data-symbol="/" onclick="calcular('dividir')"><button</td>
+            </tr>
+            <!--2ª fila-->
+            <tr>
+                <td colspan="2"><button class="buttons" data-text="SUMAR" data-symbol="+" onclick="calcular('sumar')"></button></td>
+                <td colspan="2"><button class="buttons" data-text="RESTAR" data-symbol="-" onclick="calcular('restar')"></button></td>
+    </table>
+</body>
+</html>

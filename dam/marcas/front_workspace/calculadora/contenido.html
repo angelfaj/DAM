@@ -9,9 +9,9 @@
 <script type="text/javascript" src="funcionalidad.js"></script>
 <body>
     <div class="calculator">
-        <h2>CALCULADORA BÁSICA</h2>
-        <input type="number" id="num1" placeholder="Número 1">
-        <input type="number" id="num2" placeholder="Número 2">
+        <div class="result" id="result">Resultado: </div>
+        <input type="text" id="num1" placeholder="Número 1">
+        <input type="text" id="num2" placeholder="Número 2">
         <div class="buttons">
             <button class="sumar" data-text="SUMAR" onclick="calculate('sumar')"></button>
             <button class="restar" data-text="RESTAR" onclick="calculate('restar')"></button>
@@ -19,10 +19,7 @@
             <button class="dividir" data-text="DIVIDIR" onclick="calculate('dividir')"></button>
             <button class="potencia" data-text="EXPONENTE" onclick="calculate('potencia')"></button>
         </div>
-        <div class="result" id="result">Resultado: </div>
     </div>
 
 </body>
 </html>
-meter el resultado en un div encima de la calculadora 
-cambiar los imput a tipo text
