@@ -43,7 +43,7 @@ public class Main {
 		○ Eliminar animales del inventario.
 		○ Vaciar el inventario.
 		Implementa las demás clases necesarias para la clase Inventario.
-		 */
+
 		
 		Perro perro = new Perro("Ramon", "10/1/1999", 26, Estado.VIVO, "Doberman", false);
 		Gato gato = new Gato("Ares", "10/1/1999", 26, Estado.VIVO, "Negro", true);
@@ -167,6 +167,105 @@ public class Main {
 			
 		}while(continuar);
 		entrada.close();
+		
+		
+		
+		Ejercicio 4 – EMPRESA Y EMPLEADOS
+		Vamos a implementar dos clases que permitan gestionar datos de empresas y sus
+		empleados.
+		Los empleados tienen las siguientes características:
+		● Un empleado tiene nombre, DNI, sueldo bruto (mensual), edad, teléfono y
+		dirección.
+		● El nombre y DNI de un empleado no pueden variar.
+		● Es obligatorio que todos los empleados tengan al menos definido su nombre,
+		DNI y el sueldo bruto. Los demás datos no son obligatorios.
+		● Será necesario un método para imprimir por pantalla la información de un
+		empleado.
+		● Será necesario un método para calcular el sueldo neto de un empleado. El
+		sueldo neto se calcula descontando del sueldo bruto un porcentaje que
+		depende del IRPF. El porcentaje del IRPF depende del sueldo bruto anual del
+		empleado (sueldo bruto x 12 pagas).(*)
+		● Por ejemplo, un empleado con un sueldo bruto anual de 17.000 € tendrá un
+		30% de IRPF. Para calcular su sueldo neto mensual se descontará un 30% a
+		su sueldo bruto mensual.
+		Sueldo bruto anual
+		IRPF
+		Inferior a 12.000 € 20%
+		De 12.000 a 25.000 € 30%
+		Más de 25.000 € 40%
+		Las empresas tienen las siguientes características:
+		● Una empresa tiene nombre y CIF (datos que no pueden variar), además de
+		teléfono, dirección y empleados. Cuando se crea una nueva empresa esta
+		carece de empleados.
+		● Serán necesarios métodos para:
+		○ Añadir y eliminar empleados a la empresa.
+		○ Mostrar por pantalla la información de todos los empleados.
+		○ Mostrar por pantalla el DNI, sueldo bruto y neto de todos los
+		empleados.
+		○ Calcular la suma total de sueldos brutos de todos los empleados.
+		○ Calcular la suma total de sueldos netos de todos los empleados.
+		Implementa las clases Empleado y Empresa con los atributos oportunos, un
+		constructor, los getters/setters oportunos y los métodos indicados. Puedes añadir
+		más métodos si lo ves necesario. Estas clases no deben realizar ningún tipo de
+		entrada por teclado.
+		Implementa también una clase Programa con una función main para realizar
+		pruebas: Crear una o varias empresas, crear empleados, añadir y eliminar
+		empleados a las empresas, listar todos los empleados, mostrar el total de sueldos
+		brutos y netos, etc.
+		(*) El IRPF realmente es más complejo pero se ha simplificado para no complicar
+		demasiado este ejercicio.
+		*/
+		
+		
+		
+		/*Ejercicio 5 - VEHÍCULOS
+		Es aconsejable hacer el diseño UML antes de empezar a programar.
+		Debes crear varias clases para un software de una empresa de transporte.
+		Implementa la jerarquía de clases necesaria para cumplir los siguientes criterios:
+		·
+		Los vehículos de la empresa de transporte pueden ser terrestres, acuáticos
+		y aéreos. Los vehículos terrestres pueden ser coches y motos. Los vehículos
+		acuáticos pueden ser barcos y submarinos. Los vehículos aéreos pueden ser
+		aviones y helicópteros.
+		·
+		Todos los vehículos tienen matrícula y modelo (datos que no pueden
+		cambiar). La matrícula de los coches terrestres deben estar formadas por 4 números
+		y 3 letras. La de los vehículos acuáticos por entre 3 y 10 letras. La de los vehículos
+		aéreos por 4 letras y 6 números.
+		● Los vehículos terrestres tienen un número de ruedas (dato que no puede
+		cambiar).
+		● Los vehículos acuáticos tienen eslora (dato que no puede cambiar).
+		● Los vehículos aéreos tienen un número de asientos (dato que no puede
+		cambiar).
+		● Los coches pueden tener aire acondicionado o no tenerlo.
+		● Las motos tienen un color.
+		● Los barcos pueden tener motor o no tenerlo.
+		● Los submarinos tienen una profundidad máxima.
+		● Los aviones tienen un tiempo máximo de vuelo.
+		● Los helicópteros tienen un número de hélices.
+		● No se permiten vehículos genéricos, es decir, no se deben poder instanciar
+		objetos que sean vehículos sin más. Pero debe ser posible instanciar
+		vehículos terrestres, acuáticos o aéreos genéricos (es decir, que no sean
+		coches, motos, barcos, submarinos, aviones o helicópteros).
+		● El diseño debe obligar a que todas las clases de vehículos tengan un método
+		imprimir() que imprima por pantalla la información del vehículo en una sola
+		línea.
+		Implementa todas las clases necesarias con: atributos, constructor con parámetros,
+		getters/setters y el método imprimir. Utiliza abstracción y herencia de la forma más
+		apropiada.
+		Implementa también una clase Programa para hacer algunas pruebas: Instancia
+		varios vehículos de todo tipo (coches, motos, barcos, submarinos, aviones y
+		helicópteros) así como vehículos genéricos (terrestres, acuáticos y aéreos). Crea un
+		Array y añade todos los vehículos. Recorre el array y llama al método imprimir de
+		todos los vehículos.*/
+		
+		
+		//Usar expresiones regulares para comprobar las matriculas
+		
+		
+		
+		
+		
+		//FIN MAIN
 	}
-
 }
