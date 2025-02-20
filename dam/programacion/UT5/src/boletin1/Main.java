@@ -216,6 +216,8 @@ public class Main {
 		demasiado este ejercicio.
 		*/
 		
+		//Falta el main
+		
 		
 		
 		/*Ejercicio 5 - VEHÍCULOS
@@ -261,8 +263,22 @@ public class Main {
 		
 		
 		//Usar expresiones regulares para comprobar las matriculas
+		usar un vector
 		
+		vehiculos abstract (matricula, modelo):
+			terrestres (numeroRuedas):
+				coches (boolean aireAcondicionado)
+				motos (color)
+				
+			acuaticos (eslora):
+				barcos (boolean motor)
+				submarinos (profundidadMaxima)
+				
+			aereos (numeroAsientos):
+				aviones (tiempoVueloMaximo)
+				helicopteros (numeroHelices)
 		
+				sysos para todos
 		
 		
 		
