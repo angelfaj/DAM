@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Básica</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<script type="text/javascript" src="funcionalidad.js"></script>
+<body>
+    <div class="calculator">
+        <div class="result" id="result">Resultado: </div>
+        <input type="text" id="num1" placeholder="Número 1">
+        <input type="text" id="num2" placeholder="Número 2">
+        <div class="buttons">
+            <button class="sumar" data-text="SUMAR" onclick="calculate('sumar')"></button>
+            <button class="restar" data-text="RESTAR" onclick="calculate('restar')"></button>
+            <button class="multiplicar" data-text="MULTIPLICAR" onclick="calculate('multiplicar')"></button>
+            <button class="dividir" data-text="DIVIDIR" onclick="calculate('dividir')"></button>
+            <button class="potencia" data-text="EXPONENTE" onclick="calculate('potencia')"></button>
+        </div>
+    </div>
+
+</body>
+</html>
