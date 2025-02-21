@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		Scanner entrada = new Scanner(System.in);
 		/*Ejercicio 1 - ASTROS
 		Define una jerarquía de clases que permita almacenar datos sobre los planetas y
 		satélites (lunas) que forman parte del sistema solar.
@@ -252,33 +253,71 @@ public class Main {
 		● El diseño debe obligar a que todas las clases de vehículos tengan un método
 		imprimir() que imprima por pantalla la información del vehículo en una sola
 		línea.
+		
 		Implementa todas las clases necesarias con: atributos, constructor con parámetros,
 		getters/setters y el método imprimir. Utiliza abstracción y herencia de la forma más
 		apropiada.
+		
 		Implementa también una clase Programa para hacer algunas pruebas: Instancia
 		varios vehículos de todo tipo (coches, motos, barcos, submarinos, aviones y
 		helicópteros) así como vehículos genéricos (terrestres, acuáticos y aéreos). Crea un
-		Array y añade todos los vehículos. Recorre el array y llama al método imprimir de
-		todos los vehículos.*/
+		vector y añade todos los vehículos. Recorre el array y llama al método imprimir de
+		todos los vehículos.
 		
-		
-		//Usar expresiones regulares para comprobar las matriculas
-		usar un vector
 		
 		vehiculos abstract (matricula, modelo):
 			terrestres (numeroRuedas):
 				coches (boolean aireAcondicionado)
 				motos (color)
 				
-			acuaticos (eslora):
-				barcos (boolean motor)
-				submarinos (profundidadMaxima)
-				
-			aereos (numeroAsientos):
-				aviones (tiempoVueloMaximo)
-				helicopteros (numeroHelices)
+				acuaticos (eslora):
+					barcos (boolean motor)
+					submarinos (profundidadMaxima)
+					
+					aereos (numeroAsientos):
+						aviones (tiempoVueloMaximo)
+						helicopteros (numeroHelices)
+						
+						sysos para todos
+		*/
+		//Usar expresiones regulares para comprobar las matriculas
 		
-				sysos para todos
+		Vehiculo vehiculos[] = new Vehiculo[10];
+		
+		String matriculaTerrestre = "", matriculaAerea = "", matriculaAcuatica = "";
+		boolean continuar = false;
+		int flag = 0;
+		
+		do {
+			switch (flag) {
+			case 0:
+				System.out.println("introduce una matricula terrestre (4 números + 3 letras)");
+				matriculaTerrestre = entrada.nextLine();
+				if (matriculaTerrestre.matches("\\d{4}[a-z | A-Z]{3}")) {
+					flag++;
+				}
+				break;
+			case 1:
+				System.out.println("introduce una matricula acuatica (entre 3 y 10 letras)");
+				matriculaAcuatica = entrada.nextLine();
+				if (matriculaAcuatica.matches("[a-z | A-Z]{3,10}")) {
+					flag++;
+				}
+				break;
+			case 2:
+				System.out.println("introduce una matricula aerea (4 letras + 6 números)");
+				matriculaAerea= entrada.nextLine();
+				if (matriculaAerea.matches("[a-z | A-Z]{4}\\d{6}")) {
+					continuar = true;
+				}
+				break;
+			}
+		} while(!continuar);
+		
+		System.out.println("Matricula Terrestre: " + matriculaTerrestre);
+		System.out.println("Matricula Aerea: " + matriculaAerea);
+		System.out.println("Matricula Acuatica: " + matriculaAcuatica);
+		
 		
 		
 		
