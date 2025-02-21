@@ -278,7 +278,7 @@ public class Main {
 						aviones (tiempoVueloMaximo)
 						helicopteros (numeroHelices)
 						
-						sysos para todos
+						toString para todos por tanto abstrac en Vehiculo
 		*/
 		//Usar expresiones regulares para comprobar las matriculas
 		

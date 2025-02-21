@@ -209,8 +209,127 @@ public class Main {
 		Universidad.listarProfesoresDepartamento(Departamento.BIOLOGIA);
 		
 		
-				
+		Ejercicio 11
+		Crea una interfaz llamada Televisor:
+		• Que defina los siguientes métodos:
+		void encender ( ), void apagar ( ), void cambiarCanal (int)
+		• Crea una clase llamada MiTele que implemente la interfaz
+		definida
+		● Con los atributos int numCanales, int canalActual y boolean
+		encendida.
+		● Desarrolla el constructor y los métodos definidos en la
+		interfaz.
+		• Crea una clase aparte con el método main para comprobar que no
+		se puede instanciar la interfaz Televisor. Instancia la clase MiTele y
+		comprueba su funcionamiento.
+		
+		Televisor tvs[] = new Televisor [2];
+		
+		Televisor t1 = new MiTele(60, 3, false);
+		Televisor t2 = new MiTele(10, 1, false);
+		
+		tvs[0] = t1;
+		tvs[1] = t2;
+		
+		for (int i = 0; i < tvs.length ; i++) {
+			System.out.println(tvs[i]);
+		}
+		
+		t1.encender();
+		t2.encender();
+		
+		for (int i = 0; i < tvs.length ; i++) {
+			System.out.println(tvs[i]);
+		}
+		 
+		 Ejercicio 13
+		Crea el siguiente Interfaz, definido para forzar la comparación de objetos
+		en una determinada aplicación Java:
+		public interface Comparar {
+		public boolean esMenor(Object objeto);
+		public boolean esMayor(Object objeto);
+		public boolean esIgual(Object objeto);
+		}
+		Crea la clase Alumno con los siguientes atributos privados: nombre y edad.
+		Implementa su constructor, setters, getters y toString
+		Crea la clase Vehiculo con los siguientes atributos privados: peso y
+		matricula. Implementa su constructor, setters, getters y toString.
+		Crea la clase Alumno2 que herede de Alumno e implemente la interfaz
+		Compara para comparar Alumnos en base a su edad.
+		Crea la clase Vehiculo2 que herede de Vehiculo e implemente la interfaz
+		Compara para comparar Vehiculos en base a su peso.
+		Crea una clase Principal que contenga un método main y construya:
+		● Un array de 5 objetos del tipo Alumno2 cuyos datos se cargarán por
+		teclado.
+		● Averigua qué relaciones de igualdad existen entre el primer alumno
+		y los otros 4.
+		● Idem para los vehículos
 		 */
- 	}
-
+		
+		
+		Alumno alumnos[] = new Alumno[5];
+		
+		Alumno2 a1 = new Alumno2("Paco", 40);
+		Alumno2 a2 = new Alumno2("Pepe", 100);
+		Alumno2 a3 = new Alumno2("Laura", 20);
+		Alumno2 a4 = new Alumno2("Andrea", 43);
+		Alumno2 a5 = new Alumno2("Maria", 60);
+		
+		alumnos[0] = a1;
+		alumnos[1] = a2;
+		alumnos[2] = a3;
+		alumnos[3] = a4;
+		alumnos[4] = a5;
+		
+		Alumno2 aux = (Alumno2) alumnos[0];
+		
+		for (int i = 1 ; i < alumnos.length ; i ++) {
+			System.out.println("Comparando " + aux + " con: " + alumnos[i]);
+			if (aux.esIgual(alumnos[i])) {
+				System.out.println("tienen la misma edad");
+			}else if(aux.esMayor(alumnos[i])) {
+				System.out.println("alumno1 es mayor");
+			}else if(aux.esMenor(alumnos[i])) {
+				System.out.println("alumno1 es menor");
+			}else {
+				System.out.println("Ha habido un error");
+			}
+			System.out.println();
+		}
+		
+		Vehiculo vehiculos[] = new Vehiculo[5];
+		
+		Vehiculo2 v1 = new Vehiculo2("12345dfg", 30.34);
+		Vehiculo2 v2 = new Vehiculo2("45678ghj", 30.34);
+		Vehiculo2 v3 = new Vehiculo2("234fgt", 32.34);
+		Vehiculo2 v4 = new Vehiculo2("123890fgh", 50.34);
+		Vehiculo2 v5 = new Vehiculo2("567hgd6", 100.34);
+		
+		vehiculos[0] = v1;
+		vehiculos[1] = v2;
+		vehiculos[2] = v3;
+		vehiculos[3] = v4;
+		vehiculos[4] = v5;
+		
+		Vehiculo2 aux2 = (Vehiculo2) vehiculos[0];
+		
+		for (int i = 1 ; i < vehiculos.length ; i ++) {
+			System.out.println("Comparando " + aux2 + " con: " + vehiculos[i]);
+			if (aux2.esIgual(vehiculos[i])) {
+				System.out.println("pesan lo mismo");
+			}else if(aux2.esMayor(vehiculos[i])) {
+				System.out.println("vehiculo1 es mas pesado");
+			}else if(aux2.esMenor(vehiculos[i])) {
+				System.out.println("vehiculo1 es mas ligero");
+			}else {
+				System.out.println("Ha habido un error");
+			}
+			System.out.println();
+		}
+		
+		
+		
+		
+		
+ 	}//Fin main
 }
