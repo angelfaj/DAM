@@ -1,5 +1,9 @@
 package hojaI;
 
+import java.sql.Date;
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -264,7 +268,6 @@ public class Main {
 		● Averigua qué relaciones de igualdad existen entre el primer alumno
 		y los otros 4.
 		● Idem para los vehículos
-		 */
 		
 		
 		Alumno alumnos[] = new Alumno[5];
@@ -328,7 +331,66 @@ public class Main {
 		}
 		
 		
+	 	Ejercicio 12
+		Escribe un programa para una biblioteca que contenga libros y revistas.
+		● Las características comunes que se almacenan tanto para las revistas
+		como para los libros son el código, el título, y el año de publicación.
+		Estas tres características se pasan por parámetro en el momento de
+		crear los objetos.
+		● Los libros tienen además un atributo prestado. Los libros, cuando se
+		crean, no están prestados.
+		● Las revistas tienen un número. En el momento de crear las revistas
+		se pasa el número por parámetro.
+		● Tanto las revistas como los libros deben tener (aparte de los
+		constructores) un método toString() que devuelve el valor de todos
+		los atributos en una cadena de caracteres. También tienen un
+		método que devuelve el año de publicación, y otro el código.
+		● Para prevenir posibles cambios en el programa se tiene que
+		implementar una interface Prestable con los métodos prestar(),
+		devolver(). La clase Libro implementa esta interfaz.
 		
+		Libro libro = new Libro(1, "Gomorra", "10/11/1998");
+		Libro libro2 = new Libro(2, "Muerte", "10/11/1998");
+		Libro libro3 = new Libro(3, "Adios", "10/11/1998");
+		Libro libro4 = new Libro(4, "Ra", "10/11/1998");
+		Libro libro5 = new Libro(5, "O", "10/11/1998");
+		Libro libro6 = new Libro(6, "Bu", "10/11/1998");
+		Libro libro7 = new Libro(7, "Morra", "10/11/1998");
+		Revista revista = new Revista(1, "Muy interesante", "11/1/2025", 1);
+		Revista revista2 = new Revista(2, "Muy interesante", "11/1/2025", 1);
+		Revista revista3 = new Revista(3, "Muy interesante", "11/1/2025", 1);
+		Revista revista4 = new Revista(4, "Muy interesante", "11/1/2025", 1);
+		Revista revista5 = new Revista(5, "Muy interesante", "11/1/2025", 1);
+		Revista revista6 = new Revista(6, "Muy interesante", "11/1/2025", 1);
+		
+		ArrayList<Publicacion> publicaciones = new ArrayList<Publicacion>();
+		publicaciones.add(revista6);
+		publicaciones.add(revista5);
+		publicaciones.add(revista4);
+		publicaciones.add(revista3);
+		publicaciones.add(revista2);
+		publicaciones.add(revista);
+		publicaciones.add(libro7);
+		publicaciones.add(libro6);
+		publicaciones.add(libro5);
+		publicaciones.add(libro4);
+		publicaciones.add(libro3);
+		publicaciones.add(libro2);
+		publicaciones.add(libro);
+
+		for (Publicacion p:publicaciones) {
+//			if (p instanceof Libro) {
+//				Libro aux = (Libro) p;
+//				System.out.println(aux);
+//			}else if (p instanceof Revista) {
+//				Revista aux1 = (Revista) p;
+//				System.out.println(aux1);
+//			}
+			System.out.println(p); //Aunque lo volquemos en un objeto Publicacion, gracias al polimorfismo llama al metodo toString del objeto en cuestion sin ser necesario el casteo comentado arriba
+		}
+		
+		 */
+
 		
 		
  	}//Fin main
