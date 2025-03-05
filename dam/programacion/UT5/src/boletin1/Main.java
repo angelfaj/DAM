@@ -1,5 +1,8 @@
 package boletin1;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -318,8 +321,18 @@ public class Main {
 		System.out.println("Matricula Aerea: " + matriculaAerea);
 		System.out.println("Matricula Acuatica: " + matriculaAcuatica);
 		
+
 		
 		
+		//Ejemplo de fecha
+		Date fecha = null;
+		try {
+			fecha = new SimpleDateFormat("dd/MM/yyyy").parse("05/01/2015");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(fecha);
 		
 		//FIN MAIN
 	}
