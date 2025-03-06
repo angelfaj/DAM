@@ -2,17 +2,37 @@ package boletinRepaso;
 
 import java.util.Objects;
 
-public abstract class Curso implements Comparable<Object> {
+public abstract class Curso implements Comparable<Object>, Inscribible, Certificable {
 	private Integer id; //Para usarlo en el metodo compareTO se inicializa asi: Integer number = new Integer(10)
 	private String nombre;
+	private String clasificacion;
+	private String profesor;
 	private int horas;
 	private int precio;
 	
-	public Curso(int id, String nombre, int horas, int precio) {
+	public Curso(int id, String nombre, String clasificacion, String profesor, int horas, int precio) {
 		this.id = id;
 		this.horas = horas;
 		this.precio = precio;
 		this.nombre = nombre;
+		this.clasificacion = clasificacion;
+		this.profesor = profesor;
+	}
+
+	public String getProfesor() {
+		return profesor;
+	}
+
+	public void setProfesor(String profesor) {
+		this.profesor = profesor;
+	}
+
+	public String getClasificacion() {
+		return clasificacion;
+	}
+
+	public void setClasificacion(String clasificacion) {
+		this.clasificacion = clasificacion;
 	}
 
 	public String getNombre() {
@@ -59,7 +79,7 @@ public abstract class Curso implements Comparable<Object> {
 	public int compareTo(Object o) {
 		Curso c = (Curso) o;
 		if (this.getNombre().equals(c.getNombre())) {
-			return this.getId().compareTo(c.getId());
+			return this.getId().compareTo(c.getId());		//Si id fuese int deberiamos compararlo mediante <>= y poor tanto quedaria fuera de compareTo
 		} else {
 			return this.getNombre().compareTo(c.getNombre());
 		}
