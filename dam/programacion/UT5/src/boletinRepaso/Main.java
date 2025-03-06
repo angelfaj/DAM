@@ -1,5 +1,8 @@
 package boletinRepaso;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -27,6 +30,13 @@ public class Main {
 		
 		
 		//Lamamos a COmparator asi: Collections.sort(lista, new CurssoPorPrfesor);
+//		ArrayList<Curso> cursos = new ArrayList<Curso>();
+//		Iterator<Curso> it = cursos.iterator();
+//		
+//		while(it.hasNext()) {
+//			Curso c = it.next();
+//		}
+		
 		
 		
 //FIN MAIN
