@@ -21,7 +21,8 @@ public class Main {
 		*/
 		
 		
-		//Seria mas adecuado implementar las interfaces en la clase padre para este supuesto 
+		//Seria mas adecuado implementar las interfaces en la clase padre para este supuesto
+		/*
 		Autobus a1 = new Autobus(1, 50, 150, "Keroseno");
 		Autobus a2 = new Autobus(2, 50, 150, "Keroseno");
 		Autobus a3 = new Autobus(3, 50, 150, "Keroseno");
@@ -68,7 +69,7 @@ public class Main {
 			System.out.println();
 		}
 		
-		
+		*/
 		
 		
 		
@@ -101,7 +102,7 @@ public class Main {
 		*/
 		
 		
-		solo falta el main
+		//solo falta el main
 		
 		
 		
