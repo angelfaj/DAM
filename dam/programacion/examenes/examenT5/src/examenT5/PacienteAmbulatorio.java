@@ -32,6 +32,7 @@ public class PacienteAmbulatorio extends Paciente{
 
 
 	@Override					//Utilizamos el metodo calcularCosteFinal para generar la factura
+	//Este metodo debe implementarse en la clase padre ya que no cambia para ninguno de sus hijos
 	public void generarFactura() {
 		System.out.println("*******FACTURA*******" + "\n" + "Coste final tratamiento: " + this.calcularCosteFinal() + "\n" + "Información del paciente: " + this);
 	}
