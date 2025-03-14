@@ -2,6 +2,8 @@ package excepciones;
 
 import java.util.Scanner;
 
+import pimienta.MickyHerramienta;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -261,15 +263,116 @@ public class Main {
 				    }
 				}
 			Fin del enunciado
-		 */
 		
 		System.out.println("A devolverá 46 sin generar ninguna excepcion. B devolverá");
 
 		
+		Ejercicio 7
+		Crea tu propia clase de excepción utilizando la palabra clave extends.
+		Dicha clase tendrá como atributo un String. Escribe un constructor para
+		dicha clase que tome un argumento String. Escribe un método que
+		muestre la cadena de caracteres almacenada. Crea una
+		cláusula try-catch para probar la nueva excepción. 
+		
+		
+		try {
+			throw new NuevaExcepcion("El cielo esta enladrillado quien lo desenladrillara el desenladrillador que lo desenladrille buen desenladrillador sera.");
+		}catch (NuevaExcepcion n) {
+			System.out.println(n);
+		}
 		
 		
 		
+		Ejercicio 8
+		Crea una clase Alumno con los atributos: nombre, edad y nota. Y el
+		siguiente constructor, que deberá lanzar una excepción propia cuando la
+		edad sea inferior a 0 (EdadNoValidaException con su propio mensaje de
+		error).
+		public Alumno(String nombre, int edad) ...
+		La clase tendrá los siguientes métodos:
+		●
+		●
+		●
+		●
+		public float getNota()
+		public void setNota(float nota)
+		public String getNombre()
+		public int getEdad()
+		El método setNota, no deberá asignar notas inferiores a 0 o superiores a
+		10, y se protegerá lanzando una excepción cuando la nota sea errónea
+		(NotaNoValidaException, con su propio mensaje de error).
+		Crea una clase con un método main que lea desde teclado un array de 5
+		alumnos con sus notas y posteriormente muestre la información de cada
+		uno de ellos. Se deberán capturar todas las excepciones que se pudieran
+		generar y mostrar los mensajes correspondientes a cada tipo de
+		excepción.
 		
+		
+		Alumno aula[] = new Alumno[5];
+		
+		try{
+			aula[0] = new Alumno("MARIA", 30);
+			aula[1] = new Alumno("RAMON", 31);
+			aula[2] = new Alumno("PAULA", 24);
+			aula[3] = new Alumno("MARTA", 20);
+			aula[4] = new Alumno("PACO", 36);
+			aula[0].setEdad(-1);
+		} catch (EdadNoValidaException e) {
+			System.out.println(e);
+		}
+		
+		try {
+			aula[1].setNota(-3);
+		}catch (NotaNoValidaException n) {
+			System.out.println(n);
+		}
+		
+		
+		6.
+		Implementa una clase Gato con los atributos nombre y edad, un constructor
+		con parámetros, los getters y setters, además de un método imprimir() para mostrar
+		los datos de un gato. El nombre de un gato debe tener al menos 3 caracteres y la edad
+		no puede ser negativa. Por ello, tanto en el constructor como en los setters, deberás
+		comprobar que los valores sean válidos y lanzar una ‘Exception’ si no lo son. Luego, haz
+		una clase principal con main para hacer pruebas: instancia varios objetos Gato y utiliza
+		sus setters, probando distintos valores (algunos válidos y otros incorrectos). Maneja las
+		excepciones.
+		7.
+		Crea una copia del programa anterior y modifica el main para hacer lo
+		siguiente:
+		 Crea un Array de 5 gatos. Luego, utilizando un bucle, pide al usuario que
+		introduzca los datos de 5 gatos: utiliza un Scanner para pedir los datos, instancia
+		el objeto y guárdalo en el array. Por último, imprime la información de los gatos.
+		 Maneja las posibles excepciones de modo que en el array sólo almacenemos
+		objetos Gato válidos y el bucle se repita hasta crear y almacenar correctamente
+		5 gatos.*/
+		
+		
+		Gato vectorGatos[] = new Gato[5];
+		boolean vectorCorrecto = false;
+		Scanner entrada = new Scanner(System.in);
+		int edad, i = 0;
+		String nombre;
+		
+		do {
+			System.out.println("Introduce el nombre del gato " + i + ": ");
+			nombre = entrada.nextLine();
+			System.out.println("Introduce la edad del gato " + i + ": ");
+			edad = entrada.nextInt();
+			entrada.nextLine();
+			
+			try {
+				vectorGatos[i] = new Gato(nombre, edad);	//Si el nomb
+			} catch (NombreGatoException n) {
+				System.out.println(n);
+			}catch (EdadNoValidaException e) {
+				System.out.println(e);
+			}
+			vectorGatos[i].imprimir();
+			i++;
+		}while(!vectorCorrecto);
+		
+		entrada.close();
 		
 		
 		
