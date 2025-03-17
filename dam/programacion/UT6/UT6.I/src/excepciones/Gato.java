@@ -30,11 +30,7 @@ public class Gato {
 	}
 
 	public void imprimir() {
-		if (this == null) {
-			System.out.println("null");	//?
-		}else {
-			System.out.println("Gato: " + nombre + "-" + edad);
-		}
+		System.out.println("Gato: " + nombre + "-" + edad);
 	}
 
 }

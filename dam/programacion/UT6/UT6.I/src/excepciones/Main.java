@@ -363,13 +363,17 @@ public class Main {
 			
 			try {
 				vectorGatos[i] = new Gato(nombre, edad);	//Si el nomb
+				vectorGatos[i].imprimir();
+				i++;
 			} catch (NombreGatoException n) {
 				System.out.println(n);
 			}catch (EdadNoValidaException e) {
 				System.out.println(e);
 			}
-			vectorGatos[i].imprimir();
-			i++;
+			
+			if (i == vectorGatos.length) {
+				vectorCorrecto = true;
+			}
 		}while(!vectorCorrecto);
 		
 		entrada.close();
