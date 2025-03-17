@@ -71,23 +71,46 @@ Parámetros:
 multa).*/
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS add_extra_charge;
+
+DROP PROCEDURE IF EXISTS add_extra_charge$$
+
 CREATE PROCEDURE add_extra_charge (
-	IN p_rental_id INT,
-    OUT p_late_fee DOUBLE)
+    IN p_rental_id INT,
+    OUT p_late_fee DOUBLE
+)
 BEGIN
-	DECLARE **********
-    UPDATE TABLE 
-		rental 
-    SET 
-		return_date = now()
-	WHERE 
-		p_rental_id = rental_id;
-	
-    
+    DECLARE fee DOUBLE DEFAULT 0;
+    DECLARE rental_date DATE;
+    DECLARE return_date DATE;
+    DECLARE rental_duration INT;
+    DECLARE late_days INT;
+
+    -- Update return date to current time
+    UPDATE rental 
+    SET return_date = NOW() 
+    WHERE rental_id = p_rental_id;
+
+    -- Fetch rental details
+    SELECT rental_date, return_date, rental_duration 
+    INTO rental_date, return_date, rental_duration
+    FROM rental 
+    WHERE rental_id = p_rental_id;
+
+    -- Calculate late days
+    SET late_days = DATEDIFF(return_date, rental_date) - rental_duration;
+
+    -- If returned late, set late fee (e.g., $4 per day late)
+    IF late_days > 0 THEN
+        SET fee = late_days * 4;
+    END IF;
+
+    -- Assign the computed fee to output parameter
+    SET p_late_fee = fee;
 
 END$$
+
 DELIMITER ;
+
 
 CALL add_extra_charge(1, @extra_fee);
 SELECT @extra_fee; 
