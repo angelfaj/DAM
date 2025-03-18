@@ -1,7 +1,7 @@
 function addAlumno() {          //Esta funcion añade un alumno a nuestro servidor de eclipse 
     console.log("addAlumno funciona");
     fetch(              // esta funcion la utiliza ajax para comunicarse con el servidor
-        'http://localhost:8090/alumnos/add_alumno',{        //url a la que se comunica
+        'http://localhost:8080/alumnos/add_alumno',{        //url a la que se comunica
             method:'POST', headers:{
                 "Content-Type":"application/json",
             },
