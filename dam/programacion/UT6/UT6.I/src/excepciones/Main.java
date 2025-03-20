@@ -2,8 +2,6 @@ package excepciones;
 
 import java.util.Scanner;
 
-import pimienta.MickyHerramienta;
-
 public class Main {
 
 	public static void main(String[] args) {
