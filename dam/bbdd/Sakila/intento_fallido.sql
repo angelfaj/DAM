@@ -19,7 +19,7 @@ CREATE TABLE staff_stuff (
     FOREIGN KEY staff_stuff(id_staff) REFERENCES staff(staff_id),
     staff_revenue LONG);
 */
-/*
+
 DROP TRIGGER IF EXISTS after_payment_insert;
 DELIMITER //
 CREATE TRIGGER after_payment_insert
@@ -29,35 +29,24 @@ BEGIN
 	DECLARE sum_v LONG;
 	DECLARE exists_id INT DEFAULT 0;
     SET exists_id = (
-		SELECT id_staff FROM staff_stuff WHERE id_staff = (
-			SELECT staff_id FROM payment WHERE payment_id = (
-				SELECT MAX(payment_id) FROM payment)
-			)
-		);
+		SELECT id_staff FROM staff_stuff WHERE id_staff = NEW.staff_id);
     
-    IF (SELECT id_staff FROM staff_stuff WHERE id_staff = (SELECT staff_id FROM payment WHERE payment_id = (SELECT MAX(payment_id) FROM payment))) > 0 THEN
+    IF exists_id > 0 THEN
     	SELECT staff_revenue INTO sum_v FROM staff_stuff WHERE id_staff = exists_id;
-		UPDATE staff_stuff SET staff_revenue =(sum_v + payment);
-    END IF;
-    
-    /*IF exists_id > 0 THEN
-    	SELECT staff_revenue INTO sum_v FROM staff_stuff WHERE id_staff = exists_id;
-		UPDATE staff_stuff SET staff_revenue =(sum_v + payment);
-    END IF;*/
-    
-    IF exists_id = 0 THEN
+		UPDATE staff_stuff SET staff_revenue =(sum_v + new.amount) WHERE id_staff = exists_id;
+    ELSEIF exists_id IS NULL THEN
 		INSERT INTO staff_stuff (id_staff, staff_revenue) VALUES
-         (1, 10);
+         (NEW.staff_id, NEW.amount);
     END IF;
 
 END//
 DELIMITER ;
 
 INSERT INTO payment(customer_id, staff_id, rental_id, amount) VALUES
-	(3, 1, 3, 40);
+	(3, 2, 3, 80);
 
 SELECT * FROM staff_stuff;
-SELECT @exists_id;
+DROP TABLE staff_stuff;
 
 
 
@@ -66,22 +55,16 @@ SELECT @exists_id;
 Índices 1pts
 ------------------------------------------
 Dime qué índice implementarías en cada tabla. Justifica tu respuesta.
-Tabla rental.
-Tabla customer.
+	Tabla rental.
+	Tabla customer.
 —-----------------------------------
 Vistas 2pts
 ------------------------------------------
 Vista: vista_resumen_alquileres
 Esta vista mostrará:
-●
-●
-●
-●
-●
-●
-Nombre del cliente
-Título de la película alquilada
-Fecha de alquiler
-Fecha de devolución
-Nombre de la tienda donde se alquiló la película
-Monto pagado por el alquiler*/
+	Nombre del cliente
+	Título de la película alquilada
+	Fecha de alquiler
+	Fecha de devolución
+	Nombre de la tienda donde se alquiló la película
+	Monto pagado por el alquiler*/
