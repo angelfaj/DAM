@@ -1,4 +1,4 @@
-package ficheros;
+package ficherosFile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -108,20 +108,27 @@ public class Main {
 			aux = new File(docs, archivos[i]);		//Utilizamos aux para cambiar el nombre al directorio
 			aux.renameTo(destination);
 			
-			String auxVector[] = destination.list();	//Vector con el contenido de cada directorio dentro de DOCS/
-			for (int j = 0; j < auxVector.length; j++) {
-				File aux2 = new File(auxVector[j]);
-				StringTokenizer tokenizer = new StringTokenizer(aux2.getName(), ".");
-				File dest2 = new File(tokenizer.nextToken()); //Probar a eter docs, tokenizer
-				
-				aux2.renameTo(dest2);
-				System.out.println(aux2.getName());
-				System.out.println(dest2.getName());
+			for (String s:destination.list()) {
+				System.out.println(s);
+//				StringTokenizer tokenizer = new StringTokenizer(s, ".");
+//				System.out.println(tokenizer.nextToken());
 			}
+			
+//			String auxVector[] = destination.list();	//Vector con el contenido de cada directorio dentro de DOCS/
+//			for (int j = 0; j < auxVector.length; j++) {
+//				File aux2 = new File(auxVector[j]);
+//				StringTokenizer tokenizer = new StringTokenizer(aux2.getName(), ".");
+//				File dest2 = new File(tokenizer.nextToken()); //Probar a eter docs, tokenizer
+//				
+//				aux2.renameTo(dest2);
+//				System.out.println(aux2.getName());
+//				System.out.println(dest2.getName());
+//			}
 			
 		}
 		
-		//Meter todo en metodos
+		
+		//Meter todo en metodos y hacer que funcione :)
 		
 		
 		
