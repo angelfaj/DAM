@@ -56,23 +56,19 @@ public class Main {
 		excepciones.
 		Necesitarás crear la función void muestraInfoRuta(File ruta) que dada una ruta de tipo
 		File haga lo siguiente:
-		-
-		-
-		-
-		-
-		Si es un archivo, mostrará por pantalla el nombre del archivo.
-		Si es un directorio, mostrará por pantalla la lista de directorios y archivos que
-		contiene (sus nombres). Deberá mostrar primero los directorios y luego los
-		archivos.
-		En cualquier caso, añade delante del nombre la etiqueta [*] o [A] para indicar si
-		es un directorio o un archivo respectivamente.
-		Si el path no existe lanzará un FileNotFoundException.
+		- Si es un archivo, mostrará por pantalla el nombre del archivo.
+		- Si es un directorio, mostrará por pantalla la lista de directorios y archivos que
+		  contiene (sus nombres). Deberá mostrar primero los directorios y luego los
+		  archivos.
+		- En cualquier caso, añade delante del nombre la etiqueta [*] o [A] para indicar si
+		  es un directorio o un archivo respectivamente.
+		- Si el path no existe lanzará un FileNotFoundException.
 		
 		System.out.println("Introduce una ruta: ");
 		File f = new File(entrada.nextLine());
 		
 		try {
-			muestraInfoRuta(f);
+			muestraInfoRuta(f);	//Metodo implementado al final de esta clase
 		} catch (FileNotFoundException file) {
 			System.out.println("La ruta no existe");
 		}
@@ -87,7 +83,11 @@ public class Main {
 		‘astronauta’.
 		*/
 		
+		
 		File docs = new File("Documentos");
+		String names[] = {"DOCS", "FOTOS", "LECTURAS"}; //Nombres para renombrar en orden
+		
+		!!!!!
 		File destination = new File("DOCS");
 		File aux;
 		

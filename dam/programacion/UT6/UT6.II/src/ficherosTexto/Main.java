@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
 
@@ -50,21 +51,46 @@ public class Main {
 		acabando con la cadena “fin”. Comprueba posteriormente que el fichero se ha
 		creado correctamente mostrando su contenido en pantalla.*/
 		
-		String path2 = "txtPruebaEscritura";
+		Scanner sc = new Scanner(System.in);
+		
+		String line = "", text = "", path2 = "txtPruebaEscritura";
 		File fichero = new File(path2);
 		FileReader reader = null;
 		FileWriter writer = null; 
-		este tampoco funciona xD 
-		try {
+
+		
+		try {	//Dividimos la lectura y escritura en dos bloques try catch pq es necesario cerrar el flujo del writer para que la informacion se guarde en el archivo
 			if (fichero.createNewFile()) {
 				System.out.println("Fichero de escritura creado");
 			}else {
 				System.out.println("El fichero ya existe");
 			}
-			reader = new FileReader(path2);
-			writer = new FileWriter(fichero, true);
 
-			writer.write(ReadFile.readContent(reader));
+			System.out.println("Escribe a continuacion el texto a guardar en el fichero. ('fin' para terminar)");
+			do {
+				line = sc.nextLine();
+				text += line + "\n";
+			}while(!line.equalsIgnoreCase("fin"));
+
+			writer = new FileWriter(fichero, true);
+			writer.write(text);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		try {	//Dividimos la lectura y escritura en dos bloques try catch pq es necesario cerrar el flujo del writer para que la informacion se guarde en el archivo
+			reader = new FileReader(path2);
+			ReadFile.printContentByLine(reader);
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -72,13 +98,13 @@ public class Main {
 		} finally {
 			try {
 				reader.close();
-				writer.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
 		}
 		
+		sc.close();
 		
 		
 		
