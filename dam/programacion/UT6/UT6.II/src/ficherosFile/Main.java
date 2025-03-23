@@ -84,48 +84,16 @@ public class Main {
 		*/
 		
 		
-		File docs = new File("Documentos");
+		File docs = new File("Documentos");	//REcuerda verificar que sea el nombre correcto
+		if (docs.exists()) {
+			System.out.println("YES");
+		}
 		String names[] = {"DOCS", "FOTOS", "LECTURAS"}; //Nombres para renombrar en orden
 		
-		!!!!!
-		File destination = new File("DOCS");
-		File aux;
+		Renamer.renameAll(docs, names);
+		//Al ejecutarlo 2 veces seguidas arroja error de vector vacio pero al ejecutarlo de nuevo se corrige??
 		
-		docs.renameTo(destination);
-		docs = new File(destination.getName());	//Tras renombrar un objeto file, este sigue apuntando al nombre antiguo y por tanto debemos sobreescribirlo manualmente
-		
-		String archivos[] = docs.list();
-		
-		for (int i = 0; i < archivos.length; i++) { //Vector con el contenido de docs		
-			String nombre = "";
-			if (archivos[i].equalsIgnoreCase("Fotografias")) {
-				nombre = "FOTOS";
-			}
-			if (archivos[i].equalsIgnoreCase("Libros")) {
-				nombre = "LECTURAS";
-			}
-			destination = new File(docs, nombre);	//Volcamos cada directorio en el objeto destination
-			aux = new File(docs, archivos[i]);		//Utilizamos aux para cambiar el nombre al directorio
-			aux.renameTo(destination);
-			
-			for (String s:destination.list()) {
-				System.out.println(s);
-//				StringTokenizer tokenizer = new StringTokenizer(s, ".");
-//				System.out.println(tokenizer.nextToken());
-			}
-			
-//			String auxVector[] = destination.list();	//Vector con el contenido de cada directorio dentro de DOCS/
-//			for (int j = 0; j < auxVector.length; j++) {
-//				File aux2 = new File(auxVector[j]);
-//				StringTokenizer tokenizer = new StringTokenizer(aux2.getName(), ".");
-//				File dest2 = new File(tokenizer.nextToken()); //Probar a eter docs, tokenizer
-//				
-//				aux2.renameTo(dest2);
-//				System.out.println(aux2.getName());
-//				System.out.println(dest2.getName());
-//			}
-			
-		}
+
 		
 		
 		//Meter todo en metodos y hacer que funcione :)
