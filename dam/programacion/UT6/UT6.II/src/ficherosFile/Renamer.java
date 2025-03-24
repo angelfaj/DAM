@@ -22,13 +22,13 @@ public abstract class Renamer {
 			auxFile = new File(auxFile2.getPath());	// dir/dir
 			System.out.println(auxFile.getPath());
 			
-			renameAllFile(auxFile);
+			shortenAllFileName(auxFile);
 			
 			
 		}
 	}
 	
-	public static void renameAllFile(File lastFile) {
+	public static void shortenAllFileName(File lastFile) {
 		auxVector2 = lastFile.list();	//Volcamos el contenido de cada dir dentro de auxVector2
 		
 		for (int j = 0; j < auxVector2.length; j++) {

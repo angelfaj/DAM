@@ -84,22 +84,16 @@ public class Main {
 		*/
 		
 		
-		File docs = new File("Documentos");	//REcuerda verificar que sea el nombre correcto
-		if (docs.exists()) {
-			System.out.println("YES");
-		}
-		String names[] = {"DOCS", "FOTOS", "LECTURAS"}; //Nombres para renombrar en orden
-		
-		Renamer.renameAll(docs, names);
-		//Al ejecutarlo 2 veces seguidas arroja error de vector vacio pero al ejecutarlo de nuevo se corrige??
-		
+//		File docs = new File("Documentos");	//REcuerda verificar que sea el nombre correcto
+//		if (docs.exists()) {
+//			System.out.println("YES");
+//		}
+//		String names[] = {"DOCS", "FOTOS", "LECTURAS"}; //Nombres para renombrar en orden
+//		
+//		Renamer.renameAll(docs, names);
+//		//Al ejecutarlo 2 veces seguidas arroja error de vector vacio pero al ejecutarlo de nuevo se corrige??
+//		
 
-		
-		
-		//Meter todo en metodos y hacer que funcione :)
-		
-		
-		
 		/*
 		Ejercicio 5
 		Implementa un programa que cree, dentro de ‘Documentos’, dos nuevas carpetas: ‘Mis
@@ -107,23 +101,36 @@ public class Main {
 		Luego crea dentro de ‘Alfabeto’ una carpeta por cada letra del alfabeto (en mayúsculas):
 		‘A’, ‘B’, ‘C’... ‘Z’. Te serán de ayuda los códigos numéricos ASCII:
 		https://elcodigoascii.com.ar
+		*/
+		String destination = "DOCS/misCosas";
+		String origin = "DOCS/FOTOS";
+		
+		String pathToCreate = "DOCS/misCosas";
+		Creater.createFile(pathToCreate, pathToCreate);
+		destination = "DOCS/misCosas/FOTOS";
+		Creater.moveFile(origin, destination);
+		
+		origin = "DOCS/LECTURAS";
+		pathToCreate = "DOCS/alfabeto";
+		Creater.createFile(pathToCreate, pathToCreate);
+		destination = "DOCS/misCosas/LECCTURAS";
+		Creater.moveFile(origin, destination);
+		Creater.createAbecedaryDirs(pathToCreate, 'A', 'Z');
+		
+		
+		
+		/*
 		Ejercicio 6
 		Implementa un programa con una función boolean borraTodo(File f) que borre f: Si no
 		existe lanzará una excepción. Si es un archivo lo borrará. Si es un directorio, borrará
 		primero sus archivos y luego el propio directorio (recuerda que para poder borrar un
 		directorio debe estar vacío). Devolverá ‘true’ si pudo borrar el ‘File f’ (‘false’ si no fué
-		posible).
-		Prueba
-		la
-		función
-		borrando
-		las
-		carpetas:
-		‘Documentos/Fotografias’,
-		‘Documentos/Libros’ y ‘Documentos’ (es decir, tres llamadas a la función, en ese orden).
-		Nota: después de cada operación hay que informar al usuario del éxito o fracaso en la
-		operación.
+		posible). Prueba la función borrando las carpetas:
+		‘Documentos/Fotografias’, ‘Documentos/Libros’ y ‘Documentos’ (es decir, tres llamadas a la función, en ese orden).
+		Nota: después de cada operación hay que informar al usuario del éxito o fracaso en la operación.
 		*/
+		
+		
 		
 		
 		
