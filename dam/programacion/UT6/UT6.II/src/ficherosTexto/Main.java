@@ -273,9 +273,15 @@ public class Main {
 		método.
 		Prueba en el método main que los métodos anteriores funcionan
 		correctamente.*/
+		/*
+		File fichero = new File("fichero1");
 		
-		
-		
+		System.out.println("Numero de lineas en " + fichero.getName() + ": " + Counter.contarLineas(fichero));
+		System.out.println("Numero de caracteres en " + fichero.getName() + ": " + Counter.contarCaracteres(fichero));
+		System.out.println("Numero de palabras en " + fichero.getName() + ": " + Counter.contarPalabras(fichero));
+		System.out.println("Cadena mas larga en " + fichero.getName() + ": " + Counter.cadenaMax(fichero));
+		System.out.println("Numero veces que aparece 'java' en " + fichero.getName() + ": " + Counter.cuentaPalabra(fichero, "java"));
+		*/
 		
 		
 		

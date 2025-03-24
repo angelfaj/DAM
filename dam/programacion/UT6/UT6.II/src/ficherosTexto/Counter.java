@@ -67,7 +67,20 @@ public abstract class Counter {
 	
 	public static int cuentaPalabra(File f, String word) {
 		int nWord = 0;
-		
+		String aux = "", line;
+		try (FileReader fr = new FileReader(f); BufferedReader bf = new BufferedReader(fr);){
+			while ((line = bf.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(line, " ");
+				while(st.hasMoreElements()) {
+					aux = st.nextToken();
+					if (aux.equalsIgnoreCase(word)) {
+						nWord++;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
 		return nWord;
 	}
 	
