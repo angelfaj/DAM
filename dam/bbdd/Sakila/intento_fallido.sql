@@ -36,7 +36,7 @@ BEGIN
 		UPDATE staff_stuff SET staff_revenue =(sum_v + new.amount) WHERE id_staff = exists_id;
     ELSEIF exists_id IS NULL THEN
 		INSERT INTO staff_stuff (id_staff, staff_revenue) VALUES
-         (NEW.staff_id, NEW.amount);
+         (NEW.staff_id, NEW.amount);		-- Habria que insertar la suma de todos los amount para que tenga el total y no solo el ultimo pago!!
     END IF;
 
 END//
