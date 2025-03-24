@@ -44,13 +44,13 @@ public abstract class Creater {
 			f.delete();
 			System.out.println("Archivo " + f + " eliminado");
 		}else if (f.isDirectory()) {
-			
+			deleteContent(f);
 		}
 		
 		
 	}
 	
-	public void deleteContent(File f) {	//Borra todo el contenido del directiorio pasado por parametro
+	public static void deleteContent(File f) {	//Borra todo el contenido del directiorio pasado por parametro
 		File childrenNames[] = f.listFiles();
 		
 		for (File children: childrenNames) {	
@@ -67,6 +67,7 @@ public abstract class Creater {
 				children.delete();
 			}
 		}
+		f.delete();
 	}
 	
 	

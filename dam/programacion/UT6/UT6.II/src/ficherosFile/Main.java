@@ -102,6 +102,7 @@ public class Main {
 		‘A’, ‘B’, ‘C’... ‘Z’. Te serán de ayuda los códigos numéricos ASCII:
 		https://elcodigoascii.com.ar
 		*/
+		/*
 		String destination = "DOCS/misCosas";
 		String origin = "DOCS/FOTOS";
 		
@@ -116,7 +117,7 @@ public class Main {
 		destination = "DOCS/misCosas/LECCTURAS";
 		Creater.moveFile(origin, destination);
 		Creater.createAbecedaryDirs(pathToCreate, 'A', 'Z');
-		
+		*/
 		
 		
 		/*
@@ -130,6 +131,13 @@ public class Main {
 		Nota: después de cada operación hay que informar al usuario del éxito o fracaso en la operación.
 		*/
 		
+		File f = new File("DOCS/misCosas/FOTOS");
+		
+		try {
+			Creater.borraTodo(f);
+		} catch (Exception e) {
+			System.out.println("El fichero no existe");
+		}
 		
 		
 		
