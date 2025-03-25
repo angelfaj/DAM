@@ -42,8 +42,22 @@ public class Main {
 	}
 	
 	public static void deleter(File f) {
-		if (f.exists()) {
-			
+		if (!f.exists()) {			//Evitamos ejecuciones innecesarias
+			System.out.println("El objeto " + f.getName() + " no existe");
+		}else if(f.delete()){		//Borramos si es un archivo
+			System.out.println("El fichero " + f.getName() + " se ha borrado");
+		}else {						//Volcamos su contenido en caso de ser un directorio
+			String resul = "";
+			File contenido[] = f.listFiles();
+			for (int i = 0; i < contenido.length; i++) {
+				if (contenido[i].delete()) {
+					resul = " SI";
+				}else {
+					resul = " NO";
+					//deleter(contenido[i]); esta linea haria que se borrase el arbol completo de directorios
+				}
+				System.out.println("El fichero " + contenido[i].getName() + resul + "se ha borrado");
+			}
 		}
 	}
 	
