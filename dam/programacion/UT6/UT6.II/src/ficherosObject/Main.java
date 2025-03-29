@@ -76,10 +76,8 @@ public class Main {
 		
 		try {
 			while(true) {
-				while(true) {
-					a = (Alumno) datos.readObject();
-					System.out.println(a);
-				}
+				a = (Alumno) datos.readObject();
+				System.out.println(a);
 			}
 		}catch (EOFException e) {}
 		datos.close();
@@ -130,6 +128,8 @@ public class Main {
 		A continuación, imprime el contenido del fichero por pantalla.*/
 		
 		
+		
+		
 		/*Ejercicio 3 - SERIALIZACIÓN Y CLASES COMPUESTAS
 		** Cuando una clase contiene un atributo que es una referencia a otro objeto,
 		la clase a la que pertenece dicho atributo también debe ser serializable.
@@ -138,7 +138,7 @@ public class Main {
 		su vez una clase formada por tres atributos: día, mes y año.
 		A continuación, imprime el contenido del fichero por pantalla.
 		*/
-		
+		/*
 		File f = new File("alumno.dat"); //Cada ficher contendra un tipo de objeto diferente no pudiendo mezclarlos en el mismo binario
 		Alumno a;
 
@@ -155,14 +155,7 @@ public class Main {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
+		*/
 		
 		/*Ejercicio 4
 		Dados los datos de los siguientes arrays con datos de vehículos de un taller:
@@ -190,7 +183,27 @@ public class Main {
 		5. Escribe un método que dado un código de vehículo consulte y muestre el
 		resto de sus datos obtenidos del fichero.*/
 		
+		File f = new File("vehiculos.dat");
 		
+		try {
+			Vehiculo.addVehiculos(f);
+			System.out.println("*************Fichero con vehiculos originales*************");
+			Vehiculo.readVehiculos(f);
+			Vehiculo.addExtraVehiculos(f);
+			System.out.println();
+			System.out.println("*************Fichero con vehiculos extra*************");
+			Vehiculo.readVehiculos(f);
+			System.out.println();
+			System.out.println("*************Datos del vehiculo con id 1*************");
+			Vehiculo.readVehiculos(f, 1);
+			
+		}catch (FileNotFoundException fn) {
+			fn.getStackTrace();
+		}catch (IOException io) {
+			io.getStackTrace();
+		}catch (ClassNotFoundException cn) {
+			cn.getStackTrace();
+		}
 		
 		/*Ejercicio 5
 		Realiza un programa en JAVA en el que le pidas al usuario las notas de las 6
