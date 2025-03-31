@@ -88,7 +88,7 @@ public class Vehiculo implements Serializable{
 			fo = new FileOutputStream(f);
 			datos = new ObjectOutputStream(datos);
 		} else {
-			fo = new FileOutputStream(f, true);
+			fo = new FileOutputStream(f, true);	//El valor true añade al final del fichero, sino sobreescribiria
 			datos = new MiObjectOutputStream(fo);
 		}
 		
