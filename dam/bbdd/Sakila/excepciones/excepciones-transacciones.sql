@@ -1,3 +1,4 @@
+usE sakila;
 -- procedimiento para capturar excepciones y realizar las gestiones sobre una transaccion
 /*
 DELIMITER //
@@ -25,7 +26,8 @@ DELIMITER ;
 */
 
 /*
-0 FALSO, 1 TRUE. Los clientes que no haya alquilado peliculas en el ultimo año, lo ponemos en inativo(0)*/
+0 FALSO, 1 TRUE. Los clientes que no haya alquilado peliculas en el ultimo año, lo ponemos en inactivo(0)*/
+/*
 DROP PROCEDURE IF EXISTS inactive_customer;
 DELIMITER //
 CREATE PROCEDURE inactive_customer()
@@ -43,16 +45,50 @@ BEGIN
     END;
     
     START TRANSACTION;
-    IF DATEDIFF(NOW(), (SELECT return_date FROM rental)) > 365 THEN
-		UPDATE customer SET active = 0 where customer_id = new.customer_id;
-	END IF;
+	UPDATE customer 
+		SET active = 0 
+		where customer_id in (
+				SELECT customer_id 
+				FROM rental 
+				WHERE DATEDIFF(NOW(), return_date) >= 365);
+	
     COMMIT;
     
 END//
 DELIMITER ;
+SET SQL_SAFE_UPDATES = 0;	-- Desactivamos el modo seguro para poder ejecutar querys que no tengan primary keys como condicion en el where como la de arriba
+
 call inactive_customer();
 SELECT active from customer;
-FOR EACH ROW SELECT DATEDIFF(NOW(), return_date)  FROM rental;
+*/
 
 
-/* rEALIZAR REBAJA DEL 10% A AQUELLAS PELIS NO ALQUILADAS EN LOS 6 ULTIMOS MESES
+/* REALIZAR REBAJA DEL 10% A AQUELLAS PELIS NO ALQUILADAS EN LOS 6 ULTIMOS MESES*/
+DROP PROCEDURE IF EXISTS films_discount_procedure;
+DELIMITER //
+CREATE PROCEDURE films_discount_procedure()
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		SELECT 'Ocurrió una excepción, ejecutando rollback' AS MESSAGE;
+        ROLLBACK;
+    END;
+    
+    DECLARE EXIT HANDLER FOR SQLWARNING
+    BEGIN
+		SELECT 'Ocurrió un warning, ejecutando rollback' AS MESSAGE;
+        ROLLBACK;
+    END;
+    
+    START TRANSACTION;
+    UPDATE film SET rental_rate = (rental_rate * 0.9) WHERE film_id IN (
+		select DISTINCT f.film_id 
+			from film f 
+			join inventory i on f.film_id = i.film_id
+			join rental r on i.inventory_id = r.inventory_id
+			where datediff(now(), r.return_date) >= 180);
+    COMMIT;
+END//
+DELIMITER ;
+
+CALL films_discount_procedure();
