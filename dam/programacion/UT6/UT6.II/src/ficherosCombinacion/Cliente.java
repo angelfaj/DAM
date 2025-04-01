@@ -14,6 +14,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import ficherosObject.Persona;
+
 public class Cliente implements Serializable{
 	private String nombre;
 	private int id;
@@ -70,33 +72,6 @@ public class Cliente implements Serializable{
 		datos.close();
 	}
 	
-	public static void compareSavedData(File txtF, File datF) {
-		
-	}
-	
-	public static void compareIds(File f) throws FileNotFoundException, IOException, ClassNotFoundException {
-		String linea = "";
-		Cliente c;
-		
-		try(FileReader fr = new FileReader(f); BufferedReader bf = new BufferedReader(fr); 
-			FileInputStream fi = new FileInputStream(f); ObjectInputStream datos = new ObjectInputStream(fi)) {
-			while ((linea = bf.readLine()) != null) {
-				String[] id = linea.split(":");
-				boolean continuar = true;
-				try {
-					while(continuar) {
-						c = (Cliente) datos.readObject();
-						if ((c.getId()+"").equals(id[0])) {
-							ES POCO EFICIENTE YA QUE CADA VEZ QUE LEA UN ID DEL TXT RECORRERA EL FICHERO DE OBJETOS
-							MEJOR CON PARSEINT Y QUIZA UN ARRAY
-						}
-					}
-				}catch (EOFException e) {}
-				
-			}
-		}	
-	}
-	
 	public static void readFileTxt(File f) throws FileNotFoundException, IOException {
 		String linea = "";
 		
@@ -107,6 +82,80 @@ public class Cliente implements Serializable{
 		}
 		
 	}
-
+	
+	public static void readFileObject(File f) throws FileNotFoundException, IOException, ClassNotFoundException {
+		Cliente c;
+		
+		FileInputStream fi = new FileInputStream(f);
+		//conectamos el flujo de bytes al flujo de datos¿?
+		ObjectInputStream datos = new ObjectInputStream (fi);
+		
+		try {
+			while(true) {
+				c = (Cliente) datos.readObject();
+				System.out.println(c);
+			}
+		}catch (EOFException e) {}
+		datos.close();
+	}
+	
+	public static ArrayList<Cliente> getClientTxtList(File txtFile) throws IOException, ClassNotFoundException {	//Devuelve un array de los clientes almacenados en el fichero txt pasado por parametro
+		ArrayList<Cliente> clientTxtList = new ArrayList<Cliente>();
+		String linea = "";
+		
+		try(FileReader fr = new FileReader(txtFile); BufferedReader bf = new BufferedReader(fr)) {
+			while ((linea = bf.readLine()) != null) {	//Lectura del fichero de texto. 
+				String[] id = linea.split(":");
+				clientTxtList.add(new Cliente(id[1], Integer.parseInt(id[0])));
+			}
+		}
+		return clientTxtList;
+	}
+	
+	public static ArrayList<Cliente> getClientObjectList(File objFile) throws IOException, ClassNotFoundException {	//Devuelve un array de los clientes almacenados en el fichero de objetos pasado por parametro
+		ArrayList<Cliente> clientObjectList = new ArrayList<Cliente>();
+		Cliente aux;
+		
+		try(FileInputStream fi = new FileInputStream(objFile); ObjectInputStream datosLectura = new ObjectInputStream(fi)) {
+			while (true) {								//Lectura del fichero de objetos
+				aux = (Cliente) datosLectura.readObject();
+				clientObjectList.add(aux);
+			}	
+		}catch (EOFException e) {}
+		
+		return clientObjectList;
+	}
+	
+	public static void compareSavedData(File txtF, File datF, File diferencias) throws FileNotFoundException, IOException, ClassNotFoundException { //Este metodo compara el contenido de los ficheros pasados por parametroo (fichero txt y fichero de objetos) y guarda las diferencias en otro fichero pasado por parametro
+		ArrayList<Cliente> clientesEnTxt = getClientTxtList(txtF);
+		ArrayList<Cliente> clientesEnObject = getClientObjectList(datF);
+		int muestra;
+		
+		for (int i = 0; i < clientesEnObject.size(); i++) {	//Comparamos cada cliente del fichero de objetos con todos los del fichero de texto
+			muestra = clientesEnObject.get(i).getId();
+			int j = 0;
+			boolean continuar = true;
+			
+			do {
+				if (muestra == clientesEnTxt.get(j).getId()) {//Si encontramos una coincidencia los eliminamos de ambas listas y pasamos al siguiente
+					clientesEnTxt.remove(i);
+					clientesEnObject.remove(j);				 
+					i--;
+					continuar = false;						
+				}
+			}while(j < clientesEnTxt.size() && continuar);
+			
+			//En este punto solo quedaran aquellos que solo existan en el fichero de objetos asi que los volcamos en el fichero diferencias
+			if (clientesEnObject.get(i) != null) {			
+				clientesEnObject.get(i).writeClienteFile(diferencias);
+			}
+		}
+		//En este punto solo quedaran aquellos que solo existan en el fichero de texto asi que los volcamos en el fichero diferencias
+		if (!clientesEnObject.isEmpty()) {
+			for (int i = 0; i < clientesEnObject.size(); i++) {
+				clientesEnObject.get(i).writeClienteFile(diferencias);
+			}
+		}
+	}
 	
 }

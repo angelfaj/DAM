@@ -51,7 +51,8 @@ public class Main {
 		Clientes solo en binario:
 		[102, 104]
 		*/
-		
+
+
 		
 		/*8. Serialización de datos con clave-valor desde un texto
 		Convertir un archivo de configuración de texto (config.txt) en un archivo binario
