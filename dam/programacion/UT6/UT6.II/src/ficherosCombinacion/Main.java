@@ -52,6 +52,7 @@ public class Main {
 		Clientes solo en binario:
 		[102, 104]
 		*/
+		/*
 		File txtF = new File("clientes.txt");
 		File objF = new File("clientes.dat");
 		File txtDiferencias = new File("diferencias.txt");
@@ -85,7 +86,7 @@ public class Main {
 			//Comparamos
 			Cliente.compareSavedData(txtF, objF, txtDiferencias);
 			System.out.println("**********Contenido diferencias txt**********");
-			Cliente.readFileTxt(txtF);
+			Cliente.readFileTxt(txtDiferencias);
 			System.out.println("=========================================" + "\n");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -94,8 +95,7 @@ public class Main {
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		esta escribiendo lo mismo q hay en el fichero de texto. Revisar metodo compareSavedData linea 150: no deberia entrar en el cliente 2
+		*/
 		
 		/*8. Serialización de datos con clave-valor desde un texto
 		Convertir un archivo de configuración de texto (config.txt) en un archivo binario
@@ -104,7 +104,12 @@ public class Main {
 		• config.txt tiene pares clave-valor en formato clave=valor.
 		• Crear una clase Configuracion con un Map<String, String>.
 		• Leer el archivo de texto, convertirlo en un mapa y guardarlo en config.dat.*/
-
+		
+		File configTxt= new File("configuracion.txt");
+		File configBin = new File("configuracion.dat");
+		
+	
+	
 	}
 
 }

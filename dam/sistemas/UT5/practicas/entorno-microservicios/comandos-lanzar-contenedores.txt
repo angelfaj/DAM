@@ -1,0 +1,10 @@
+docker run -d --network entornoI-net --name phpLamp -p 8080:80 \
+-e DB_HOST=mysqlLamp \
+-e DB_NAME=peliculasdb \
+-e DB_USER=peliculas \
+-e DB_PASSWORD=pssword \
+-v $(pwd)/html/:/var/www/html \
+php:7.4-apache
+
+
+docker run -d --name mysqlLamp --network entornoI-net -e MYSQL_ROOT_PASSWORD=toor -e MYSQL_DATABASE=peliculasdb -e MYSQL_USER=peliculas -e MYSQL_PASSWORD=pssword -v $(pwd)/dbd-inicial.sql:/docker-entrypoint-initdb.d/init.sql mysql:latest

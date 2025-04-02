@@ -152,9 +152,9 @@ public class Cliente implements Serializable{
 			}
 		}
 		//En este punto solo quedaran aquellos que existan unicamente en el fichero de texto asi que los volcamos en el fichero diferencias
-		if (!clientesEnObject.isEmpty()) {
-			for (int i = 0; i < clientesEnObject.size(); i++) {
-				clientesEnObject.get(i).writeClienteFile(diferencias);
+		if (!clientesEnTxt.isEmpty()) {
+			for (Cliente c: clientesEnTxt) {
+				c.writeClienteFile(diferencias);
 			}
 		}
 	}
