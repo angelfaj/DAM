@@ -1,6 +1,7 @@
 package ficherosCombinacion;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
@@ -51,8 +52,50 @@ public class Main {
 		Clientes solo en binario:
 		[102, 104]
 		*/
+		File txtF = new File("clientes.txt");
+		File objF = new File("clientes.dat");
+		File txtDiferencias = new File("diferencias.txt");
+		
+		Cliente c1 = new Cliente("Paco", 1);
+		Cliente c2 = new Cliente("Laura", 2);
+		Cliente c3 = new Cliente("Maria", 3);
+		Cliente c4 = new Cliente("Ramon", 4);
+				
+		Cliente[] clientesTxt = {c1, c2, c3}; 
+		Cliente[] clientesObj = {c2, c3, c4}; 
 
 
+		for (int i = 0; i < clientesObj.length; i++) {	//Rellenamos los ficheros
+			try {
+				clientesTxt[i].writeClienteFile(txtF);
+				clientesObj[i].writeClienteObject(objF);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//Imprimimos el contenido
+		try {
+			System.out.println("**********Contenido fichero txt**********");
+			Cliente.readFileTxt(txtF);
+			System.out.println("=========================================" + "\n");
+			System.out.println("**********Contenido fichero objetos**********");
+			Cliente.readFileObject(objF);
+			System.out.println("=========================================");
+			//Comparamos
+			Cliente.compareSavedData(txtF, objF, txtDiferencias);
+			System.out.println("**********Contenido diferencias txt**********");
+			Cliente.readFileTxt(txtF);
+			System.out.println("=========================================" + "\n");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		esta escribiendo lo mismo q hay en el fichero de texto. Revisar metodo compareSavedData linea 150: no deberia entrar en el cliente 2
 		
 		/*8. Serialización de datos con clave-valor desde un texto
 		Convertir un archivo de configuración de texto (config.txt) en un archivo binario

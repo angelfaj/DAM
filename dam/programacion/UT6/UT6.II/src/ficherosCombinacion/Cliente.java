@@ -52,7 +52,7 @@ public class Cliente implements Serializable{
 			f.createNewFile();
 		}
 		try(FileWriter fr = new FileWriter(f, true)){
-			fr.write(this.id + ":" + this.nombre + "\n");
+			fr.write(this.getId() + ":" + this.getNombre() + "\n");
 		}
 	}
 	
@@ -138,19 +138,20 @@ public class Cliente implements Serializable{
 			
 			do {
 				if (muestra == clientesEnTxt.get(j).getId()) {//Si encontramos una coincidencia los eliminamos de ambas listas y pasamos al siguiente
-					clientesEnTxt.remove(i);
-					clientesEnObject.remove(j);				 
+					clientesEnObject.remove(i);				 
+					clientesEnTxt.remove(j);
 					i--;
 					continuar = false;						
 				}
+				j++;
 			}while(j < clientesEnTxt.size() && continuar);
 			
-			//En este punto solo quedaran aquellos que solo existan en el fichero de objetos asi que los volcamos en el fichero diferencias
-			if (clientesEnObject.get(i) != null) {			
+			//En este punto solo quedaran aquellos que existan unicamente en el fichero de objetos asi que los volcamos en el fichero diferencias
+			if (continuar && clientesEnObject.get(i) != null) {			
 				clientesEnObject.get(i).writeClienteFile(diferencias);
 			}
 		}
-		//En este punto solo quedaran aquellos que solo existan en el fichero de texto asi que los volcamos en el fichero diferencias
+		//En este punto solo quedaran aquellos que existan unicamente en el fichero de texto asi que los volcamos en el fichero diferencias
 		if (!clientesEnObject.isEmpty()) {
 			for (int i = 0; i < clientesEnObject.size(); i++) {
 				clientesEnObject.get(i).writeClienteFile(diferencias);
