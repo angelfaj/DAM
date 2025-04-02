@@ -3,6 +3,7 @@ package ficherosCombinacion;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Main {
 
@@ -108,8 +109,23 @@ public class Main {
 		File configTxt= new File("configuracion.txt");
 		File configBin = new File("configuracion.dat");
 		
-	
-	
+		Configuracion c1 = new Configuracion();
+		
+		try {
+			c1.fillMapFromTxt(configTxt);
+			System.out.println("Mapa con los vañores del txt");
+			System.out.println(c1);
+			System.out.println("Guardamos el contenido en un binario");
+			c1.saveMapInBinFile(configBin);
+			System.out.println("Contenido del binario");
+			Configuracion.readFileObject(configBin);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
