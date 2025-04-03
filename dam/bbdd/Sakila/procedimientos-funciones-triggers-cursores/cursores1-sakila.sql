@@ -58,8 +58,8 @@ BEGIN
         CREATE TABLE IF NOT EXISTS suspicius_payments (
 			payment_id SMALLINT PRIMARY KEY NOT NULL, 
             customer_id SMALLINT NOT NULL,
-            amount DECIMAL(5,2),
-            avg_payment DECIMAL(5,2),
+            amount DECIMAL(5,2) NOT NULL,
+            avg_payment DECIMAL(5,2) NOT NULL,
             d_date DATETIME DEFAULT NOW()
 		);
         
@@ -83,4 +83,8 @@ DELIMITER ;
 
 -- drop table if exists suspicius_payments;
 CALL transaction_snitcher();
-select * from suspicius_payments where payment_id = 5;
+select * from suspicius_payments;
+SET GLOBAL wait_timeout = 28800;
+SET GLOBAL interactive_timeout = 28800;
+SET GLOBAL net_read_timeout = 600;
+SET GLOBAL net_write_timeout = 600;
