@@ -1,30 +1,40 @@
 <?php
-//usamos las variables de entorno para configurar la conexión
+// Usamos las variables de entorno para configurar la conexión
 $dbHost = getenv('DB_HOST');
 $dbUser = getenv('DB_USER');
 $dbPassword = getenv('DB_PASSWORD');
-$dbName = getenv('DB_NAME'); mysqli = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
- 
+$dbName = getenv('DB_NAME'); 
+$mysqli = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
+
+// Verificar conexión a la base de datos
+if ($mysqli->connect_error) {
+    die("Conexión fallida: " . $mysqli->connect_error);
+}
+
 // Manejar el envío del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titulo = $_POST['titulo'];
     $director = $_POST['director'];
-    $anio = (int)$_POST['anio'];
-    $duracion = (int)$_POST['duracion'];
-    $query = "INSERT INTO peliculas (titulo, director,
-    anio, duracion) VALUES (?, ?, ?, ?)";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("ssii",$titulo, $director, $anio,
-    $duracion);
-    $stmt->execute();
+    $anio = filter_var($_POST['anio'], FILTER_VALIDATE_INT);
+    $duracion = filter_var($_POST['duracion'], FILTER_VALIDATE_INT);
+
+    if ($anio && $duracion) {
+        $query = "INSERT INTO peliculas (titulo, director, anio, duracion) VALUES (?, ?, ?, ?)";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("ssii", $titulo, $director, $anio, $duracion);
+        $stmt->execute();
+    } else {
+        echo "Por favor, ingrese valores válidos.";
+    }
 }
 
-// Ordenar los tituloes
+// Ordenar los títulos
 $orden = 'id'; // Orden por defecto
-if (isset($_GET['orden'])) {
+$orden_valido = ['titulo', 'director', 'anio', 'duracion']; // Campos válidos
+if (isset($_GET['orden']) && in_array($_GET['orden'], $orden_valido)) {
     $orden = $_GET['orden'];
 } 
-$query = "SELECT * FROM tituloes ORDER BY $orden";
+$query = "SELECT * FROM peliculas ORDER BY $orden";
 $result = $mysqli->query($query);
 ?> 
 
@@ -34,12 +44,12 @@ $result = $mysqli->query($query);
         <title>Peliculas</title>
         <style>
             table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
+                border: 1px solid black;
+                border-collapse: collapse;
             }
             th, td {
-            padding: 5px;
-            text-align: left;
+                padding: 5px;
+                text-align: left;
             }
         </style>
     </head>
@@ -61,7 +71,7 @@ $result = $mysqli->query($query);
             </tr>
             <?php endwhile; ?>
         </table> 
-        <h2>Añadir titulo</h2>
+        <h2>Añadir pelicula</h2>
         <form method="post" action="">
             <label for="titulo">titulo:</label><br>
             <input type="text" id="titulo" name="titulo" required><br>
@@ -75,3 +85,4 @@ $result = $mysqli->query($query);
         </form>
     </body>
 </html>
+

@@ -1,0 +1,25 @@
+docker run -d --network entornoII-net \
+  --name mariaDB \
+  --restart always \
+  -e MYSQL_ROOT_PASSWORD=Villaverde1.0 \
+  -e MYSQL_PASSWORD=Villaverde1.0 \
+  -e MYSQL_DATABASE=nextcloud \
+  -e MYSQL_USER=nextcloud \
+  -v db:/var/lib/mysql \
+  mariadb:10.6 \
+  --transaction-isolation=READ-COMMITTED \
+  --log-bin=binlog \
+  --binlog-format=ROW
+
+docker run -d --network entornoII-net \
+  --name nextcloud \
+  --restart always \
+  -p 8080:80 \
+  --link db \
+  -v nextcloud:/var/www/html \
+  -e MYSQL_PASSWORD=Villaverde1.0 \
+  -e MYSQL_DATABASE=nextcloud \
+  -e MYSQL_USER=nextcloud \
+  -e MYSQL_HOST=mariaDB \
+  nextcloud
+

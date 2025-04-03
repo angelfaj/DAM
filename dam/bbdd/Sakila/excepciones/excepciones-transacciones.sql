@@ -74,21 +74,29 @@ BEGIN
         ROLLBACK;
     END;
     
-    DECLARE EXIT HANDLER FOR SQLWARNING
+    DECLARE CONTINUE HANDLER FOR SQLWARNING				-- continue pq lal aplicar el descuento saltara el arning de truncar, en este caso queremos que siga asi que continue y sin rollback
     BEGIN
-		SELECT 'Ocurrió un warning, ejecutando rollback' AS MESSAGE;
-        ROLLBACK;
+		SELECT 'Alerta - Se han truncado los datos' AS MESSAGE;
     END;
     
     START TRANSACTION;
+    /*
+    NO PUEDES HACER UN UPDATE QUE CONTENGA UNA SUBCONSULTA SOBRE LA TABLA OBJETIVO DEL UPDATE
     UPDATE film SET rental_rate = (rental_rate * 0.9) WHERE film_id IN (
 		select DISTINCT f.film_id 
 			from film f 
 			join inventory i on f.film_id = i.film_id
 			join rental r on i.inventory_id = r.inventory_id
-			where datediff(now(), r.return_date) >= 180);
+			where datediff(now(), r.return_date) > 180);
+	*/
+    UPDATE film SET rental_rate = (rental_rate * 9) WHERE film_id IN (
+		select DISTINCT i.film_id 
+			FROM inventory i
+			join rental r on i.inventory_id = r.inventory_id
+			where datediff(now(), r.return_date) > 180);
     COMMIT;
 END//
 DELIMITER ;
 
 CALL films_discount_procedure();
+SELECT * FROM film;
