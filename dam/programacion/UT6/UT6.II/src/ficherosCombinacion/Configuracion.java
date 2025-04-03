@@ -16,9 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class Configuracion implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4970923104669163709L;
 	private HashMap<String, String> mapa;
 	
@@ -48,15 +46,9 @@ public class Configuracion implements Serializable{
 		}else {
 			fo = new FileOutputStream(f, true);
 			datos = new MiObjectOutputStream(fo);
-		}
+		} 
 		
-		//No se pueden guardar estructuras de datos en un fichero asi que volcamos el contenido del mapa 
-		Iterator<String> it = mapa.keySet().iterator(); 
-		
-		while(it.hasNext()) {
-			String id = it.next();
-			datos.writeObject(new Cliente(mapa.get(id), Integer.parseInt(id)));		//Convertimos los pares clave vbalor en un objeto cliente y lo guardamos en el binario
-		}
+		datos.writeObject(this);
 		datos.close();
 	}
 	
@@ -72,7 +64,7 @@ public class Configuracion implements Serializable{
 	}
 	
 	public static void readFileObject(File f) throws FileNotFoundException, IOException, ClassNotFoundException {
-		Cliente c;
+		Configuracion c;
 		
 		FileInputStream fi = new FileInputStream(f);
 		//conectamos el flujo de bytes al flujo de datos¿?
@@ -80,7 +72,7 @@ public class Configuracion implements Serializable{
 		
 		try {
 			while(true) {
-				c = (Cliente) datos.readObject();
+				c = (Configuracion) datos.readObject();
 				System.out.println(c);
 			}
 		}catch (EOFException e) {}

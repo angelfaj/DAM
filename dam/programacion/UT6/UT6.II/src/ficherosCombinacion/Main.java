@@ -105,7 +105,7 @@ public class Main {
 		• config.txt tiene pares clave-valor en formato clave=valor.
 		• Crear una clase Configuracion con un Map<String, String>.
 		• Leer el archivo de texto, convertirlo en un mapa y guardarlo en config.dat.*/
-		
+		/*
 		File configTxt= new File("configuracion.txt");
 		File configBin = new File("configuracion.dat");
 		
@@ -120,12 +120,31 @@ public class Main {
 			System.out.println("Contenido del binario");
 			Configuracion.readFileObject(configBin);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+	
+		/*4. Fusión de dos ficheros en uno mixto
+		Leer un archivo de texto (usuarios.txt) y un archivo binario (usuarios.dat), luego
+		fusionarlos en un único archivo binario de objetos (usuarios_completo.dat).
+		Pautas:
+		• usuarios.txt tiene datos en formato id,nombre,email.
+		• usuarios.dat almacena una lista de objetos Usuario con la misma
+		información que se recoge en el fichero de texto plano.*/
+		
+		File txtF = new File("usuarios.txt");
+		File binF = new File("usuarios.dat");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
 	}
-
 }
