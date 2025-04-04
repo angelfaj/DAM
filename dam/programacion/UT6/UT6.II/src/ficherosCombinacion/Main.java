@@ -138,7 +138,7 @@ public class Main {
 		File binF = new File("usuarios.dat");
 		
 		
-		
+		falta main
 		
 		
 		
