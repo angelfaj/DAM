@@ -5,15 +5,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 public class UI extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textFieldResult;
 
 	/**
 	 * Launch the application.
@@ -34,209 +39,84 @@ public class UI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	String operador ="", n1 = "", n2 = "";	//String que almacenaran los numeros, de esta forma podremos introducir numeros mayores de 9 sin pisar el contenido
-	boolean cambiaTurno = false;
-	
 	public UI() {
-		setTitle("Calculadora");
+		setTitle("Calculadora");							//Titulos de la ventana	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 453, 480);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setForeground(new Color(0, 0, 0));
+		contentPane.setBackground(new Color(0, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(null);				//Permite mover donde queramos los componentes con el mouse 
 		
-		setResizable(false);
+		textField_1 = new JTextField();
+		textField_1.setBounds(39, 106, 169, 55);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
 		
-		JButton btnNewButtonEqual = new JButton("=");
-		btnNewButtonEqual.addActionListener(new ActionListener() {
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(225, 106, 169, 55);
+		contentPane.add(textField_2);
+		
+		textFieldResult = new JTextField();
+		textFieldResult.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textFieldResult.setForeground(new Color(0, 0, 0));
+		textFieldResult.setText("TOTAL:");
+		textFieldResult.setEnabled(false);
+		textFieldResult.setColumns(10);
+		textFieldResult.setBounds(39, 43, 355, 55);
+		contentPane.add(textFieldResult);
+		
+		JButton btnSum = new JButton("+");
+		btnSum.setForeground(new Color(255, 255, 255));
+		btnSum.setBackground(new Color(255, 102, 0));
+		btnSum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				switch (operador) {
-				case "-":
-					//Integer.parseInt(n1) + Integer.parseInt(n2)
-					;
-				case "+":
-					
-					;
-				case "x":
-						
-						;
-				case "/":
-					
-					;
-				default:
-					throw new IllegalArgumentException("Unexpected value: " + key);
-				}
+				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) + Double.parseDouble(textField_2.getText())));
+				
 			}
 		});
-		btnNewButtonEqual.setBounds(234, 348, 86, 73);
-		contentPane.add(btnNewButtonEqual);
+		btnSum.setBounds(39, 172, 87, 55);
+		contentPane.add(btnSum);
 		
-		JButton btnNewButtonSum = new JButton("+");
-		btnNewButtonSum.setBounds(332, 348, 86, 73);
-		contentPane.add(btnNewButtonSum);
-		
-		JButton btnNewButtonCero = new JButton("0");
-		btnNewButtonCero.addActionListener(new ActionListener() {
+		JButton btnSubstract = new JButton("-");
+		btnSubstract.setForeground(new Color(255, 255, 255));
+		btnSubstract.setBackground(new Color(255, 102, 51));
+		btnSubstract.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "0";
-				}else {
-					n2 += "0";
-				}
+				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) - Double.parseDouble(textField_2.getText())));
 			}
 		});
-		btnNewButtonCero.setBounds(136, 348, 86, 73);
-		contentPane.add(btnNewButtonCero);
+		btnSubstract.setBounds(128, 172, 87, 55);
+		contentPane.add(btnSubstract);
 		
-		JButton btnNewButtondecimal = new JButton(".");
-		btnNewButtondecimal.addActionListener(new ActionListener() {
+		JButton btnMultiply = new JButton("x");
+		btnMultiply.setForeground(new Color(255, 255, 255));
+		btnMultiply.setBackground(new Color(255, 102, 51));
+		btnMultiply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += ".";
-				}else {
-					n2 += ".";
-				}
+				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) * Double.parseDouble(textField_2.getText())));
 			}
 		});
-		btnNewButtondecimal.setBounds(38, 348, 86, 73);
-		contentPane.add(btnNewButtondecimal);
+		btnMultiply.setBounds(218, 172, 87, 55);
+		contentPane.add(btnMultiply);
 		
-		JButton btnNewButtonOne = new JButton("1");
-		btnNewButtonOne.addActionListener(new ActionListener() {
+		JButton btnDivide = new JButton("/");
+		btnDivide.setForeground(new Color(255, 255, 255));
+		btnDivide.setBackground(new Color(255, 102, 51));
+		btnDivide.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "1";
-				}else {
-					n2 += "1";
-				}
+				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) / Double.parseDouble(textField_2.getText())));
 			}
 		});
-		btnNewButtonOne.setBounds(38, 263, 86, 73);
-		contentPane.add(btnNewButtonOne);
+		btnDivide.setBounds(307, 172, 87, 55);
+		contentPane.add(btnDivide);
 		
-		JButton btnNewButtonTwo = new JButton("2");
-		btnNewButtonTwo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "2";
-				}else {
-					n2 += "2";
-				}
-			}
-		});
-		btnNewButtonTwo.setBounds(136, 263, 86, 73);
-		contentPane.add(btnNewButtonTwo);
+		setResizable(false);						//Bloqueamos el tamño
 		
-		JButton btnNewButtonTrhee = new JButton("3");
-		btnNewButtonTrhee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "3";
-				}else {
-					n2 += "3";
-				}
-			}
-		});
-		btnNewButtonTrhee.setBounds(234, 263, 86, 73);
-		contentPane.add(btnNewButtonTrhee);
 		
-		JButton btnNewButtonSustract = new JButton("-");
-		btnNewButtonSustract.setBounds(332, 263, 86, 73);
-		contentPane.add(btnNewButtonSustract);
-		
-		JButton btnNewButtonFour = new JButton("4");
-		btnNewButtonFour.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "4";
-				}else {
-					n2 += "4";
-				}
-			}
-		});
-		btnNewButtonFour.setBounds(38, 178, 86, 73);
-		contentPane.add(btnNewButtonFour);
-		
-		JButton btnNewButtonFive = new JButton("5");
-		btnNewButtonFive.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "5";
-				}else {
-					n2 += "5";
-				}
-			}
-		});
-		btnNewButtonFive.setBounds(136, 178, 86, 73);
-		contentPane.add(btnNewButtonFive);
-		
-		JButton btnNewButtonSix = new JButton("6");
-		btnNewButtonSix.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "6";
-				}else {
-					n2 += "6";
-				}
-			}
-		});
-		btnNewButtonSix.setBounds(234, 178, 86, 73);
-		contentPane.add(btnNewButtonSix);
-		
-		JButton btnNewButtonMultiply = new JButton("x");
-		btnNewButtonMultiply.setBounds(332, 178, 86, 73);
-		contentPane.add(btnNewButtonMultiply);
-		
-		JButton btnNewButtonSeven = new JButton("7");
-		btnNewButtonSeven.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "7";
-				}else {
-					n2 += "7";
-				}
-			}
-		});
-		btnNewButtonSeven.setBounds(38, 93, 86, 73);
-		contentPane.add(btnNewButtonSeven);
-		
-		JButton btnNewButtonEight = new JButton("8");
-		btnNewButtonEight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "8";
-				}else {
-					n2 += "8";
-				}
-			}
-		});
-		btnNewButtonEight.setBounds(136, 93, 86, 73);
-		contentPane.add(btnNewButtonEight);
-		
-		JButton btnNewButtonNine = new JButton("9");
-		btnNewButtonNine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!cambiaTurno) {
-					n1 += "9";
-				}else {
-					n2 += "9";
-				}
-			}
-		});
-		btnNewButtonNine.setBounds(234, 93, 86, 73);
-		contentPane.add(btnNewButtonNine);
-		
-		JButton btnNewButtonDivide = new JButton("/");
-		btnNewButtonDivide.setBounds(332, 93, 86, 73);
-		contentPane.add(btnNewButtonDivide);
-		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(38, 23, 380, 60);
-		contentPane.add(textField);
-		textField.setColumns(10);
 	}
 }
