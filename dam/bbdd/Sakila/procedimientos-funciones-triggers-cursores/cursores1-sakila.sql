@@ -89,4 +89,28 @@ SET GLOBAL interactive_timeout = 28800;
 SET GLOBAL net_read_timeout = 600;
 SET GLOBAL net_write_timeout = 600;
 
-/* Rehacer sin cursores*/
+/* Rehacer sin cursores:
+Procesar payment par detectar transacciones sospechosas(pagos > 50% del promedio de pagos)
+guardando en una tabla nueva (creada en el procedimiento) con los atributos: payment_id primary key, customer_id, amount, promedio anterior, fecha de deteccion/now()*/
+DROP PROCEDURE IF EXISTS suspicius_transaction_procedure;
+DELIMITER //
+CREATE PROCEDURE suspicius_transaction_procedure()
+BEGIN
+	DROP TABLE IF EXISTS suspicius_transaction;
+	CREATE TABLE IF NOT EXISTS suspicius_transaction (
+		payment_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        customer_id SMALLINT UNSIGNED NOT NULL,
+        amount DECIMAL(5,2) NOT NULL,
+        average DECIMAL(5,2) NOT NULL,
+        detenction_date DATETIME DEFAULT NOW()
+	);
+    
+	INSERT INTO suspicius_transaction (payment_id, customer_id, amount, average) 
+		SELECT payment_id, customer_id, amount, AVG(amount) FROM payment 
+		GROUP BY 1 HAVING AVG(amount) > (SELECT AVG(amount)*1.5 FROM payment);
+		
+	SELECT * FROM suspicius_transaction;
+END//
+DELIMITER ;
+
+CALL suspicius_transaction_procedure();
