@@ -38,7 +38,7 @@ function getPeliculas() {
         const listaPeliculas = peliculas.map(p =>
             `ID: ${p.id_pelicula} - ${p.nombre} ${p.anio} - ${p.autor} [${p.genero}]<br>`
         ).join("");
-        document.getElementById("listaPeliculas").innerHTML =  listado;     //Esta linea llena el div del html con el listado de peliculas
+        document.getElementById("listaPeliculas").innerHTML =  listaPeliculas;     //Esta linea llena el div del html con el listado de peliculas
     })
 }
 
