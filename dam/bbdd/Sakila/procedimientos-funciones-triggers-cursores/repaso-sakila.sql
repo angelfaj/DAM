@@ -205,5 +205,77 @@ debe devolver un parámetro de salida con el promedio general de alquileres de p
 
 
 ### Ejercicio 3:  
-Crear una función que reciba un `store_id` y calcule el total de los pagos realizados en esa tienda. 
-La función debe manejar excepciones en caso de que ocurra algún error al calcular el total.*/
+Crear una función que reciba un `store_id` y calcule el total de los pagos realizados en esa tienda.
+Posteriormente crear un procedimiento que mediante un cursor 
+llame a la funcion para saber cual es la tienda con mayores ventas y devuelva su id y el total de ventas*/
+DELIMITER //
+DROP FUNCTION IF EXISTS total_pagos_function//
+CREATE FUNCTION total_pagos_function(p_store_id TINYINT UNSIGNED)
+	RETURNS DECIMAL(10,2)
+    READS SQL DATA
+BEGIN
+	DECLARE total DECIMAL(10,2);
+
+	SELECT SUM(p.amount) INTO total FROM payment p 
+	JOIN store s ON p.staff_id = s.manager_staff_id
+	WHERE s.store_id = p_store_id;
+    
+    
+    RETURN total;
+END//
+DELIMITER ;
+
+SELECT total_pagos_function(2);
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS total_pagos_proc//
+CREATE PROCEDURE total_pagos_proc(OUT p_address VARCHAR(50), OUT amount DECIMAL(10,2))
+BEGIN
+	DECLARE done SMALLINT DEFAULT FALSE;
+    DECLARE aux_amount DECIMAL(10,2);
+    DECLARE v_store_id TINYINT UNSIGNED;
+    DECLARE cur CURSOR FOR 
+		SELECT store_id FROM store;
+	
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+	DECLARE CONTINUE HANDLER FOR SQLWARNING
+    BEGIN 
+		SELECT 'WARNING' AS MESSAGE;
+        COMMIT;
+	END;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN 
+		SELECT 'EXCEPCION' AS MESSAGE;
+	END;
+    
+    SET amount = 0;
+    
+    -- Transccion creada con fines educativos, no es necesaria para la consulta de datos
+    START TRANSACTION;
+    
+    OPEN cur;
+    WHILE NOT done DO
+    FETCH cur INTO v_store_id;
+    
+    IF NOT done THEN
+		SELECT total_pagos_function(v_store_id) INTO aux_amount;
+		IF aux_amount > amount THEN
+			SET amount = aux_amount;
+		
+			SELECT a.address INTO p_address FROM address a 
+			JOIN store s ON s.address_id = a.address_id
+            WHERE s.store_id = v_store_id;
+		END IF;
+    END IF;
+    
+    END WHILE;
+    CLOSE cur;
+    
+    COMMIT;
+END//
+DELIMITER ;
+
+CALL total_pagos_proc(@AD, @AMOUNT);
+SELECT @AD AS Direccion, @AMOUNT AS Ventas;
