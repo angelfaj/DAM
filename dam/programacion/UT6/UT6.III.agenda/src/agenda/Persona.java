@@ -99,4 +99,11 @@ public class Persona implements Serializable{
 			System.out.println(p);
 		}
 	}
+	
+	public void editPersona(Persona nueva) throws FileNotFoundException, ClassNotFoundException, IOException {
+		this.deletePersona();
+		nueva.addPersona();
+	}
+	
+	
 }
