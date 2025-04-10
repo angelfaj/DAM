@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulario</title>
 </head>
 <script type="text/javascript" src="script.js"></script>
 <link rel="stylesheet" href="styles.css">
 <body>
-    <div class="form-container">
-        <h2>Agregar Película</h2>
-        <label for="id_pelicula">ID Película:</label>
-        <input type="number" id="id_pelicula" name="id_pelicula" required>
+    <div class="flex-container">
 
-        <label for="anio_publicacion">Año de Publicación:</label>
-        <input type="number" id="anio_publicacion" name="anio_publicacion" required>
-
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required>
-
-        <label for="autor">Autor:</label>
-        <input type="text" id="autor" name="autor" required>
-
-        <label for="genero">Género:</label>
-        <select id="genero" name="genero" required>
+        <div class="form-container">
+            <h2>Añadir película</h2>
+            <label for="id_pelicula">ID película:</label>
+            <input type="number" id="id_pelicula" name="id_pelicula" required>
+            
+            <label for="anio_publicacion">Año de publicación:</label>
+            <input type="number" id="anio_publicacion" name="anio_publicacion" required>
+            
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            
+            <label for="autor">Autor:</label>
+            <input type="text" id="autor" name="autor" required>
+            
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
             <option value="accion">Acción</option>
             <option value="comedia">Comedia</option>
             <option value="drama">Drama</option>
@@ -32,8 +34,16 @@
             <option value="ciencia_ficcion">Ciencia Ficción</option>
             <option value="aventura">Aventura</option>
         </select>
+        
+        <input type="button" id="add_pelicula" name="addPelicula" value="Añadir Película" onclick="validar()">
+        <div id="respuesta" class="mensaje-respuesta"></div>
 
-        <input type="button" id="add_pelicula" name="addPelicula" value="Añadir Película" onclick="addPelicula()">
     </div>
+
+    <div id="listaPeliculas" class="tabla-container"></div>
+</div>
+
+<input type="button" id="ver_peliculas" value="Ver Películas" onclick="getPeliculas()">
+
 </body>
 </html>
