@@ -1,0 +1,14 @@
+.container {
+display: flex;
+justify-content: space-around;
+align-items: center;
+height: 100vh;
+}
+.item {
+width: 100px;
+height: 100px;
+background-color: lightblue;
+text-align: center;
+font-size: 2em;
+line-height: 100px;
+}

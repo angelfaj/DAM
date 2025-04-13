@@ -1,0 +1,56 @@
+services:
+  dns_server:
+    image: ubuntu/bind9:latest
+    container_name: dns_server
+    networks:
+      red_20:
+        ipv4_address: 172.20.0.2
+    volumes:
+      - ./bind9_config/named.conf:/etc/bind/named.conf
+      - ./bind9_config/db.dam.local:/etc/bind/db.dam.local
+      - ./bind9_config/db.otro.dam.local:/etc/bind/db.otro.dam.local
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+
+  server:
+    image: nginx:latest
+    container_name: server
+    networks:
+      red_20:
+        ipv4_address: 172.20.0.3
+
+  server2:
+    image: nginx:latest
+    container_name: server2
+    networks:
+      red_21:
+        ipv4_address: 172.21.0.10
+        
+  client:
+    image: alpine:latest
+    container_name: client
+    networks:
+      red_20:
+        ipv4_address: 172.20.0.4
+    command: ["tail", "-f", "/dev/null"]
+
+  client_red_21:
+    image: alpine:latest
+    container_name: client_red_21
+    networks:
+      red_21:
+        ipv4_address: 172.21.0.2
+    command: ["tail", "-f", "/dev/null"]
+
+networks:
+  red_20:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  red_21:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16

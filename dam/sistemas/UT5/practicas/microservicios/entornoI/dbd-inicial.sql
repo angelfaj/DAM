@@ -21,3 +21,4 @@ INSERT INTO peliculas (titulo, director, anio, duracion) VALUES
     ('Titanic', 'James Cameron', 1997, 194),
     ('El Club de la Lucha', 'David Fincher', 1999, 139),
     ('Interestelar', 'Christopher Nolan', 2014, 169);
+

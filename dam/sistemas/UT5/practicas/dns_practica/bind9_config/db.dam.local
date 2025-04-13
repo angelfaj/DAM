@@ -1,0 +1,14 @@
+$TTL    604800
+@       IN      SOA     dns.dam.local. root.dam.local. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      dns.dam.local.
+dns     IN      A       172.20.0.2
+server  IN      A       172.21.0.4
+server  IN      A       172.20.0.3
+client  IN      A       172.20.0.4
+otro    IN      NS      dns.dam.local
