@@ -5,6 +5,8 @@ services:
     networks:
       red_20:
         ipv4_address: 172.20.0.2
+      red_21:
+        ipv4_address: 172.21.0.3
     volumes:
       - ./bind9_config/named.conf:/etc/bind/named.conf
       - ./bind9_config/db.dam.local:/etc/bind/db.dam.local
@@ -19,6 +21,8 @@ services:
     networks:
       red_20:
         ipv4_address: 172.20.0.3
+      red_21:
+        ipv4_address: 172.21.0.4
 
   server2:
     image: nginx:latest
@@ -33,7 +37,10 @@ services:
     networks:
       red_20:
         ipv4_address: 172.20.0.4
-    command: ["tail", "-f", "/dev/null"]
+    dns:
+      - 1.1.1.1
+        # Posteriormente debemos cambiarlo por 172.20.0.2, el dns 1.1.1.1 es solo para que instale las herramientas necesarias
+    command: /bin/sh -c "apk add --no-cache bind-tools iputils && tail -f /dev/null"
 
   client_red_21:
     image: alpine:latest
@@ -41,7 +48,10 @@ services:
     networks:
       red_21:
         ipv4_address: 172.21.0.2
-    command: ["tail", "-f", "/dev/null"]
+    dns:
+      - 1.1.1.1
+        # Posteriormente debemos cambiarlo por 172.21.0.3, el dns 1.1.1.1 es solo para que instale las herramientas necesarias
+    command: /bin/sh -c "apk add --no-cache bind-tools iputils && tail -f /dev/null"
 
 networks:
   red_20:
