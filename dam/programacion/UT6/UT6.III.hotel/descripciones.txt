@@ -1,0 +1,3 @@
+Habitación simple: 1 cama, 1 baño, TV.
+Habitación doble: 2 camas, TV, 1 baño, minibar.
+Habitación suite: 1 cama King size, minibar ilimitado, TV+ cine, regalo bienvenida.
