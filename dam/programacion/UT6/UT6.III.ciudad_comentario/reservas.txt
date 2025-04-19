@@ -1,5 +1,6 @@
-Ciudad: SevillaComentarios: sevilla sevilla.
 Ciudad: Madrid
-Comentarios: comentario madrid
-Ciudad: Barcelona
-Comentarios: comentario barceloa
+Comentarios: bonita madrid
+Ciudad: Madrid
+Comentarios: bonita ma
+Ciudad: Madrid
+Comentarios: genial madrid

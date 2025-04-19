@@ -1,4 +1,4 @@
-package calculadora;
+package vista;
 
 import java.awt.EventQueue;
 
@@ -12,34 +12,17 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
 
-public class UI extends JFrame {
+public class VistaCalculadora extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textFieldResult;
+	private JButton btnSum, btnSubstract, btnMultiply, btnDivide;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UI frame = new UI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
-	public UI() {
+	public VistaCalculadora() {
 		setTitle("Calculadora");							//Titulos de la ventana	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -70,53 +53,67 @@ public class UI extends JFrame {
 		textFieldResult.setBounds(39, 43, 355, 55);
 		contentPane.add(textFieldResult);
 		
-		JButton btnSum = new JButton("+");
+		btnSum = new JButton("+");
 		btnSum.setForeground(new Color(255, 255, 255));
-		btnSum.setBackground(new Color(255, 102, 0));
-		btnSum.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) + Double.parseDouble(textField_2.getText())));
-				
-			}
-		});
+		btnSum.setBackground(new Color(255, 102, 51));
 		btnSum.setBounds(39, 172, 87, 55);
 		contentPane.add(btnSum);
 		
-		JButton btnSubstract = new JButton("-");
+		btnSubstract = new JButton("-");
 		btnSubstract.setForeground(new Color(255, 255, 255));
 		btnSubstract.setBackground(new Color(255, 102, 51));
-		btnSubstract.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) - Double.parseDouble(textField_2.getText())));
-			}
-		});
 		btnSubstract.setBounds(128, 172, 87, 55);
 		contentPane.add(btnSubstract);
 		
-		JButton btnMultiply = new JButton("x");
+		btnMultiply = new JButton("x");
 		btnMultiply.setForeground(new Color(255, 255, 255));
 		btnMultiply.setBackground(new Color(255, 102, 51));
-		btnMultiply.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) * Double.parseDouble(textField_2.getText())));
-			}
-		});
 		btnMultiply.setBounds(218, 172, 87, 55);
 		contentPane.add(btnMultiply);
 		
-		JButton btnDivide = new JButton("/");
+		btnDivide = new JButton("/");
 		btnDivide.setForeground(new Color(255, 255, 255));
 		btnDivide.setBackground(new Color(255, 102, 51));
-		btnDivide.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textFieldResult.setText("TOTAL: " + (Double.parseDouble(textField_1.getText()) / Double.parseDouble(textField_2.getText())));
-			}
-		});
 		btnDivide.setBounds(307, 172, 87, 55);
 		contentPane.add(btnDivide);
 		
 		setResizable(false);						//Bloqueamos el tamño
+		setVisible(true);
 		
-		
+	}
+
+
+	public JTextField getTextField_1() {
+		return textField_1;
+	}
+
+
+	public JTextField getTextField_2() {
+		return textField_2;
+	}
+
+
+	public JTextField getTextFieldResult() {
+		return textFieldResult;
+	}
+
+
+	public JButton getBtnSum() {
+		return btnSum;
+	}
+
+
+	public JButton getBtnSubstract() {
+		return btnSubstract;
+	}
+
+
+	public JButton getBtnMultiply() {
+		return btnMultiply;
+	}
+
+
+	public JButton getBtnDivide() {
+		return btnDivide;
 	}
 }

@@ -56,7 +56,7 @@ public class ModeloCC {
 		
 		try(FileReader reader = new FileReader(reservas); BufferedReader buffer = new BufferedReader(reader)) {
 			while ((linea = buffer.readLine()) != null) {
-				texto += linea;
+				texto += linea + "\n";
 			}
 		}
 		return texto;

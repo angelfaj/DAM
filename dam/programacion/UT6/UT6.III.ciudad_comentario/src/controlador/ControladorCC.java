@@ -36,6 +36,7 @@ public class ControladorCC {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					vista.getTextArea().setText("");
 					vista.getTextArea().setText(ModeloCC.readReservas());
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -55,7 +56,7 @@ public class ControladorCC {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(vista, aux.getComentario());
+					JOptionPane.showMessageDialog(vista, "Ciudad seleccionada: " + aux.getCiudad() + "\n" + "Comentarios: " + aux.getComentario());
 				}
 			}
 		}); 

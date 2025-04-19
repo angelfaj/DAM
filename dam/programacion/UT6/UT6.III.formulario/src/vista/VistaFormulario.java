@@ -1,9 +1,11 @@
-package formulario;
+package vista;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -13,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
 
-public class UI extends JFrame {
+public class VistaFormulario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -21,29 +23,13 @@ public class UI extends JFrame {
 	private JTextField textFieldEdad;
 	private JLabel lblEdad;
 	private JButton btnEnviar;
-	private JTextField textFieldDatos;
+	private JTextArea textAreaDatos;
 	private JLabel lblDatosRecibidos;
+	private JButton btnMostrarTodos;
+	private JScrollPane scroll;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UI frame = new UI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public UI() {
+	
+	public VistaFormulario() {
 		setTitle("Formulario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -72,26 +58,62 @@ public class UI extends JFrame {
 		contentPane.add(lblEdad);
 		
 		btnEnviar = new JButton("Enviar");
-		btnEnviar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textFieldDatos.setText("Nombre: " + textFieldNombre.getText() + ", edad: " + textFieldEdad.getText());
-			}
-		});
-		btnEnviar.setBounds(173, 114, 89, 23);
+		btnEnviar.setBounds(151, 143, 89, 23);
 		contentPane.add(btnEnviar);
 		
-		textFieldDatos = new JTextField();
-		textFieldDatos.setForeground(new Color(0, 0, 0));
-		textFieldDatos.setFont(new Font("Tahoma", Font.BOLD, 11));
-		textFieldDatos.setEnabled(false);
-		textFieldDatos.setBounds(32, 195, 354, 25);
-		contentPane.add(textFieldDatos);
-		textFieldDatos.setColumns(10);
+		textAreaDatos = new JTextArea();
+//		textFieldDatos.setColumns(10);
+		scroll = new JScrollPane(textAreaDatos);
+		scroll.setForeground(new Color(0, 0, 0));
+		scroll.setFont(new Font("Tahoma", Font.BOLD, 11));
+		scroll.setBounds(32, 195, 354, 58);
+		contentPane.add(scroll);
 		
 		lblDatosRecibidos = new JLabel("Datos recibidos:");
 		lblDatosRecibidos.setBounds(32, 170, 102, 14);
 		contentPane.add(lblDatosRecibidos);
 		
+		btnMostrarTodos = new JButton("Mostrar todos");
+		btnMostrarTodos.setBounds(272, 143, 114, 23);
+		contentPane.add(btnMostrarTodos);
+		
 		setResizable(false);
+		setVisible(true);
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public JTextField getTextFieldNombre() {
+		return textFieldNombre;
+	}
+
+	public JTextField getTextFieldEdad() {
+		return textFieldEdad;
+	}
+
+	public JLabel getLblEdad() {
+		return lblEdad;
+	}
+
+	public JButton getBtnEnviar() {
+		return btnEnviar;
+	}
+
+	public JTextArea getTextAreadDatos() {
+		return textAreaDatos;
+	}
+
+	public JLabel getLblDatosRecibidos() {
+		return lblDatosRecibidos;
+	}
+
+	public JButton getBtnMostrarTodos() {
+		return btnMostrarTodos;
+	}
+
+	public JScrollPane getScroll() {
+		return scroll;
 	}
 }
