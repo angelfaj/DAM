@@ -6,14 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import modelo.PersonaModelo;
-import vista.UI;
+import vista.VistaAgenda;
 
 public class ControladorPersona {		//El controlador gestiona las excepciones
 
-	private UI vista;
+	private VistaAgenda vista;
 	private PersonaModelo modelo;
 	
-	public ControladorPersona(UI vista, PersonaModelo modelo) {
+	public ControladorPersona(VistaAgenda vista, PersonaModelo modelo) {
 		this.vista = vista;
 		this.modelo = modelo;
 		cargarTabla();

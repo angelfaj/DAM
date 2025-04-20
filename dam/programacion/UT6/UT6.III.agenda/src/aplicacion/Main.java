@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import controlador.ControladorPersona;
 import modelo.PersonaModelo;
-import vista.UI;
+import vista.VistaAgenda;
 
 public class Main {
 
@@ -50,7 +50,7 @@ public class Main {
 		3. Establece al controlador como responsable de responder a los eventos de la vista
 		4. Arranca la vista*/
 	
-	UI vista = new UI();
+	VistaAgenda vista = new VistaAgenda();
 	PersonaModelo modelo = new PersonaModelo();
 	new ControladorPersona(vista, modelo);
 	

@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class UI extends JFrame {
+public class VistaAgenda extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,7 +29,7 @@ public class UI extends JFrame {
 	private JScrollPane scrollPane;
 
 	
-	public UI() {
+	public VistaAgenda() {
 		setTitle("Agenda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
