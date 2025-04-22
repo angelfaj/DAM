@@ -1,7 +1,5 @@
 package vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -74,11 +71,12 @@ public class VistaBuscador extends JFrame {
 		setResizable(false);
 	}
 
-	public void mostrarTabla(String[] text) {	//Llena la tabla
+	public void mostrarTabla(String[][] text) {	//Llena la tabla
 		modeloTabla.setRowCount(0); 			//Limpia la tabla
-		!!!!
-		crear metodo que devuelva matriz con cada fila a mostrar ?
-				otra froma de añadir a la tabla?
+		
+		for (String[] fila : text) {
+			modeloTabla.addRow(fila);
+		}
 	}
 	
 	public JPanel getContentPane() {
