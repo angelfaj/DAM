@@ -1,0 +1,23 @@
+<concesionario>
+  <coche matricula="1777cdf">
+    <marca>Renault</marca>
+    <modelo>Megane</modelo>
+    <color>Rojo</color>
+    <cilindrada>1.5</cilindrada>
+  </coche>
+
+  <coche matricula="3457aff">
+    <marca>Seat</marca>
+    <modelo>León</modelo>
+    <color>Amarillo</color>
+    <cilindrada>1.6</cilindrada>
+  </coche>
+
+  <coche matricula="5466ggf">
+    <marca>Suzuki</marca>
+    <modelo>Vitara</modelo>
+    <color>Verde</color>
+    <cilindrada>1.9</cilindrada>
+  </coche>
+</concesionario>
+
