@@ -1,9 +1,15 @@
 package modelo;
 
+import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
@@ -12,7 +18,7 @@ public class ModeloCine implements Serializable{
 	private String email;
 	private String film;
 	private boolean disabledPerson;
-	private int seat;
+	private String seat;
 	private static final File facturaBin = new File("factura.bin"); 
 	private static final File facturaTxt= new File("factura.txt"); 
 	
@@ -20,12 +26,13 @@ public class ModeloCine implements Serializable{
 		super();
 	}
 	
-	public ModeloCine(String email, String film, boolean disabledPerson, int seat) {
+	public ModeloCine(String email, String film, boolean disabledPerson, String seat) throws IOException {
 		super();
 		this.email = email;
 		this.film = film;
 		this.disabledPerson = disabledPerson;
 		this.seat = seat;
+		saveFactura();
 	}
 
 	public void saveFactura() throws IOException {
@@ -33,11 +40,12 @@ public class ModeloCine implements Serializable{
 		FileWriter writer = null;
 		
 		if (!facturaTxt.exists()) {
-			writer = new FileWriter(facturaBin);
+			facturaTxt.createNewFile();
+			writer = new FileWriter(facturaTxt);
 		}else {
-			writer = new FileWriter(facturaBin, true);
+			writer = new FileWriter(facturaTxt, true);
 		}
-		writer.write(this + "");
+		writer.write(this + "\n");
 		writer.close();
 		
 		//Guardfamos en el bin
@@ -56,14 +64,57 @@ public class ModeloCine implements Serializable{
 		datos.close();
 	}
 	
-	public String showTxt() {
-		String txt = "", line = "";
+	public String showFacturaTxt() throws FileNotFoundException, IOException {
+		String line = "";
 		
+		try (FileReader reader = new FileReader(facturaTxt); BufferedReader buffer = new BufferedReader(reader)) {
+			while ((line = buffer.readLine()) != null) {
+				if (line.equalsIgnoreCase(this.toString())) {
+					return line;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public String showAllFacturaTxt() throws FileNotFoundException, IOException {
+		String line = "", txt = "";
+		
+		try (FileReader reader = new FileReader(facturaTxt); BufferedReader buffer = new BufferedReader(reader)) {
+			while ((line = buffer.readLine()) != null) {
+				txt += line + "\n";
+			}
+		}
 		return txt;
 	}
 	
-	public String showBin() {
+	public String showFacturaBin() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ModeloCine aux = null;
+		
+		try (FileInputStream fi = new FileInputStream(facturaBin); ObjectInputStream datos = new ObjectInputStream(fi)) {
+			while (true) {
+				aux = (ModeloCine) datos.readObject();
+				if (aux.toString().equalsIgnoreCase(this.toString())) {
+					return aux.toString();
+				}
+			}
+		}catch (EOFException e) {}
+		
+		
+		return null;
+	}
+	
+	public String showAllFacturaBin() throws FileNotFoundException, IOException, ClassNotFoundException {
 		String txt = "";
+		ModeloCine aux = null;
+		
+		try (FileInputStream fi = new FileInputStream(facturaBin); ObjectInputStream datos = new ObjectInputStream(fi)) {
+			while (true) {
+				aux = (ModeloCine) datos.readObject();
+				txt += aux.toString() + "\n";
+			}
+		}catch (EOFException e) {}
+		
 		
 		return txt;
 	}
@@ -98,11 +149,11 @@ public class ModeloCine implements Serializable{
 		this.disabledPerson = disabledPerson;
 	}
 
-	public int getSeat() {
+	public String getSeat() {
 		return seat;
 	}
 
-	public void setSeat(int seat) {
+	public void setSeat(String seat) {
 		this.seat = seat;
 	}
 	
