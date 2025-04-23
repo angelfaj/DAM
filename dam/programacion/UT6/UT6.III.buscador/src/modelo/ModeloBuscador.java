@@ -17,7 +17,7 @@ public class ModeloBuscador {
 		int ocurrencias = 0;
 		int aux = 0;
 		try(FileReader reader = new FileReader(txt)) {
-			while ((aux = reader.read()) != 0) {
+			while ((aux = reader.read()) != -1) {
 				if (aux == c) {
 					ocurrencias++;
 				}
@@ -53,7 +53,7 @@ public class ModeloBuscador {
 		int ocurrencias = 0;
 		int aux = 0;
 		try(FileReader reader = new FileReader(txt)) {
-			while ((aux = reader.read()) != 0) {
+			while ((aux = reader.read()) != -1) {
 				ocurrencias++;
 			}
 		}

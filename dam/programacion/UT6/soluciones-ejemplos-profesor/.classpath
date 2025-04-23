@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="EjemplosSwing/src/|Ejercicio1SWING_MVC/src/|MVC_Ejemplo/src/|Ejercicio3SWING_MVC/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="EjemplosSwing/src"/>
+	<classpathentry kind="src" path="Ejercicio1SWING_MVC/src"/>
+	<classpathentry kind="src" path="Ejercicio3SWING_MVC/src"/>
+	<classpathentry kind="src" path="MVC_Ejemplo/src"/>
+	<classpathentry kind="output" path="EjemplosSwing/bin"/>
+</classpath>

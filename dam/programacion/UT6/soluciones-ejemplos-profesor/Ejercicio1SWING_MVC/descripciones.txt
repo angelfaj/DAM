@@ -1,0 +1,3 @@
+Simple: Habitación sencilla con cama individual y escritorio.
+Doble: Habitación para dos personas con cama doble y baño privado.
+Suite: Habitación de lujo con sala de estar, jacuzzi y vistas panorámicas.

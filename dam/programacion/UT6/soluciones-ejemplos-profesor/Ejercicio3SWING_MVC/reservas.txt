@@ -1,0 +1,9 @@
+Ciudad: Barcelona
+Comentarios: Buen menú de comida
+------------
+Ciudad: Sevilla
+Comentarios: Habitación simple pero cómoda
+------------
+Ciudad: Madrid
+Comentarios: Bien hubicado
+------------

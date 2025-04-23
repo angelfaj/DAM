@@ -26,6 +26,7 @@ public class ControladorBuscador implements ActionListener {
 		}
 
 		this.vista.getBtnBuscar().addActionListener(this);
+		System.out.println("HOLA");
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class ControladorBuscador implements ActionListener {
 			e2.printStackTrace();
 		}
 		
-		System.out.println("HOLA");
+		
 		vista.mostrarTabla(results);
 	}
 }
