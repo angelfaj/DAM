@@ -25,7 +25,7 @@ public class VistaPedido extends JFrame {
 	public VistaPedido() {
 		setTitle("Gestor de pedidos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 462, 309);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -33,7 +33,7 @@ public class VistaPedido extends JFrame {
 		setContentPane(contentPane);
 		
 		pedidoPane = new JPanel();
-		pedidoPane.setBounds(23, 0, 285, 32);
+		pedidoPane.setBounds(23, 10, 285, 32);
 		contentPane.add(pedidoPane);
 		pedidoPane.setLayout(null);
 		
@@ -72,7 +72,7 @@ public class VistaPedido extends JFrame {
 		contentPane.add(btnAniadirTxt);
 		
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(320, 0, 100, 25);
+		btnBuscar.setBounds(320, 10, 100, 25);
 		contentPane.add(btnBuscar);
 		
 		btnMostrarTodo = new JButton("Mostrar todo");
@@ -80,7 +80,7 @@ public class VistaPedido extends JFrame {
 		contentPane.add(btnMostrarTodo);
 		
 		textArea = new JTextArea();
-		textArea.setBounds(12, 146, 424, 107);
+		textArea.setBounds(12, 146, 414, 107);
 		contentPane.add(textArea);
 		
 		btnAniadirObj = new JButton("AñadirOBJ");

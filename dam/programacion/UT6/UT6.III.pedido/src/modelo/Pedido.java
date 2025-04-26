@@ -1,18 +1,18 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Pedido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String pedido;
-	private String[] comida;
+	private ArrayList<String> comida;
 	
 	public Pedido() {}
 	
-	public Pedido(String pedido, String[] comida) {
+	public Pedido(String pedido, ArrayList<String> comida) {
 		this.pedido = pedido;
 		this.comida = comida;
 	}
@@ -34,13 +34,13 @@ public class Pedido implements Serializable{
 		return comidas;
 	}
 
-	public void setComida(String[] comida) {
+	public void setComida(ArrayList<String> comida) {
 		this.comida = comida;
 	}
 
 	@Override
 	public String toString() {
-		return "Pedido=" + pedido + ", comida=" + getComida();
+		return pedido + " - " + getComida();
 	}
 
 	@Override

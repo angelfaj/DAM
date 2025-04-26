@@ -90,7 +90,7 @@ public class GestionPedido {
 		
 		try(FileReader reader = new FileReader(PEDIDOTXT); BufferedReader buffer = new BufferedReader(reader)) {
 			while ((linea = buffer.readLine()) != null) {
-				if (linea.equalsIgnoreCase(pedido)) {
+				if (linea.split(" - ")[0].equalsIgnoreCase(pedido)) {
 					return linea;
 				}
 			}
