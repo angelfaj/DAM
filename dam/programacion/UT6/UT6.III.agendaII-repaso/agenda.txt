@@ -1,0 +1,4 @@
+Nombre=prueba, telefono=456, favorito=no
+Nombre=prueba5, telefono=4567, favorito=no
+Nombre=s, telefono=, favorito=si
+Nombre=se, telefono=se, favorito=si
