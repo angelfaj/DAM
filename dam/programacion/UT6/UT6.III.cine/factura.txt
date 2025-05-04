@@ -1,3 +1,4 @@
 Reserva [email=prueba, film=La naranja mecánica, disabledPerson=true, seat=6]
 Reserva [email=prueba2, film=La naranja mecánica, disabledPerson=true, seat=3]
 Reserva [email=prueba2, film=Solo en casa, disabledPerson=true, seat=3]
+Reserva [email=, film=El resplandor, disabledPerson=false, seat=]
