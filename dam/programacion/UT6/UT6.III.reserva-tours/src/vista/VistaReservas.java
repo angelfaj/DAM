@@ -4,6 +4,7 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -44,16 +45,17 @@ public class VistaReservas extends JFrame {
 		contentPane.add(dataPane);
 
 		paymentPane = new JPanel();
-		paymentPane.setBounds(224, 83, 184, 36);
+		paymentPane.setBounds(224, 73, 184, 46);
 		paymentPane.setLayout(null);
+		paymentPane.setBorder(new TitledBorder("Forma de pago"));
 		dataPane.add(paymentPane);
 		
 		rdbtnTarjeta = new JRadioButton("Tarjeta");
-		rdbtnTarjeta.setBounds(6, 7, 75, 23);
+		rdbtnTarjeta.setBounds(6, 16, 75, 23);
 		paymentPane.add(rdbtnTarjeta);
 		
 		rdbtnEfectivo = new JRadioButton("Efectivo");
-		rdbtnEfectivo.setBounds(103, 7, 75, 23);
+		rdbtnEfectivo.setBounds(103, 16, 75, 23);
 		paymentPane.add(rdbtnEfectivo);
 		
 		grupoRdbtn = new ButtonGroup();
@@ -85,12 +87,6 @@ public class VistaReservas extends JFrame {
 		chckbxIngles.setBounds(326, 25, 82, 23);
 		dataPane.add(chckbxIngles);
 		
-		JLabel lblNewLabel_1 = new JLabel("Forma de pago");
-		lblNewLabel_1.setForeground(new Color(255, 0, 0));
-		lblNewLabel_1.setBackground(new Color(255, 255, 255));
-		lblNewLabel_1.setBounds(237, 73, 114, 14);
-		dataPane.add(lblNewLabel_1);
-
 		actionPane = new JPanel();
 		actionPane.setBounds(10, 156, 414, 44);
 		actionPane.setLayout(null);
@@ -116,11 +112,6 @@ public class VistaReservas extends JFrame {
 		setVisible(true);
 		setResizable(false);
 	}
-	
-	public void printLog(String text) {		//Log del textarea
-		getTextArea().setText(text);
-		JOptionPane.showMessageDialog(this, text);
-	}
 
 	public boolean camposRellenos() {		//True si estan todos los campos rellenos
 		if (getTextFieldNombre().getText().length() <= 0) {
@@ -138,12 +129,40 @@ public class VistaReservas extends JFrame {
 		return true;
 	}
 	
+	public void mostrarOperacion(String operacion) {
+		textArea.setText(operacion);
+	}
+	
+	public void mostrarAviso(String aviso) {
+		JOptionPane.showMessageDialog(this, aviso);
+	}
+	
 	public void limpiarCampos() {		//Limpia el formulario
 		getTextFieldNombre().setText("");
 		getComboBox().setSelectedIndex(0);
 		getChckbxCastellano().setSelected(false);
 		getChckbxIngles().setSelected(false);
 		getGrupoRdbtn().clearSelection();
+	}
+	
+	public String getIdioma() {			//Devuelve un string con los idiomas seleccionados
+		String idioma = "";
+		if (chckbxCastellano.isSelected()) {
+			idioma += "Castellano ";
+		}
+		if (chckbxIngles.isSelected()) {
+			idioma += "Inglés";
+		}
+		return idioma;
+	}
+	
+	public String getPago() {			//Devuelve el pago seleccionado
+		if(rdbtnEfectivo.isSelected()) {
+			return "Efectivo";
+		}else if (rdbtnTarjeta.isSelected()) {
+			return "Tarjeta";
+		}
+		return null;
 	}
 	
 	public JPanel getContentPane() {

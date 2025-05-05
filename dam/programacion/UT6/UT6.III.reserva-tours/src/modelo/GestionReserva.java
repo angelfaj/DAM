@@ -68,7 +68,7 @@ public class GestionReserva {
 	
 	public boolean cancelarReservaTxt(Reserva reserva) throws FileNotFoundException, IOException {	//True si borra la reserva
 		ArrayList<Reserva> reservas = getReservasTxt();
-		
+
 		if (reservas.contains(reserva)) {							//Eliminamos la reserva, eliminamos el fichero y volcamos de nuevo la informacion actualizada
 			reservas.remove(reserva);
 			
@@ -84,10 +84,14 @@ public class GestionReserva {
 	public ArrayList<Reserva> getReservasTxt() throws FileNotFoundException, IOException {	//Devuelve un arraylist con todas las reservas del txt
 		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 		String linea;
+		String[] reserva = new String[4];
 		
 		try (FileReader reader = new FileReader(RESERVASTXT); BufferedReader bufer = new BufferedReader(reader)) {
 			while ((linea = bufer.readLine()) != null) {
-				reservas.add(new Reserva(linea.split(":")[0], linea.split(":")[1], linea.split(":")[2], linea.split(":")[3]));	//Creamos un objeto reserva a partir de la linea leida
+				reserva = linea.split("-");
+				if (reserva.length == 4) {							//Comprobacion obligatoria por la linea adicional introducida al guardar cada reserva
+					reservas.add(new Reserva(reserva[0], reserva[1], reserva[2], reserva[3]));	//Creamos un objeto reserva a partir de la linea leida
+				}
 			}
 		}
 		return reservas;
