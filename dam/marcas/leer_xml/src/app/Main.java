@@ -13,7 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class Main {
 
 	public static void main(String[] args) {	//Contenido obtenido de http://jmoral.es/blog/xml-dom
-		/* Tratamiento de concesionario.xml
+		// Tratamiento de concesionario.xml
 		File file = new File("concesionario.xml");
 		
 		if (!file.exists()) {
@@ -53,7 +53,7 @@ public class Main {
 			} catch(Exception e) {
 			  e.printStackTrace();
 			}
-		*/
+		
 
 		/*Tratamiento del archivo concesionario_modificado.xml
 		
