@@ -1,7 +1,11 @@
 package app;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,29 +20,35 @@ public class Main {
 
 	public static void main(String[] args) {
 		/*
-	 	Se trata de hacer un programa que lea el fichero oposición.xml y
-		guardar en un fichero oposición_resultado.txt los datos de salnifa,
-		que serán:
-		Nif*pruebafisica*psicotécnico*media nota exámenes*apto o no
-		apto
-		Un alumno será apto si tienes las tres notas mayor o igual a 5, en
-		el fichero que os mando el resultado seria:
-		55555m*6.7*5.3*6*APTO
-		44444m*4.7*6.3*5*NO APTO
+		5 practica: proceso de un fichero .xml
+		 	
+		 	ENUNCIADO:
+		 	Se trata de hacer un programa que lea el fichero oposición.xml y
+			guardar en un fichero oposición_resultado.txt los datos de salnifa,
+			que serán:
+			Nif*pruebafisica*psicotécnico*media nota exámenes*apto o no
+			apto
+			Un alumno será apto si tienes las tres notas mayor o igual a 5, en
+			el fichero que os mando el resultado seria:
+			55555m*6.7*5.3*6*APTO
+			44444m*4.7*6.3*5*NO APTO
+			
+			extra: pedir los ficheros mediante scanner y añadir un mensaje informativo a las excepciones.
+			Subir solo la clase Main.
 		 */
 		
-		File fichXml, fichTxt; 
+		File xmlFile, txtFile; 
 		String entradaXml, entradaTxt;
 		Scanner entrada = new Scanner(System.in);
 		
 		//Peticion de datos
 		System.out.println("Introduce el fichero xml a leer: ");
 		entradaXml = entrada.nextLine();
-		fichXml = new File(entradaXml);
+		xmlFile = new File(entradaXml);
 			
 		System.out.println("Introduce el nombre del .txt donde guardar la informacion: ");
 		entradaTxt = entrada.nextLine();
-		fichTxt = new File(entradaTxt);
+		txtFile = new File(entradaTxt);
 		
 		entrada.close();
 		
@@ -46,7 +56,7 @@ public class Main {
 		try {
 		  DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		  DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		  Document doc = dBuilder.parse(fichXml);
+		  Document doc = dBuilder.parse(xmlFile);
 		  
 		  // estos métodos podemos usarlos combinados para normalizar el archivo XML
 		  doc.getDocumentElement().normalize();
@@ -85,17 +95,43 @@ public class Main {
 			    			+ media + "*" + apto;
 			    
 			    //Guardamos en el fichero txt
-			    !!!!!!
-			    System.out.println(salidaTxt);
-			   
+			    System.out.println("Guardando informacion en el fichero txt...");
+			    writeDataInTxt(txtFile, salidaTxt);
+			    
 			 }
 		  }
+		  
+		  //Imprimimos el contenido del txt 
+		  System.out.println("Leyendo información del fichero txt: ");
+		  readTxtFile(txtFile);
 		} catch(FileNotFoundException e) {
 			System.out.println("El fichero xml no existe o no se encuentra");
-		} catch(Exception e) {
-			  e.printStackTrace();
+		} catch(IOException e) {
+			System.out.println("Ha ocurrido un error de entrada/salida");;
+		} catch (Exception e) {
+			System.out.println("Ha ocurrido un error");
+		}
+	}
+	
+	private static void readTxtFile(File txtFile) throws FileNotFoundException, IOException {
+		String linea;
+		try(FileReader reader = new FileReader(txtFile); BufferedReader buffer = new BufferedReader(reader)) {
+			while ((linea = buffer.readLine()) != null ) {
+				System.out.println(linea);
+			}
+		}
+	}
+
+	private static void writeDataInTxt(File txtFile, String textToSave) throws IOException {
+		FileWriter writer = null;
+		//Si no existe lo creamos, si existe añadimos
+		if (!txtFile.exists()) {
+			writer = new FileWriter(txtFile);
+		}else {
+			writer = new FileWriter(txtFile, true);
 		}
 		
-		
+		writer.write(textToSave + "\n");
+		writer.close();
 	}
 }
