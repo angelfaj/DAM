@@ -1,0 +1,97 @@
+Guia instalación archlinux:
+	1. Conectar cable ethernet
+	2. Introducir iso 
+	3. Seleccionar primera opcion instalar archlinux
+	4. En el terminal ejecutar: archinstall
+	5. Elegir configuaracion:
+		Lenguaje: ingles
+		Layout: es
+		Perfil: GNOME
+		contraseñas y cuentas
+		audio: pulseaudio e interfaz grafica
+	
+	-Primer inicio de sesion-
+	6. sudo pacman -S i3
+	7. cerramos sesion y antes de loguearnos de nuevo en el menu elegimos i3.
+	8. *1, setxkbmap -layout es  //Cambiamos el layout del teclado a español
+	9. *4 y agregamos: exec --no-startup-id setxkbmap -layout es
+	9. sudo pacman -S dmenu
+	
+	--Configurando i3--
+	10. *4 modificamos el tamaño de la fuente actual a 14 + *2 + *3
+	12. sudo pacman -S xclip xsel & sudo pacman -S clipmenu dmenu //instalamos gestor de portapapeles
+	13. *4 añadimos: 
+			exec_always --no-startup-id clipmenud 
+			bindsym $mod+p exec clipmenu
+	11. Instalamos yay (aur helper) siguiendo las instrucciones del repositorio de github
+	12. yay -S ttf-meslo-nerd			//Fuente para el texto
+	13. fc-list | grep Meslo 			//Lista las fuentes instaladas
+	14. *4 + modificar la linea: font pango:Meslo LGM Nerd Font 13
+	15. yay -S picom  					//Instala el compositor de ventanas picom
+	16. yay -S stow						//Crear enlaces simbolicos entre archivos de configuracion de diferentes directorios
+	17. en home: git clone + URL al repo de github de typecraft dotfiles
+	18. cd dotfiles && stow picom && stow alacritty		//ahora picom apuntara al archivo de configuaracion de picom de la carpeta dotfiles igual para alacritty
+	19. *4 añadimos: exec_always --no-startup-id picom y *2 + *3
+	20. repetimos pasos 11-13 pero con ttf-jetbrains-mono-nerd
+	21. *5 debe quedar asi:
+		backend = "xrender";
+		vsync = true;
+
+		xrender-sync = true;
+		xrender-sync-fence = true;
+
+		# La siguiente configuracion no es valida para mi pc actual ya que se queda la pantalla congelada hasta que refrescas manualmente
+		# Si backend = "glx" entonces descomentar las siguientes lineas:
+		# glx-use-copysubbuffer-mesa = true;
+		# glx-copy-from-front = true;
+		# glx-swap-method = 2;
+
+	22. *6 y sustituimos la fuente por "JetBrainsMono Nerd Font"
+	23. yay -S polybar
+	24. cd ~/dotfiles && stow polybar
+	25. *4 añadimos: 
+		exec_always killall polybar
+		exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
+		y comentamos las lineas que hace referencia a i3bar (se encuentran al final)
+	26. yay -S feh 			//Gestiona el fondo de pantalla
+	28. cd ~/dotfiles && stow backgrounds
+	27. Fondo de pantalla deseando moverlo a ~/.config/backgrounds/*
+	28. *4 añadimos:
+		exec_always --bg-scale ~/.config/backgrounds/fondo-deseado.jpg
+	29. yay -S rofi && cd ~/dotfiles && stow rofi			//rofi es un app launcher and windows switcher
+	30. *4 añadimos:
+		bindsym $mod+d exec rofi -show combi
+		modificamos el bloque #move focused window:
+		h ->left
+		j ->down
+		k ->up
+		l ->right
+	
+	
+	
+
+
+
+
+
+Comandos:
+	---i3---
+	- *1: alt + enter -> abre terminal en i3
+	- *2: esc + :wq -> guarda el archivo actual en vim y sale
+	- *3: alt + sift + r -> recarga la configuracion en ~/.config/*
+	- *4: vim ~/.config/i3/config
+	- *5: vim ~/dotfiles/picom
+	- *6: vim ~/dotfiles/alacritty
+	- *7: vim ~/dotfiles/polybar
+	- alt + / -> abre dmenu que permite ejecutar cualquier aplicacion instalada pej: firefox
+	- alt + flech.iz -> cambia el foco a la ventana correspondiente
+	- alt + w -> pone la ventana en pantalla completa y permite cambiar entre ellas con el comando anterior
+	- alt + e -> devuelve las ventanas a su distribucion original
+	- alt + 2 -> cambia al workspace 2
+	- shitf + alt + space -> convierte la ventana actual en una ventana flotante
+	- 
+	
+Personalizacion:
+	Para configurar atajos de teclado en *4
+	Para transparencias y animaciones en *5
+	Personalizar la terminal en *6
