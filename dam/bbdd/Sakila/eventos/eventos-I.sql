@@ -77,7 +77,7 @@
 DROP EVENT IF EXISTS insert_once_event;
 
 CREATE EVENT IF NOT EXISTS insert_once_event
-ON SCHEDULE AT NOW() + INTERVAL 10 MINUTE
+ON SCHEDULE EVERY 10 MINUTE
 DO INSERT INTO log_eventos VALUES (NOW());
 
 -- 5. Crear un evento que borre registros de payment donde amount = 0 una vez al
@@ -92,7 +92,7 @@ DO DELETE FROM payment WHERE amount = 0;
 DROP EVENT IF EXISTS disable_event;
 
 CREATE EVENT IF NOT EXISTS disable_event
-ON SCHEDULE AT NOW() + INTERVAL 20 HOUR 
+ON SCHEDULE EVERY 20 HOUR 
 DISABLE DO DELETE FROM payment WHERE amount = 0;
 
 -- 7. Listar todos los eventos definidos en la base de datos Sakila.
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS log_bajas (
 DROP EVENT IF EXISTS move_inactive_customer_event;
 DELIMITER //
 CREATE EVENT IF NOT EXISTS move_inactive_customer_event
-ON SCHEDULE AT NOW() + INTERVAL EVERY MONTH
+ON SCHEDULE EVERY EVERY MONTH
 DO BEGIN
 	INSERT INTO log_bajas SELECT * FROM customer WHERE active = false;
     DELETE FROM customer WHERE active = false;    
@@ -162,7 +162,7 @@ DELIMITER ;
 DROP EVENT IF EXISTS update_rental_rate_to_old_film_event;
 
 CREATE EVENT IF NOT EXISTS update_rental_rate_to_old_film_event
-ON SCHEDULE AT NOW() + INTERVAL EVERY DAY
+ON SCHEDULE EVERY EVERY DAY
 DO UPDATE film SET rental_rate = rental_rate*0.9 
 WHERE (SELECT * FROM film 
 		WHERE (YEAR(NOW()) - release_year) >= 10);
@@ -171,24 +171,61 @@ WHERE (SELECT * FROM film
 -- 14. Crear un evento que inserte estadísticas de uso (películas más alquiladas)
 -- cada semana en una tabla de resumen.
 ALTER TABLE log_eventos ADD most_rented_film SMALLINT UNSIGNED;
+ALTER TABLE log_eventos ADD veces_alquilada SMALLINT UNSIGNED;
+ALTER TABLE log_eventos ADD week date;
 
 DROP EVENT IF EXISTS save_most_rented_film_event;
 
 CREATE EVENT IF NOT EXISTS save_most_rented_film_event
-ON SCHEDULE AT NOW() + INTERVAL EVERY WEEK
+ON SCHEDULE EVERY EVERY WEEK
 DO 
 INSERT INTO log_eventos(most_rented_film) 
-	SELECT i.film_id FROM inventory i 
-    JOIN rental r ON r.inventory_id = i.inventory_id
-    WHERE i.film_id IN (
-		SELECT i.film_id as film_id, COUNT(i.film_id) FROM inventory i 
-		JOIN rental r ON r.inventory_id = i.inventory_id 
-
-!!SELECT SOBRE LA SUBCONSULTA PARA NO REPETIR CODIGO 
-
+	SELECT film_id, veces_alquilada, NOW() FROM (			-- SELECT SOBRE LA SUBCONSULTA PARA NO REPETIR CODIGO 
+		SELECT i.film_id as film_id, COUNT(i.film_id) AS veces_alquilada 
+        FROM inventory i 
+		JOIN rental r ON r.inventory_id = i.inventory_id
+        GROUP BY 1) AS subquery
+	ORDER BY veces_alquilada DESC LIMIT 10;
 
 -- 15. Crear un evento que ejecute un procedimiento almacenado que calcula
 -- ingresos mensuales y lo guarda en una tabla reporte_mensual.
+DROP PROCEDURE IF EXISTS calculate_month_income_procedure;
+
+DELIMITER //
+CREATE PROCEDURE calculate_month_income_procedure
+	(OUT month_income DOUBLE)
+BEGIN    
+	SET month_income = 0;
+    
+    CREATE TABLE IF NOT EXISTS reporte_mensual (
+		id_reporte_mensual SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        month_income DOUBLE NOT NULL,
+        fecha_reporte TIMESTAMP DEFAULT NOW()
+	);
+    
+    SELECT SUM(amount) INTO month_income
+    FROM payment
+    WHERE 
+		MONTH(payment_date) = MONTH(NOW()) AND
+        YEAR(payment_date) = YEAR(NOW());
+
+	IF month_income IS NULL THEN 
+		SET month_income = 0;
+	END IF;
+    
+END//
+
+DROP EVENT IF EXISTS calculate_month_income_event//
+CREATE EVENT calculate_month_income_event
+ON SCHEDULE EVERY 1 MONTH
+DO BEGIN
+	CALL calculate_month_income_procedure(@income);
+    INSERT INTO reporte_mensual(month_income, fecha_reporte)  VALUES (@income, NOW());
+END//
+DELIMITER ;
+
+SELECT * FROM reporte_mensual;
+
 -- 16. Crear un evento que, al finalizar el mes, archive la tabla payment y vacíe los
 -- registros.
 -- 17. Crear un evento que corra cada 5 minutos y verifique si hay nuevos clientes
