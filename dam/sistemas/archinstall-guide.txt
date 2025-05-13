@@ -34,18 +34,21 @@ Guia instalación archlinux:
 	19. *4 añadimos: exec_always --no-startup-id picom y *2 + *3
 	20. repetimos pasos 11-13 pero con ttf-jetbrains-mono-nerd
 	21. *5 debe quedar asi:
-		backend = "xrender";
+		backend = "glx"
 		vsync = true;
-
+		
 		xrender-sync = true;
 		xrender-sync-fence = true;
-
-		# La siguiente configuracion no es valida para mi pc actual ya que se queda la pantalla congelada hasta que refrescas manualmente
-		# Si backend = "glx" entonces descomentar las siguientes lineas:
-		# glx-use-copysubbuffer-mesa = true;
-		# glx-copy-from-front = true;
-		# glx-swap-method = 2;
-
+		# Si el	gestor da problemas comentar las siguientes 3 lineas y cambiar eI backend a xrender
+		glx-use-copysubbuffer-mesa = true;
+		glx-copy-from-front = true;
+		glx-swap-method = 2
+		
+		##Personalization##
+		#Windows opacity
+		inactive-opacity = 95
+		active-opacity = 1
+		
 	22. *6 y sustituimos la fuente por "JetBrainsMono Nerd Font"
 	23. yay -S polybar
 	24. cd ~/dotfiles && stow polybar
@@ -60,7 +63,7 @@ Guia instalación archlinux:
 		exec_always --bg-scale ~/.config/backgrounds/fondo-deseado.jpg
 	29. yay -S rofi && cd ~/dotfiles && stow rofi			//rofi es un app launcher and windows switcher
 	30. *4 añadimos:
-		bindsym $mod+d exec rofi -show combi
+		bindsym $mod+d exec rofi -show drun
 		modificamos el bloque #move focused window:
 		h ->left
 		j ->down
