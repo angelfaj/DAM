@@ -228,8 +228,51 @@ SELECT * FROM reporte_mensual;
 
 -- 16. Crear un evento que, al finalizar el mes, archive la tabla payment y vacíe los
 -- registros.
+DELIMITER //
+DROP EVENT IF EXISTS archive_payment_event//
+
+CREATE TABLE IF NOT EXISTS archive_payment LIKE payment//
+
+CREATE EVENT archive_payment_event 
+ON SCHEDULE EVERY 1 MONTH STARTS '2025-05-29'
+DO BEGIN
+	INSERT INTO archive_payment SELECT * FROM payment;
+	DELETE FROM payment;
+END//
+DELIMITER ;
+
 -- 17. Crear un evento que corra cada 5 minutos y verifique si hay nuevos clientes
 -- registrados hoy. Si hay, guarda un log.
+DELIMITER //
+use sakila;
+DROP EVENT IF EXISTS new_customers_event;
+
+-- CREATE TABLE IF NOT EXISTS new_customers_by_day (
+-- 	id_new_customers_by_day SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+--     total_customers SMALLINT UNSIGNED DEFAULT 0,
+--     date DATETIME DEFAULT NOW()
+-- );
+
+DROP PROCEDURE IF EXISTS new_customers_by_day_procedure;
+CREATE PROCEDURE new_customers_by_day_procedure
+	(OUT total_customers SMALLINT)
+BEGIN
+	SELECT COUNT(customer_id) INTO total_customers
+    FROM customer WHERE DATE(create_date) = DATE(NOW());
+    
+    IF total_customers IS NULL THEN
+		SET total_customers = 0;
+	END IF;
+END;
+	
+
+CREATE EVENT new_customers_event
+ON SCHEDULE EVERY 5 MINUTE
+DO BEGIN
+	INSERT INTO new_customers_by_day SELECT new_customers_by_day_procedure, NOW();
+END;
+DELIMITER ;
+SELECT * FROM new_customers_by_day;
 -- 18. Crear un evento que desactive cuentas de clientes inactivos por más de 1 año.
 -- 19. Crear un evento que revise el inventario de cada tienda y registre si el stock de
 -- una categoría baja de 10 unidades.
