@@ -53,8 +53,9 @@ public class Main {
 		String nombre;
 		double nota;
 		st = connection.createStatement();
-		rs = st.executeQuery("select id, nombre, edad, nota from alumnos order by id asc");
+		rs = st.executeQuery("select id, nombre, edad, nota from alumnos order by id asc");	//Consulta a realizar 
 
+		//Formateamos la salida
 		System.out.println("ID" + "\t" + "Nombre" + "\t" + "Edad" + "\t" + "Nota");
 		System.out.println("-----------------------------");
 		while (rs.next()) {
@@ -70,6 +71,7 @@ public class Main {
 	public static void updateAlumnoById(int id, Alumno alumno) throws SQLException {
 		PreparedStatement ps=connection.prepareStatement("update alumnos set nombre = ?, edad = ?, nota = ? where id = ?");
 		//Los parámetros empiezan a contar desde el 1
+		//Obtenemos los valores del alumno creado
 		ps.setString(1, alumno.getNombre());
 		ps.setInt(2, alumno.getEdad());
 		ps.setDouble(3, alumno.getNota());
@@ -79,8 +81,7 @@ public class Main {
 
 	public static void insertAlumno(Alumno alumno) throws SQLException {
 		
-		PreparedStatement ps=connection.prepareStatement("insert into alumnos values (?, ?, ?)");
-		//Los parámetros empiezan a contar desde el 1
+		PreparedStatement ps=connection.prepareStatement("insert into alumnos(nombre, edad, nota) values (?, ?, ?)");
 		ps.setString(1, alumno.getNombre());
 		ps.setInt(2, alumno.getEdad());
 		ps.setDouble(3, alumno.getNota());
@@ -89,7 +90,6 @@ public class Main {
 	
 	public static void deleteAlumnoById(int id) throws SQLException {
 		PreparedStatement ps=connection.prepareStatement("delete from alumnos where id = ?");
-		//Los parámetros empiezan a contar desde el 1
 		ps.setInt(1, id);
 		ps.executeUpdate();
 	}
@@ -100,9 +100,11 @@ public class Main {
 		double nota;
 		
 		PreparedStatement ps=connection.prepareStatement("select id, nombre, edad, nota from alumnos where nota >= ? order by nota desc");
+		//Sustituimos la nota pasada por parametro
 		ps.setDouble(1, notaReferencia);
 		rs = ps.executeQuery();
 		
+		//Formateamos la salida
 		System.out.println("ID" + "\t" + "Nombre" + "\t" + "Edad" + "\t" + "Nota");
 		System.out.println("-----------------------------");
 		while (rs.next()) {
@@ -141,8 +143,7 @@ public class Main {
 		String nombre;
 		double nota;
 		st = connection.createStatement();
-		rs = st.executeQuery("select id, nombre, edad, nota from alumnos order by nota desc limit 3");  
-//		rs = st.executeQuery("select * from (select id, nombre, edad, nota from alumnos order by nota desc ) where rownum = 3");
+		rs = st.executeQuery("select * from (select id, nombre, edad, nota from alumnos order by nota desc ) where rownum < 4");
 		
 		System.out.println("ID" + "\t" + "Nombre" + "\t" + "Edad" + "\t" + "Nota");
 		System.out.println("-----------------------------");
@@ -162,7 +163,7 @@ public class Main {
 		rs = st.executeQuery("select avg(nota) as notaMedia from alumnos");
 		rs.next();
 
-		media = rs.getDouble("notaMedia");
+		media = rs.getDouble("notaMedia");	//Tomamos el valor a traves del nombre de la columna
 		
 		return media;
 	}
@@ -172,7 +173,7 @@ public class Main {
 		st = connection.createStatement();
 		rs = st.executeQuery("select count(id) as aprobados from alumnos where nota >= 5");
 		
-		while (rs.next()) {
+		while (rs.next()) {		//Solo devolvera una linea
 			nAlumnos = rs.getInt("aprobados");
 		}
 		
@@ -191,30 +192,36 @@ public class Main {
 		return nAlumnos;
 	}
 	
-	public static void estadisticasGenerales() throws SQLException {
+	public static void estadisticasGenerales() throws SQLException {	
 		System.out.println("Aprobados" + "\t" + "Suspensos" + "\t" + "Media");
 		System.out.println("-----------------------------------------");
 		System.out.println(numeroAprobados() + "\t\t" + numeroSuspensos() + "\t\t" + notaMediaAlumnos());
 	}
 	
-	public static int validarInt(Scanner scanner) {
+	public static int validarInt(Scanner scanner) {		//Evita recoger valores no deseados
 		do {
+			int number;
 			if (scanner.hasNextInt()) {
-			    int number = scanner.nextInt();
+			    number = scanner.nextInt();
+			    scanner.nextLine();			//Limpiamos enter
 			    return number;
 			} else {
 			    System.out.println("Por favor introduce un numero válido");
+			    scanner.nextLine();			//Limpiamos buffer para evitar bulce infinito
 			}
 		}while (true);
 	}
 	
-	public static double validarDouble(Scanner scanner) {
+	public static double validarDouble(Scanner scanner) {	//Evita recoger valores no deseados
 		do {
+			double number;
 			if (scanner.hasNextDouble()) {
-				double number = scanner.nextDouble();
+				number = scanner.nextDouble();
+				scanner.nextLine();
 				return number;
 			} else {
 				System.out.println("Por favor introduce un numero válido");
+				scanner.nextLine();
 			}
 		}while (true);
 	}
@@ -225,7 +232,7 @@ public class Main {
 		Scanner entrada = new Scanner(System.in);
 		
 		do {
-			System.out.println("***************************** MENÚ *****************************"
+			System.out.println("***************************** MENÚ *****************************\n"
 					+ "1. Listar todos los alumnos ordenados por ID.\n"
 					+ "2. Insertar un nuevo alumno (nombre, edad, nota).\n"
 					+ "3. Actualizar un alumno existente por ID.\n"
@@ -234,11 +241,11 @@ public class Main {
 					+ "6. Listar alumnos de una edad concreta.\n"
 					+ "7. Mostrar los 3 alumnos con mejor nota.\n"
 					+ "8. Mostrar estadísticas generales. \n"
-					+ "9. Salir del programa"
+					+ "9. Salir del programa\n"
 					+ "Introduce una opcion: ");
 			
 			opcion = entrada.nextInt();
-			entrada.next(); //Limpiamos el buffer
+			entrada.nextLine(); //Limpiamos el buffer
 			
 			switch (opcion) {
 			case 1: {
@@ -253,11 +260,9 @@ public class Main {
 				System.out.println("Por favor introduce el nombre del nuevo alumno");
 				nombre = entrada.nextLine();
 				System.out.println("Por favor introduce la edad del nuevo alumno");
-				edad = entrada.nextInt();
-				entrada.next();
+				edad = validarInt(entrada);
 				System.out.println("Por favor introduce la nota del nuevo alumno");
-				nota = entrada.nextDouble();
-				entrada.next();
+				nota = validarDouble(entrada);
 				
 				Alumno alumno = new Alumno(edad, nombre, nota);
 				insertAlumno(alumno);
@@ -271,15 +276,12 @@ public class Main {
 				
 				System.out.println("Introduce el ID del alumno que quieres actualizar");
 				id = validarInt(entrada);
-				entrada.next();
 				System.out.println("Por favor introduce el nombre del nuevo alumno");
 				nombre = entrada.nextLine();
 				System.out.println("Por favor introduce la edad del nuevo alumno");
 				edad = validarInt(entrada);
-				entrada.next();
 				System.out.println("Por favor introduce la nota del nuevo alumno");
 				nota = validarDouble(entrada);
-				entrada.next();
 				
 				Alumno alumno = new Alumno(edad, nombre, nota);
 				updateAlumnoById(id, alumno);
@@ -288,7 +290,6 @@ public class Main {
 			case 4: {
 				System.out.println("Introduce el ID del alumno que quieres eliminar");
 				int id = validarInt(entrada);
-				entrada.next();
 				
 				deleteAlumnoById(id);
 				System.out.println("Alumno eliminado correctamente");
@@ -297,7 +298,6 @@ public class Main {
 			case 5: {
 				System.out.println("Introduce la nota de referencia");
 				double nota = validarDouble(entrada);
-				entrada.next();
 				
 				listarAlumnosNotaMayorOIgual(nota);
 				break;
@@ -305,7 +305,6 @@ public class Main {
 			case 6: {
 				System.out.println("Introduce la edad de referencia");
 				int edad = validarInt(entrada);
-				entrada.next();
 				
 				listarAlumnosDeEdadConcreta(edad);
 				break;
@@ -357,9 +356,8 @@ public class Main {
 		entradas.
 		• Demostrar el uso de Statement y PreparedStatement.
 		• Crea el proyecto en eclipse con java 17.*/
-		
-		
-//		comprobar funcionamiento y resolver el limit 3 que no funciona
+
+
 		conectar();
 		try {
 			showMenu();
