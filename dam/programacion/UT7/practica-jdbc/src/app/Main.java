@@ -141,8 +141,9 @@ public class Main {
 		String nombre;
 		double nota;
 		st = connection.createStatement();
-		rs = st.executeQuery("select id, nombre, edad, nota from alumnos order by nota desc limit 3");
-
+		rs = st.executeQuery("select id, nombre, edad, nota from alumnos order by nota desc limit 3");  
+//		rs = st.executeQuery("select * from (select id, nombre, edad, nota from alumnos order by nota desc ) where rownum = 3");
+		
 		System.out.println("ID" + "\t" + "Nombre" + "\t" + "Edad" + "\t" + "Nota");
 		System.out.println("-----------------------------");
 		while (rs.next()) {
@@ -196,6 +197,28 @@ public class Main {
 		System.out.println(numeroAprobados() + "\t\t" + numeroSuspensos() + "\t\t" + notaMediaAlumnos());
 	}
 	
+	public static int validarInt(Scanner scanner) {
+		do {
+			if (scanner.hasNextInt()) {
+			    int number = scanner.nextInt();
+			    return number;
+			} else {
+			    System.out.println("Por favor introduce un numero válido");
+			}
+		}while (true);
+	}
+	
+	public static double validarDouble(Scanner scanner) {
+		do {
+			if (scanner.hasNextDouble()) {
+				double number = scanner.nextDouble();
+				return number;
+			} else {
+				System.out.println("Por favor introduce un numero válido");
+			}
+		}while (true);
+	}
+	
 	public static void showMenu() throws SQLException {
 		boolean continuar = true;
 		int opcion;
@@ -247,15 +270,15 @@ public class Main {
 				double nota;
 				
 				System.out.println("Introduce el ID del alumno que quieres actualizar");
-				id = entrada.nextInt();
+				id = validarInt(entrada);
 				entrada.next();
 				System.out.println("Por favor introduce el nombre del nuevo alumno");
 				nombre = entrada.nextLine();
 				System.out.println("Por favor introduce la edad del nuevo alumno");
-				edad = entrada.nextInt();
+				edad = validarInt(entrada);
 				entrada.next();
 				System.out.println("Por favor introduce la nota del nuevo alumno");
-				nota = entrada.nextDouble();
+				nota = validarDouble(entrada);
 				entrada.next();
 				
 				Alumno alumno = new Alumno(edad, nombre, nota);
@@ -264,7 +287,7 @@ public class Main {
 			}
 			case 4: {
 				System.out.println("Introduce el ID del alumno que quieres eliminar");
-				int id = entrada.nextInt();
+				int id = validarInt(entrada);
 				entrada.next();
 				
 				deleteAlumnoById(id);
@@ -273,7 +296,7 @@ public class Main {
 			}
 			case 5: {
 				System.out.println("Introduce la nota de referencia");
-				double nota = entrada.nextDouble();
+				double nota = validarDouble(entrada);
 				entrada.next();
 				
 				listarAlumnosNotaMayorOIgual(nota);
@@ -281,7 +304,7 @@ public class Main {
 			}
 			case 6: {
 				System.out.println("Introduce la edad de referencia");
-				int edad = entrada.nextInt();
+				int edad = validarInt(entrada);
 				entrada.next();
 				
 				listarAlumnosDeEdadConcreta(edad);
@@ -308,7 +331,7 @@ public class Main {
 		}while(continuar);
 	}
 
-
+	
 	public static void main(String[] args) {
 		/*Objetivo de la práctica:
 		Desarrollar una aplicación Java de consola que permita gestionar los
@@ -336,10 +359,10 @@ public class Main {
 		• Crea el proyecto en eclipse con java 17.*/
 		
 		
-		validar los numeros introducidos mediante expresiones regulares y resolver el limit 3 que no funciona
+//		comprobar funcionamiento y resolver el limit 3 que no funciona
 		conectar();
 		try {
-			estadisticasGenerales();
+			showMenu();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
