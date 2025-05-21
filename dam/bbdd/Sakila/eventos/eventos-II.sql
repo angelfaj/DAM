@@ -40,42 +40,42 @@ automáticamente una penalización diaria de $2 al monto total que debe pagar.*/
 10% del monto que hayan gastado en ese período. Estos puntos serán almacenados en
 una tabla separada.*/
 CREATE TABLE IF NOT EXISTS customer_rewards (
-	cr_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    customer_id SMALLINT UNSIGNED,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    reward_points DECIMAL(5,2) NOT NULL
+	reward_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id smallint UNSIGNED,
+    week_start DATE,
+    week_end DATE,
+    amount_spent DECIMAL(10,2),
+    reward_points DECIMAL(10,2),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
 );
 SELECT * FROM customer_rewards;
 UPDATE payment SET payment_date = now();
 
-DELIMITER //
-DROP EVENT IF EXISTS add_reward_points_event//
+
+DROP EVENT IF EXISTS add_reward_points_event;
 
 CREATE EVENT add_reward_points_event
-ON SCHEDULE EVERY 1 WEEK
-DO BEGIN
-	DECLARE client_exists_v SMALLINT UNSIGNED;
-	DECLARE client_v SMALLINT UNSIGNED;
-    DECLARE points DECIMAL(5,2);
-    
-    SELECT customer_id INTO client_v FROM payment
-    WHERE WEEK(payment_date) = WEEK(NOW());  
-    
-    SELECT SUM(amount) INTO points FROM payment
-    WHERE WEEK(payment_date) = WEEK(NOW())
-    GROUP BY customer_id;  
-    
-    SELECT customer_id INTO client_exists_v FROM customer_rewards
-    WHERE customer_id = client_v;  
-    
-    IF client_exits_v IS NULL THEN
-		INSERT INTO customer_rewards VALUES(
-	END IF;
-    
-    
-END//
-DELIMITER ;
+ON SCHEDULE EVERY 1 WEEK -- STARTS CURRENT_DATE + INTERVAL (7 - DAYOFWEEK(CURRENT_DATE)) DAY
+DO
+  INSERT INTO rewards (customer_id, week_start, week_end, amount_spent, reward_points)
+  SELECT p.customer_id,
+         DATE_SUB(CURDATE(), INTERVAL 7 DAY),
+         CURDATE(),
+         SUM(p.amount),
+         ROUND(SUM(p.amount) * 0.10, 2)
+  FROM payment p
+  WHERE p.payment_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()
+  GROUP BY p.customer_id;
 
 /*Enunciado: Revisar mensualmente los clientes que califican para el nivel VIP (aquellos que
 han gastado más de 100 en el mes) y actualizar su estatus. Añadir columna vip_status en
 customer.*/
+
+/*cada domingo a las dos y media de la noche se muevan los lquileres ya pagados a una tabla nueva rental_payments y */
+CREATE TABLE rental_payments AS SELECT * FROM payment;
+DELETE FROM rental_payments;
+
+DROP EVENT IF EXISTS move_paid_rentals_event;
+
+CREATE EVENT move_paid_rentals_event
+ON SCHEDULE 
