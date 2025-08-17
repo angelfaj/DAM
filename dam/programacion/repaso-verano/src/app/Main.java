@@ -18,11 +18,12 @@ class Main {
 		// Phase one: 0 to 1000
 		Scanner entrada = new Scanner(System.in);
 		String textIn;
+		Main main = new Main();
 		
 		System.out.println("Please enter the text to convert:");
 		textIn = entrada.nextLine();
 		
-		
+		System.out.println(main.textDivider(textIn));
 		
 	}
 	public static int[] arrNumbers = new int[100];
@@ -51,14 +52,36 @@ class Main {
 	}
 	
 	public String textDivider(String fullText) { //This method will take the diferents parts of the string and return one by one each word
-		
-		String[] arrStr = fullText.split(" ");
-		if (arrStr.length > 1) {				//We´ll divide in two parts, if the string is one word then the number its between 0-99 otherwise it´ll be higher 
-			
-		}else if (arrStr.length == 1) {
+		String result = "";
+		String[] arrStr = fullText.split(" ");	//We´ll divide it in two parts, if the string is one word then the number its between 0-99 otherwise it´ll be higher
+		if (arrStr.length > 1) {				//Multiple words case scenario 
+			String midResult = "";				//Doesnt recognise hundred and thousand 
+			for (String word:arrStr) {
+				midResult += textDivider(word);
+			}
+			result += midResult;
+		}else if (arrStr.length == 1) {			//One word case scenario
 			fillArrNumbers();
+			int number = 0;
+			boolean continuar = true;
 			
+			do {
+				if (number == 100) {			
+					continuar = false;
+				}
+				if (arrNumbersName[number].equalsIgnoreCase(arrStr[0])) {
+					result = number + "";
+					continuar = false;
+				}
+					
+				number++;
+			}while (continuar);
 		}
-		return "paquete";
+		return result;
 	}
 }
+
+//String resul = "3"+"00"+"2";
+//System.out.println(resul);
+//int suma = 1;
+//System.out.println(resul + suma);
