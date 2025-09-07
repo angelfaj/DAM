@@ -26,7 +26,7 @@ class Main {
 		System.out.println(main.textDivider(textIn));
 		
 	}
-	public static int[] arrNumbers = new int[100];
+	public static int[] arrNumbers = new int[101];
 	public static String[] arrNumbersName = {
             "cero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
             "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
@@ -37,7 +37,7 @@ class Main {
             "sixty-one", "sixty-two", "sixty-three", "sixty-four", "sixty-five", "sixty-six", "sixty-seven", "sixty-eight", "sixty-nine", "seventy",
             "seventy-one", "seventy-two", "seventy-three", "seventy-four", "seventy-five", "seventy-six", "seventy-seven", "seventy-eight", "seventy-nine", "eighty",
             "eighty-one", "eighty-two", "eighty-three", "eighty-four", "eighty-five", "eighty-six", "eighty-seven", "eighty-eight", "eighty-nine", "ninety",
-            "ninety-one", "ninety-two", "ninety-three", "ninety-four", "ninety-five", "ninety-six", "ninety-seven", "ninety-eight", "ninety-nine"
+            "ninety-one", "ninety-two", "ninety-three", "ninety-four", "ninety-five", "ninety-six", "ninety-seven", "ninety-eight", "ninety-nine", "one-hundred"
         };
 	
 	private void fillArrNumbers() {
@@ -46,18 +46,17 @@ class Main {
 		}
 	}
 	
-	public int converterOne(String text) { 
-		
+	public int toInt(String text) { 
 		return 0;
 	}
 	
 	public String textDivider(String fullText) { //This method will take the diferents parts of the string and return one by one each word
 		String result = "";
-		String[] arrStr = fullText.split(" ");	//We´ll divide it in two parts, if the string is one word then the number its between 0-99 otherwise it´ll be higher
+		String[] arrStr = fullText.split(" ");	//We´ll divide it in two parts, if the string is one word then the number its between 0-100 otherwise it´ll be higher
 		if (arrStr.length > 1) {				//Multiple words case scenario 
-			String midResult = "";				//Doesnt recognise hundred and thousand 
+			int midResult = 0;				//Doesnt recognise thousand 
 			for (String word:arrStr) {
-				midResult += textDivider(word);
+				midResult += Integer.parseInt(textDivider(word));
 			}
 			result += midResult;
 		}else if (arrStr.length == 1) {			//One word case scenario
