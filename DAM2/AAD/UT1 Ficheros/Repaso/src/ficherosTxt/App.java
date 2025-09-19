@@ -1,4 +1,4 @@
-package ej1;
+package ficherosTxt;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
