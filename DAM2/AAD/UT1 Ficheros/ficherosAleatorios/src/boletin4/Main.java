@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -57,7 +58,7 @@ public class Main {
 //		
 //		try {
 //			mostrarFichero(f);
-//			pos = validarPosicion(f, sc);
+//			pos = validarPosicionInt(f, sc);
 //			modificaEntero(f, sc, pos);
 //			mostrarFichero(f);
 //		} catch (FileNotFoundException e) {
@@ -79,58 +80,75 @@ public class Main {
 		Nota: Un double en JAVA ocupa 8 bytes.
 		*/
 		
-		File f = new File("e5.dat");
+//		File f = new File("e5.dat");
+//		Scanner sc = new Scanner(System.in);
+//		int op;
+//		
+//		do {
+//			mostrarMenu();
+//			System.out.println("Introduce una opcion:");
+//			op = sc.nextInt();
+//			
+//			switch (op) {
+//			case 1:
+//				try {
+//					addDoubleInicio(sc, f);
+//				} catch (FileNotFoundException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 2:
+//				try {
+//					addDoubleFinal(sc, f);
+//				} catch (FileNotFoundException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 3:
+//				try {
+//					mostrarFicheroDoubles(f);
+//				} catch (FileNotFoundException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 4:
+//				try {
+//					int posicion = validarPosicionDouble(f, sc);
+//					modificaDouble(f, sc, posicion);
+//				} catch (FileNotFoundException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			case 9:
+//				System.out.println("Adiós!");
+//				break;
+//			}
+//		}while(op != 9);
+		
+		/*
+		BOLETIN 4 - extra
+		Ejercicio 1
+		Escribe un programa Java que haga lo siguiente:
+		1- Recupera la información de los datos de alumnos en una lista de alumnos. Cada alumno tendrá una nota entera y un nombre (será único para simplificar)
+		2 - Escriba la información completa de todos los alumnos de la lista en un fichero binario alumnos.dat
+		3 - Muestre la información completa de alumnos.dat
+		4 - Modifique la nota de un alumno en el fichero alumnos.dat a partir del nombre del alumno.
+		5 - Realiza el apartado anterior para modificar la nota del último alumno.
+		6 - Muestre la información completa de alumnos.dat
+		Utiliza fichero binario aleatorio para todos los apartados.
+		 */
+		
 		Scanner sc = new Scanner(System.in);
-		int op;
+		fillArrAlumno(sc);
 		
-		do {
-			mostrarMenu();
-			System.out.println("Introduce una opcion:");
-			op = sc.nextInt();
-			
-			switch (op) {
-			case 1:
-				try {
-					addDoubleInicio(sc, f);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 2:
-				try {
-					addDoubleFinal(sc, f);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 3:
-				try {
-					mostrarFicheroDoubles(f);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 4:
-				try {
-					modificaEntero(f, sc, op);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case 9:
-				break;
-			}
-		}while(op != 9);
-		
-		//EJERCICIO AULAVIRTUAL
 		
 	}
 	//Metodos
@@ -171,7 +189,7 @@ public class Main {
 		}
 	}
 	
-	public static int validarPosicion(File f, Scanner sc) throws FileNotFoundException, IOException {
+	public static int validarPosicionInt(File f, Scanner sc) throws FileNotFoundException, IOException {
 		int i = -1;
 		try(RandomAccessFile fr = new RandomAccessFile(f, "rw")) {
 			while (i < 1 || i >= fr.length()) {
@@ -188,7 +206,8 @@ public class Main {
 							+"1. Añadir números de tipo double al principio del fichero. Esto hará que si existe alguno en esa posición se reemplace.\n"
 							+"2. Añadir números de tipo double al final del fichero.\n"
 							+"3. Mostrar el fichero creado.\n"
-							+"4. Sustituir un número indicado por el usuario por otro número que también te indique el usuario. ");
+							+"4. Sustituir un número indicado por el usuario por otro número que también te indique el usuario. \n"
+							+"9. Terminar programa.");
 	}
 	
 	public static void addDoubleInicio(Scanner sc, File f) throws FileNotFoundException, IOException {
@@ -222,6 +241,87 @@ public class Main {
 			}
 		}
 	}
+	
+	public static void modificaDouble(File f, Scanner sc, int posicion) throws FileNotFoundException, IOException {
+		double i; 
+		
+		try(RandomAccessFile fr = new RandomAccessFile(f, "rw")) {
+			fr.seek(posicion);
+			System.out.println("Numero a modificar: " + fr.readDouble());
+			System.out.println("Nuevo numero: ");
+			i = sc.nextDouble();
+			fr.seek(posicion);
+			fr.writeDouble(i);
+		}
+	}
+	
+	public static int validarPosicionDouble(File f, Scanner sc) throws FileNotFoundException, IOException {
+		int i = -1;
+		try(RandomAccessFile fr = new RandomAccessFile(f, "rw")) {
+			while (i < 1 || i >= fr.length()) {
+				System.out.println("Introduce una posicion valida:");
+				i =(sc.nextInt()-1) * 8;	//Hacemos la conversion para que corresponda con el entero deseado (1 entero = 4 bytes), -1 para posicionar el cursor al final del predecesor. 
+			}
+		}
+		return i;
+	}	
+
+	//BOLETIN 4 - extra
+	public static ArrayList<Alumno> getArrAlumnoFromFile(File f) throws FileNotFoundException, IOException {
+		ArrayList<Alumno> arrAlum = new ArrayList<Alumno>();
+		char[] n = new char[10];
+		
+		try(RandomAccessFile raf = new RandomAccessFile(f, "r")) {
+			raf.seek(0);
+			while (raf.getFilePointer() < raf.length()) {
+				for (int i = 0; i < n.length; i++) {
+					n[i] = raf.readChar();
+				}
+				Alumno aux = new Alumno(new String(n), raf.readInt());
+				arrAlum.add(aux);
+			}
+		}
+		return arrAlum;
+	}
+	
+	public static ArrayList<Alumno> fillArrAlumno(Scanner sc) {
+		ArrayList<Alumno> arrAlum = new ArrayList<Alumno>();
+		int op;
+		do {
+			subMenu();
+			System.out.println("Introduce una opcion:");
+			op = sc.nextInt();
+			sc.nextLine();
+			
+			switch (op) {
+			case 1:
+				System.out.println("Nombre (10 char max): ");
+				String nombre = sc.nextLine();
+				System.out.println("Nota (int):");
+				int nota = sc.nextInt();
+				sc.nextLine();
+				arrAlum.add(new Alumno(nombre, nota));
+				break; 
+			case 2:
+				for (Alumno a:arrAlum) {
+					System.out.println(a);
+				}
+				break;
+			case 3:
+				
+				break;
+			}
+		}while(op != 3);
+		return arrAlum;
+	}
+	
+	private static void subMenu() {
+		System.out.println("---------Array---------\n" 
+							+ "1. Añadir alumno\n"
+							+ "2. Mostrar alumnos introducidos\n"
+							+ "3. Terminar\n");
+	}
+	
 	
 	
 }
