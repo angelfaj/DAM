@@ -147,7 +147,10 @@ public class Main {
 		 */
 		
 		Scanner sc = new Scanner(System.in);
-		fillArrAlumno(sc);
+		File f= new File("alumnos.dat");
+		
+		ArrayList<Alumno> arrAlum = new ArrayList<Alumno>();
+		System.out.println(arrAlum.size());
 		
 		
 	}
@@ -322,6 +325,58 @@ public class Main {
 							+ "3. Terminar\n");
 	}
 	
+	public static void saveFromArr(File f, ArrayList<Alumno> arrAlum) throws FileNotFoundException, IOException {
+		if (arrAlum.size() != 0) {
+			char[] nom;		//Vector para albergar el nombre de cada alumno
 	
+			try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
+				raf.seek(raf.length());
+				for(Alumno a:arrAlum) {
+					nom = new char[10];
+					a.getNombre().getChars(0, 10, nom, 0); //Volcamos el nombre en un vector de chars
+					for(int i = 0; i < nom.length; i++) {
+						raf.writeChar(nom[i]);
+					}
+					raf.writeInt( a.getNota());
+				}
+			}
+		}else {
+			System.out.println("El array esta vacío, debes llenarlo con la opcion 1 del menú");
+		}
+	}
+	
+	public static void mostrarFicheroAlumno(File f) throws FileNotFoundException, IOException {
+		System.out.println("Contenido del fichero " + f.getName() + ":");
+		for(Alumno a:getArrAlumnoFromFile(f)) {
+			System.out.println(a);
+		}
+	}
+	
+	public static void modificaNotaGuardada(File f, String nombre, int nota) throws FileNotFoundException, IOException {
+		char[] nom = new char[10];
+		boolean encontrado = false;
+		String nombreGuardado;
+		
+		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
+			raf.seek(0);
+			while (raf.getFilePointer() != raf.length() && !encontrado) {
+				for(int i = 0; i < 10; i++) {		//10 es el tamaño maximo decidido para el nombre de los alumnos
+					nom[i] = raf.readChar();
+				}
+				nombreGuardado = new String(nom);
+				if (nombre.equalsIgnoreCase(nombreGuardado)) {
+					raf.writeInt(nota);
+					encontrado = true;
+				}
+				raf.seek(raf.getFilePointer() + 4); //Saltamos las notas de cada alumno
+			}
+		}
+	}
+	
+	public static void modificaUltimaNotaGuardada(File f, int nota) throws FileNotFoundException, IOException {
+		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
+			
+		}
+	}
 	
 }
