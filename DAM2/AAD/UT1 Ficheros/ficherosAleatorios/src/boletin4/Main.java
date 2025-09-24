@@ -149,6 +149,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		File f= new File("alumnos.dat");
 		int op;
+		ArrayList<Alumno> arrAlum = new ArrayList<Alumno>(); 
 		
 		
 		do {
@@ -156,15 +157,18 @@ public class Main {
 			System.out.println("Introduce una opcion:");
 			op = sc.nextInt();
 			sc.nextLine();
-			ArrayList<Alumno> arrAlum = null;
 			
 			switch (op) {
+			case 0:
+				f.delete();
+				break;
 			case 1:
 				arrAlum = fillArrAlumno(sc);
 				break;
 			case 2:
 				try {
 					saveFromArr(f, arrAlum);
+					arrAlum.clear();;	//Vaciamos el array tras volcar su contenido
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -181,8 +185,7 @@ public class Main {
 				}
 				break;
 			case 4:
-				System.out.println("Nombre del alumno:");
-				String nombre = sc.nextLine();
+				String nombre = validarNombre(sc);
 				System.out.println("Nueva nota:");
 				int nota = sc.nextInt();
 				sc.nextLine();
@@ -329,7 +332,7 @@ public class Main {
 	}	
 
 	//BOLETIN 4 - extra
-	public static ArrayList<Alumno> getArrAlumnoFromFile(File f) throws FileNotFoundException, IOException {	//Devuelve un array de alumnos apartir de un fichero de datos
+	public static ArrayList<Alumno> getArrAlumnoFromFile(File f) throws FileNotFoundException, IOException {	//Devuelve un array de alumnos a partir de un fichero de datos
 		ArrayList<Alumno> arrAlum = new ArrayList<Alumno>();
 		char[] n = new char[10];
 		
@@ -339,7 +342,7 @@ public class Main {
 				for (int i = 0; i < n.length; i++) {
 					n[i] = raf.readChar();
 				}
-				Alumno aux = new Alumno(new String(n), raf.readInt());
+				Alumno aux = new Alumno(new String(n).trim(), raf.readInt()); //Convertimos el vector de caracteres a string y eliminamos los espacios en blanco 
 				arrAlum.add(aux);
 			}
 		}
@@ -357,8 +360,7 @@ public class Main {
 			
 			switch (op) {
 			case 1:
-				System.out.println("Nombre (10 char max): ");
-				String nombre = sc.nextLine();
+				String nombre = validarNombre(sc);
 				System.out.println("Nota (int):");
 				int nota = sc.nextInt();
 				sc.nextLine();
@@ -377,6 +379,22 @@ public class Main {
 		return arrAlum;
 	}
 	
+	private static String validarNombre(Scanner sc) {
+		boolean continuar = true;
+		String nombre;
+		do {
+			System.out.println("Introduce un nombre válido (3 caracteres min, 10 max): ");
+			nombre = sc.nextLine();
+			if (nombre.length() <= 10 && nombre.length() >= 3) {
+				for (int i = 0; i < 10 && nombre.length() < 10; i++) {	//Añadimos espacios en blanco hasta llegar a 10 caracteres
+					nombre = nombre + " ";
+				}
+				continuar = false;
+			}
+		}while (continuar);
+		
+		return nombre;
+	}
 	private static void subMenu() {
 		System.out.println("---------Array---------\n" 
 							+ "1. Añadir alumno\n"
@@ -385,7 +403,7 @@ public class Main {
 	}
 	
 	public static void saveFromArr(File f, ArrayList<Alumno> arrAlum) throws FileNotFoundException, IOException {	//Vuelkca el contenido del array en el fichero pasado por parametro
-		if (arrAlum.size() != 0) {
+		if (arrAlum.size() !=  0) {
 			char[] nom;		//Vector para albergar el nombre de cada alumno
 	
 			try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
@@ -400,14 +418,18 @@ public class Main {
 				}
 			}
 		}else {
-			System.out.println("El array esta vacío, debes llenarlo con la opcion 1 del menú");
+			System.out.println("El array esta vacío, debes llenarlo previamente con la opcion 1 del menú");
 		}
 	}
 	
 	public static void mostrarFicheroAlumno(File f) throws FileNotFoundException, IOException {	//Llama al metodo que copia el fichero en un array y lo imprime
-		System.out.println("Contenido del fichero " + f.getName() + ":");
-		for(Alumno a:getArrAlumnoFromFile(f)) {
-			System.out.println(a);
+		if (!f.exists()) {
+			System.out.println("No existe el fichero " + f.getName());
+		}else {
+			System.out.println("Contenido del fichero " + f.getName() + ":");
+			for(Alumno a:getArrAlumnoFromFile(f)) {
+				System.out.println(a);
+			}
 		}
 	}
 	
@@ -434,13 +456,15 @@ public class Main {
 	
 	public static void modificaUltimaNotaGuardada(File f, int nota) throws FileNotFoundException, IOException { //Modifica la ultima nota guardada en el fichero
 		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
-			raf.seek(raf.getFilePointer()-4);
-			raf.write(nota);
+			raf.seek(raf.length() - 4);
+			raf.writeInt(nota);
 		}
 	}
 	
 	public static void mostrarMenuAlumno() {
-		System.out.println("1 - Llenar lista de alumnos. Cada alumno tendrá una nota entera y un nombre (será único para simplificar)\n"
+		System.out.println("-------------------MENU-------------------\n"
+				+ "0 - Borrar fichero\n"
+				+ "1 - Llenar lista de alumnos. Cada alumno tendrá una nota entera y un nombre (será único para simplificar)\n"
 				+ "2 - Guardar el contenido de la lista en un fichero binario alumnos.dat\n"
 				+ "3 - Muestre la información completa de alumnos.dat\n"
 				+ "4 - Modifique la nota de un alumno en el fichero alumnos.dat a partir del nombre del alumno.\n"
