@@ -37,7 +37,7 @@ public class Main {
 				entero = Integer.parseInt(cadena);
 				saveInt(f, entero);
 			}catch (NumberFormatException e) {
-				System.out.println("SIN TERMINAR");
+				charCounter += cadena.length();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -48,6 +48,7 @@ public class Main {
 		try {
 			System.out.println("Valores numéricos:");
 			printFileContent(f);
+			System.out.println("Caracteres totales: " + charCounter);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

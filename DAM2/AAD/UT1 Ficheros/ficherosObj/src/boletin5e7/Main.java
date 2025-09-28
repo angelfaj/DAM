@@ -1,6 +1,17 @@
 package boletin5e7;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
 public class Main {
+
+	public static void main(String[] args) {
+		
 	/*
 	Ejercicio 7
 	● Escribe un fichero de acceso aleatorio con el siguiente contenido:
@@ -22,4 +33,55 @@ public class Main {
 	llamado utensilios.txt. Este método se implementará sin la utilización de
 	arrays.
 	*/
+	
+	File f = new File ("inventario.dat");
+	Scanner sc = new Scanner(System.in);
+	}
+	//Metodos
+	public static int lineSize = 24; //10 chars + 1 int = 20 + 4
+	public static void saveUtilOnRaf(File f, Utensilio u) throws FileNotFoundException, IOException {
+		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
+			String nombre = u.getNombre();
+			raf.seek(raf.length());
+			
+			for (int i = 0; i < nombre.length(); i++) {
+				raf.writeChar(nombre.charAt(i));
+			}
+			raf.writeInt(u.getCantidad());
+		}
+	}
+	
+	public static ArrayList<Utensilio>  getArrFromRaf(File f) throws FileNotFoundException, IOException {
+		ArrayList<Utensilio> arrUt = new ArrayList<Utensilio>();
+		try(RandomAccessFile raf = new RandomAccessFile(f, "r")) {
+			StringBuilder sb = new StringBuilder();
+			String nombre;
+			
+			while (raf.getFilePointer() < raf.length()) {
+				for (int i = 0; i < 10; i++) {
+					sb.append(raf.readChar());
+				}
+				nombre = sb.toString();
+				arrUt.add(new Utensilio(nombre, raf.readInt()));
+			}
+		}
+		return arrUt;
+	}
+	
+	public static int validarPosicion(File f, Scanner sc) throws FileNotFoundException, IOException {
+		int i = -1;
+		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
+			while (i < 1 || i >= raf.length()) {
+				System.out.println("Introduce una posición valida");
+				i = ((sc.nextInt()-1) * 24); //Hacemos la conversion, 24 ocupa cada linea
+			}
+		}
+		return i;
+	}
+	
+	
 }
+
+	
+
+
