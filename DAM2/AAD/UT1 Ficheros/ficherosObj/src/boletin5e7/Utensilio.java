@@ -1,5 +1,7 @@
 package boletin5e7;
 
+import java.util.Objects;
+
 public class Utensilio {
 	private String nombre;
 	private int unidades;
@@ -28,6 +30,18 @@ public class Utensilio {
 	@Override
 	public String toString() {
 		return "Utensilio [nombre=" + nombre + ", cantidad=" + unidades + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utensilio other = (Utensilio) obj;
+		return Objects.equals(nombre, other.nombre);
 	}
 	
 	

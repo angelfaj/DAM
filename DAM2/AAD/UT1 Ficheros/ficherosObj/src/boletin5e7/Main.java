@@ -1,11 +1,21 @@
 package boletin5e7;
 
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
+
+import boletin5e3.MiObjectOutputStream;
 
 
 public class Main {
@@ -36,10 +46,21 @@ public class Main {
 	
 	File f = new File ("inventario.dat");
 	Scanner sc = new Scanner(System.in);
+
+	if (!f.exists()) {
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	}
 	//Metodos
 	public static int lineSize = 24; //10 chars + 1 int = 20 + 4
-	public static void saveUtilOnRaf(File f, Utensilio u) throws FileNotFoundException, IOException {
+	
+	public static void saveUtilOnRaf(File f, Utensilio u) throws FileNotFoundException, IOException {	//Guarda el objeto utensilio en un random acces file
 		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
 			String nombre = u.getNombre();
 			raf.seek(raf.length());
@@ -51,7 +72,7 @@ public class Main {
 		}
 	}
 	
-	public static ArrayList<Utensilio>  getArrFromRaf(File f) throws FileNotFoundException, IOException {
+	public static ArrayList<Utensilio>  getArrFromRaf(File f) throws FileNotFoundException, IOException {	//Devuelve un ArrayList del fichero pasado por parametro
 		ArrayList<Utensilio> arrUt = new ArrayList<Utensilio>();
 		try(RandomAccessFile raf = new RandomAccessFile(f, "r")) {
 			StringBuilder sb = new StringBuilder();
@@ -68,7 +89,25 @@ public class Main {
 		return arrUt;
 	}
 	
-	public static int validarPosicion(File f, Scanner sc) throws FileNotFoundException, IOException {
+	public static void saveArrOnObjectFile(File f, ArrayList<Utensilio> arrUt) throws IOException {	//Vuelca el contenido array pasado por parametro en unfichero de objetos
+		FileOutputStream fo = null;
+		ObjectOutputStream datos = null;
+		
+		if(!f.exists()) {
+			fo = new FileOutputStream(f);
+			datos = new ObjectOutputStream(fo);
+		} else {
+			fo = new FileOutputStream(f, true);
+			datos = new MiObjectOutputStream();
+		}
+		
+		for (Utensilio u:arrUt) {
+			datos.writeObject(u);
+		}
+		datos.close();
+	}
+	
+	public static int validarPosicion(File f, Scanner sc) throws FileNotFoundException, IOException {	//Valida la posicion introducida por teclado para que sea un numero de linea existente
 		int i = -1;
 		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
 			while (i < 1 || i >= raf.length()) {
@@ -77,6 +116,49 @@ public class Main {
 			}
 		}
 		return i;
+	}
+	
+	public static void printFileObject(File f) throws FileNotFoundException, IOException, ClassNotFoundException {
+		try(FileInputStream fi = new FileInputStream(f); ObjectInputStream datos = new ObjectInputStream(fi)) {
+			while (true) {
+				Utensilio u = (Utensilio) datos.readObject();
+				System.out.println(u);
+			}
+		}catch (EOFException e) {}
+	}
+	
+	public static void printOrSaveTotalByUtil(File f, boolean flag)  throws FileNotFoundException, IOException, ClassNotFoundException {	//Volcamos los valores en un hash map y vamos sumando los repes. False para imprimir por consola, true para guardar en fichero de texto
+		HashMap<String, Integer> mapUtils = new HashMap<String, Integer>();
+
+		try(FileInputStream fi = new FileInputStream(f); ObjectInputStream datos = new ObjectInputStream(fi)) {
+			int unidades = 0;
+			while (true) {
+				Utensilio u = (Utensilio) datos.readObject();
+				if (mapUtils.containsKey(u.getNombre())) {		//Si ya existe el utensilio sobrreescribimos la cantidad sumando el viejo valor al nuevo
+					unidades = mapUtils.get(u.getNombre()) + u.getCantidad();
+					mapUtils.replace(u.getNombre(), unidades);
+				}else {
+					mapUtils.put(u.getNombre(), u.getCantidad());
+				}
+			}
+		}catch (EOFException e) {}
+		
+		Iterator<String> it = mapUtils.keySet().iterator();		//Volcamos los nombres (claves del mapa) e un iterator
+		
+		while(it.hasNext()) {
+			String util = it.next();	//Guardamos el nombre y lo utilizamos para obtener la cantidad asociada a el
+			if (!flag) {
+				System.out.println(util + "-->" + mapUtils.get(util));
+			}else {
+				writeUtilInTxt(f, new Utensilio(util, mapUtils.get(util)));
+			}
+		}
+	}
+
+	private static void writeUtilInTxt(File f, Utensilio utensilio) throws IOException {	//Escribe el objeto utensilioo en un fichero txt
+		try(FileWriter writer = new FileWriter(f)) {
+			writer.write(utensilio.getNombre() + utensilio.getCantidad() + "\n");
+		}
 	}
 	
 	
