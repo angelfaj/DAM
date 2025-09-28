@@ -22,53 +22,83 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-	/*
-	Ejercicio 7
-	● Escribe un fichero de acceso aleatorio con el siguiente contenido:
-	● Añade un método en el que dado un número de línea, muestre el
-	nombre del utensilio y las unidades del mismo que están almacenados
-	en dicha línea.
-	● A continuación, dada una clase Utensilio, con los atributos privados:
-	private String nombre;
-	private int unidades;
-	● Almacena la información del fichero en un array de objetos de tipo
-	Utensilio.
-	● Posteriormente, vuelca el contenido del array en un fichero de objetos.
-	● Muestra la información de dicho fichero.
-	● Además, la clase contendrá un método que recorrerá el fichero de
-	objetos y al final mostrará el nombre del objeto y cuántas unidades hay
-	del mismo almacenados en el fichero. La salida será:
-	● Realizar otro método similar al anterior, pero en vez de escribir el
-	resultado en la consola, éste se almacenará en un fichero de texto
-	llamado utensilios.txt. Este método se implementará sin la utilización de
-	arrays.
-	*/
+		/*
+		Ejercicio 7
+		● Escribe un fichero de acceso aleatorio con el siguiente contenido:
+		● Añade un método en el que dado un número de línea, muestre el
+		nombre del utensilio y las unidades del mismo que están almacenados
+		en dicha línea.
+		● A continuación, dada una clase Utensilio, con los atributos privados:
+		private String nombre;
+		private int unidades;
+		● Almacena la información del fichero en un array de objetos de tipo
+		Utensilio.
+		● Posteriormente, vuelca el contenido del array en un fichero de objetos.
+		● Muestra la información de dicho fichero.
+		● Además, la clase contendrá un método que recorrerá el fichero de
+		objetos y al final mostrará el nombre del objeto y cuántas unidades hay
+		del mismo almacenados en el fichero. La salida será:
+		● Realizar otro método similar al anterior, pero en vez de escribir el
+		resultado en la consola, éste se almacenará en un fichero de texto
+		llamado utensilios.txt. Este método se implementará sin la utilización de
+		arrays.
+		*/
+		
+		File fRaf = new File ("inventarioRAF.dat");
+		Scanner sc = new Scanner(System.in);
 	
-	File f = new File ("inventario.dat");
-	Scanner sc = new Scanner(System.in);
-
-	if (!f.exists()) {
+		if (!fRaf.exists()) {
+			try {
+				fRaf.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//Lenamos el fichero
+		Utensilio[] muestra = {new Utensilio("tijeras", 7), new Utensilio("alicates", 5), new Utensilio("cafetera", 1), new Utensilio("batidora", 2), new Utensilio("cafetera", 4), new Utensilio("tijeras", 6)};
+		for (Utensilio u: muestra) {
+			try {
+				saveUtilOnRaf(fRaf, u);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//Pedimos una linea y mostramos contenido de la misma
 		try {
-			f.createNewFile();
+			int i = validarPosicion(fRaf, sc);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
+		
+		------------
 	}
 	//Metodos
 	public static int lineSize = 24; //10 chars + 1 int = 20 + 4
 	
 	public static void saveUtilOnRaf(File f, Utensilio u) throws FileNotFoundException, IOException {	//Guarda el objeto utensilio en un random acces file
 		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
-			String nombre = u.getNombre();
+			StringBuilder nombre = new StringBuilder();
+			nombre.append(u.getNombre());
+			nombre.setLength(10);
 			raf.seek(raf.length());
 			
 			for (int i = 0; i < nombre.length(); i++) {
 				raf.writeChar(nombre.charAt(i));
 			}
 			raf.writeInt(u.getCantidad());
+		}
+	}
+	
+	public static void printRafFile(File f) throws FileNotFoundException, IOException {
+		ArrayList<Utensilio> arrUt = getArrFromRaf(f);
+		for (Utensilio u: arrUt) {
+			System.out.println(u);
 		}
 	}
 	
