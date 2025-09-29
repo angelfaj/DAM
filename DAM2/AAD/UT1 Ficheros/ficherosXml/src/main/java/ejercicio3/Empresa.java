@@ -1,6 +1,5 @@
 package ejercicio3;
 
-import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -8,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement(name="Empresa")
-@XmlType(propOrder= {"cif", "empleadosList", "nombre"})
+@XmlType(propOrder= {"cif", "empleados", "nombre"})
 public class Empresa {
 	//Atributos
 	private String cif;
 	private String nombre;
-	private Empleados empleadosList;
+	private Empleados empleados;
 	
 	public Empresa() {}
 
@@ -36,12 +35,12 @@ public class Empresa {
 	}
 
 	@XmlElement(name="empleados")
-	public Empleados getEmpleadosList() {
-		return empleadosList;
+	public Empleados getEmpleados() {
+		return empleados;
 	}
 
-	public void setEmpleadosList(Empleados empleadosList) {
-		this.empleadosList = empleadosList;
+	public void setEmpleados(Empleados empleados) {
+		this.empleados = empleados;
 	}
 	
 	

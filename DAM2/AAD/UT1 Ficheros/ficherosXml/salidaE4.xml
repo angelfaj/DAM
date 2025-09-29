@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Album>
+    <artista>Zapato Veloz</artista>
+    <canciones>
+        <canciones>
+            <titulo>Mi tractor amarillo</titulo>
+            <duracion extra="si">540</duracion>
+        </canciones>
+        <canciones>
+            <titulo>Mi tractor verde</titulo>
+            <duracion extra="si">540</duracion>
+        </canciones>
+    </canciones>
+    <nombre>Remember</nombre>
+</Album>
