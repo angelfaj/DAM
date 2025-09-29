@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listaempleados>
+        <empleado edad="27">
+                <nombre>Pepe Perez</nombre>
+                <categoria>Empleado</categoria>
+        </empleado>
+        <empleado edad="34">
+                <nombre>Juan Sanchez</nombre>
+                <categoria>Gerente</categoria>
+        </empleado>
+</listaempleados>

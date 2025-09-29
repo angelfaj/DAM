@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Empresa>
+    <cif>A12345689</cif>
+    <empleados>
+        <empleados>
+            <dni>12345678C</dni>
+            <nombre>Manuel</nombre>
+            <edad>32</edad>
+            <cargo nivel="2">Administrativo</cargo>
+        </empleados>
+        <empleados>
+            <dni>12345678K</dni>
+            <nombre>Natalia</nombre>
+            <edad>54</edad>
+            <cargo nivel="0">Desarrollador</cargo>
+        </empleados>
+    </empleados>
+    <nombre>Desatrancos Manolo S.A</nombre>
+</Empresa>
