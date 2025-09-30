@@ -69,17 +69,47 @@ public class Main {
 		
 		//Pedimos una linea y mostramos contenido de la misma
 		try {
+			prinfRafFile(fRaf);
 			int i = validarPosicion(fRaf, sc);
+			getUtensilioInLine(fRaf, i);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		------------
+		
 	}
 	//Metodos
 	public static int lineSize = 24; //10 chars + 1 int = 20 + 4
+	public static int utilSize = 10;
+	public static int cuantitySize = 4;
+	
+	public static void getUtensilioInLine(File f, int linea) throws FileNotFoundException, IOException {
+		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
+			raf.seek(linea);
+			int i = 0;
+			while (i < utilSize) {
+				i++;
+				System.out.print(raf.readChar());
+			}
+			System.out.print(raf.readInt());
+		}
+	}
+	
+	public static void prinfRafFile(File f) throws FileNotFoundException, IOException {
+		try(RandomAccessFile raf = new RandomAccessFile(f, "r")) {
+			while (raf.getFilePointer() < raf.length() ) {
+				StringBuilder util = new StringBuilder();
+				int cantidad;
+				for (int i = 0; i < utilSize; i++) {
+					util.append(raf.readChar());
+				}
+				cantidad = raf.readInt();
+				System.out.println(util + "" + cantidad);
+			}
+		}
+	}
 	
 	public static void saveUtilOnRaf(File f, Utensilio u) throws FileNotFoundException, IOException {	//Guarda el objeto utensilio en un random acces file
 		try(RandomAccessFile raf = new RandomAccessFile(f, "rw")) {
@@ -140,7 +170,7 @@ public class Main {
 	public static int validarPosicion(File f, Scanner sc) throws FileNotFoundException, IOException {	//Valida la posicion introducida por teclado para que sea un numero de linea existente
 		int i = -1;
 		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
-			while (i < 1 || i >= raf.length()) {
+			while (i < 0 || i >= raf.length()) {
 				System.out.println("Introduce una posición valida");
 				i = ((sc.nextInt()-1) * 24); //Hacemos la conversion, 24 ocupa cada linea
 			}
