@@ -1,4 +1,4 @@
-package boletin1;
+package boletin1ej1;
 
 public class SumaEnteros {
 
@@ -20,11 +20,12 @@ public class SumaEnteros {
 		}
 		
 		resul = menor;
+		int menorOriginal = menor;
 		while (menor < mayor) {
 			menor++; 
 			resul += menor;
 		}
-		System.out.println("Numeros introducidos " + menor + " y " + mayor + ", resultado: " + resul);
+		System.out.println("Numeros introducidos " + menorOriginal + " y " + mayor + ", resultado: " + resul);
 	}
 
 }
