@@ -69,12 +69,24 @@ public class Main {
 		
 		//Pedimos una linea y mostramos contenido de la misma
 		try {
+			System.out.println("Contenido del fichero");
 			prinfRafFile(fRaf);
 			int i = validarPosicion(fRaf, sc);
 			getUtensilioInLine(fRaf, i);
+			File fObj = new File("inventarioObj.dat");
+			System.out.println("\nGuardamos info en fichero de objetos e imprimos su contenido por consola");
+			saveArrOnObjFile(fRaf, fObj);
+			printObjFile(fObj);
+			System.out.println("Mostramos fichero objetos resumido");
+			printOrSaveTotalByUtil(fObj, null, false);
+			System.out.println("Guardamos en txt");
+			File txtFile = new File("inventarioTxt.txt");
+			printOrSaveTotalByUtil(fObj, txtFile, true);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
@@ -132,13 +144,47 @@ public class Main {
 		}
 	}
 	
-	public static ArrayList<Utensilio>  getArrFromRaf(File f) throws FileNotFoundException, IOException {	//Devuelve un ArrayList del fichero pasado por parametro
+	public static void printObjFile(File objFile) throws FileNotFoundException, IOException, ClassNotFoundException {
+		try(FileInputStream fi = new FileInputStream(objFile); ObjectInputStream datos = new ObjectInputStream(fi)) {
+			while (true) {
+				Utensilio u = (Utensilio) datos.readObject();
+				System.out.println(u);
+			}
+		}catch (EOFException e) {}
+	}
+	
+	public static void saveArrOnObjFile (File rafFile, File objFile) throws FileNotFoundException, IOException {
+		ArrayList<Utensilio> arrUt = getArrFromRaf(rafFile);
+		for (Utensilio u:arrUt) {
+			saveUtensilioOnObjFile(objFile, u);
+		}
+	}
+	
+	public static void saveUtensilioOnObjFile(File objFile, Utensilio u) throws IOException {
+		FileOutputStream fo;
+		ObjectOutputStream datos;
+		
+		if (!objFile.exists()) {
+			fo = new FileOutputStream(objFile);
+			datos = new ObjectOutputStream(fo);
+		}else {
+			fo = new FileOutputStream(objFile, true);
+			datos = new MiObjectOutputStream(fo);
+		}
+		
+		datos.writeObject(u);
+		datos.close();
+		
+	}
+	
+	public static ArrayList<Utensilio>  getArrFromRaf(File rafFile) throws FileNotFoundException, IOException {	//Devuelve un ArrayList del fichero pasado por parametro
 		ArrayList<Utensilio> arrUt = new ArrayList<Utensilio>();
-		try(RandomAccessFile raf = new RandomAccessFile(f, "r")) {
-			StringBuilder sb = new StringBuilder();
+		try(RandomAccessFile raf = new RandomAccessFile(rafFile, "r")) {
+			StringBuilder sb;
 			String nombre;
 			
 			while (raf.getFilePointer() < raf.length()) {
+				sb = new StringBuilder();
 				for (int i = 0; i < 10; i++) {
 					sb.append(raf.readChar());
 				}
@@ -171,7 +217,7 @@ public class Main {
 		int i = -1;
 		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
 			while (i < 0 || i >= raf.length()) {
-				System.out.println("Introduce una posición valida");
+				System.out.println("Introduce un número de línea valido:");
 				i = ((sc.nextInt()-1) * 24); //Hacemos la conversion, 24 ocupa cada linea
 			}
 		}
@@ -187,10 +233,10 @@ public class Main {
 		}catch (EOFException e) {}
 	}
 	
-	public static void printOrSaveTotalByUtil(File f, boolean flag)  throws FileNotFoundException, IOException, ClassNotFoundException {	//Volcamos los valores en un hash map y vamos sumando los repes. False para imprimir por consola, true para guardar en fichero de texto
+	public static void printOrSaveTotalByUtil(File objFile, File txtFile, boolean flag)  throws FileNotFoundException, IOException, ClassNotFoundException {	//Volcamos los valores en un hash map y vamos sumando los repes. False para imprimir por consola, true para guardar en fichero de texto
 		HashMap<String, Integer> mapUtils = new HashMap<String, Integer>();
 
-		try(FileInputStream fi = new FileInputStream(f); ObjectInputStream datos = new ObjectInputStream(fi)) {
+		try(FileInputStream fi = new FileInputStream(objFile); ObjectInputStream datos = new ObjectInputStream(fi)) {
 			int unidades = 0;
 			while (true) {
 				Utensilio u = (Utensilio) datos.readObject();
@@ -210,13 +256,13 @@ public class Main {
 			if (!flag) {
 				System.out.println(util + "-->" + mapUtils.get(util));
 			}else {
-				writeUtilInTxt(f, new Utensilio(util, mapUtils.get(util)));
+				writeUtilInTxt(txtFile, new Utensilio(util, mapUtils.get(util)));
 			}
 		}
 	}
 
 	private static void writeUtilInTxt(File f, Utensilio utensilio) throws IOException {	//Escribe el objeto utensilioo en un fichero txt
-		try(FileWriter writer = new FileWriter(f)) {
+		try(FileWriter writer = new FileWriter(f, true)) {
 			writer.write(utensilio.getNombre() + utensilio.getCantidad() + "\n");
 		}
 	}

@@ -1,8 +1,13 @@
 package boletin5e7;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Utensilio {
+public class Utensilio implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private int unidades;
 	
@@ -29,7 +34,7 @@ public class Utensilio {
 
 	@Override
 	public String toString() {
-		return "Utensilio [nombre=" + nombre + ", cantidad=" + unidades + "]";
+		return nombre + unidades;
 	}
 
 	@Override
