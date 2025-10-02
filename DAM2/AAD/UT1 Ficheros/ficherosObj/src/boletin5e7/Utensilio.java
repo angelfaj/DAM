@@ -34,7 +34,7 @@ public class Utensilio implements Serializable{
 
 	@Override
 	public String toString() {
-		return nombre + unidades;
+		return nombre + " " + unidades;
 	}
 
 	@Override
