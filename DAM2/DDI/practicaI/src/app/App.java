@@ -58,27 +58,17 @@ public class App extends JFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Para cambiar el color del texto
-				StyledDocument doc;
-				SimpleAttributeSet color;
-				
+				StyledDocument doc = jTextResultado.getStyledDocument();
+				SimpleAttributeSet color = new SimpleAttributeSet();
+
 				if (textFieldNombre.getText().isEmpty() || textFieldClave.getText().isEmpty() || !textFieldClave.getText().equals("Aloha1234")) {
 					jTextResultado.setText("ERROR");
-
-			        doc = jTextResultado.getStyledDocument();
-			        color = new SimpleAttributeSet();
 			        StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
-
-			        doc.setCharacterAttributes(0, doc.getLength(), color, false);
-
 				}else {
 					jTextResultado.setText("CORRECTO");
-
-			        doc = jTextResultado.getStyledDocument();
-			        color = new SimpleAttributeSet();
 			        StyleConstants.setForeground(color, Color.GREEN); // Cambia a color rojo
-
-			        doc.setCharacterAttributes(0, doc.getLength(), color, false);
 				}
+				doc.setCharacterAttributes(0, doc.getLength(), color, false);
 			}
 		});
 		btnAceptar.setBounds(265, 118, 117, 25);
@@ -87,7 +77,9 @@ public class App extends JFrame {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				textFieldNombre.setText("");
+				textFieldClave.setText("");
+				jTextResultado.setText("");
 			}
 		});
 		btnCancelar.setBounds(443, 118, 117, 25);
