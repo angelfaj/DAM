@@ -27,21 +27,38 @@ public class LanzadorSumadorEnteros {
 		try {
 			Process p1 = pb1.start();
 			Process p2 = pb2.start();
+
+			//hay que añadir isalive para asegurarse de que los procesos han terminado de escribir! tambien puede comprobarse con waitfor
+			p1.waitFor();
+			p2.waitFor();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 		//Leemos ambos ficheros e imprimimos el resultado de la suma
+		String resul2 = "", resul1 = "";
 		try(FileReader fr = new FileReader(fOut1); BufferedReader br = new BufferedReader(fr)) {
-			String linea;
-			linea = br.readLine();
+			resul1 = br.readLine();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		hay que añadir isalive para asegurarse de que los procesos han terminado de escribir! tambien puede comprobarse con waitfor
+		try(FileReader fr = new FileReader(fOut2); BufferedReader br = new BufferedReader(fr)) {
+			resul2 = br.readLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		int r1 = Integer.parseInt(resul1);
+		int r2 = Integer.parseInt(resul2);
+		
+		System.out.println("Resultado 1: " + r1 + "\nResultado 2: " + r2 + "\nTOTAL: " +  (r1+r2));
 	}
 
 }
