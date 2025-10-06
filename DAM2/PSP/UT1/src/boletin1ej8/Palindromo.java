@@ -26,8 +26,8 @@ public class Palindromo {
 		*/
 		
 		if (args.length < 1 || args.length > 1) {
-			System.exit(1);
 			System.out.println("Este programa solo admite un argumeno");
+			System.exit(1);
 		}else {
 			String cadena = args[0];
 			boolean palindromo = true;
@@ -39,7 +39,13 @@ public class Palindromo {
 					palindromo = false;
 				}
 			}
-			System.out.println(palindromo);
+			String esPalindromo;
+			if (palindromo) {
+				esPalindromo = " SI ";
+			}else {
+				esPalindromo = " NO ";
+			}
+			System.out.println("La palabra '" + cadena + "'" + esPalindromo + "es un palíndromo");
 			System.exit(0);
 		}
 		
