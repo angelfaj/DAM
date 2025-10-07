@@ -1,6 +1,9 @@
 package com.example.myfirstapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,15 +13,28 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText txtNombre;
+    private Button btnAceptar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        //Obtenemos una referencia a los controles de la interfaz
+        txtNombre = findViewById(R.id.txtNombre);
+        btnAceptar = findViewById(R.id.btnAceptar);
+
+        btnAceptar.setOnClickListener(view -> {
+            //Creamos el intent
+            Intent intent = new Intent(MainActivity.this, SaludoActivity.class);
+
+            //Añadimos al intent la información para pasar entre actividades
+            intent.putExtra("NOMBRE", txtNombre.getText().toString());
+
+            //In iciamos la nueva actividad
+            startActivity(intent);
+
         });
     }
 }
