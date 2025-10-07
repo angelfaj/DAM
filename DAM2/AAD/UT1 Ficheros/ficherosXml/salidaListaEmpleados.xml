@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<listaempleados>
+    <listaempleados edad="32">
+        <nombre>Manuel</nombre>
+        <categoria plus="200">Gerente</categoria>
+    </listaempleados>
+    <listaempleados edad="52">
+        <nombre>Mario</nombre>
+        <categoria plus="0">Empleado</categoria>
+    </listaempleados>
+</listaempleados>

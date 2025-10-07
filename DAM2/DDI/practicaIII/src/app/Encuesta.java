@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.EventQueue;
+import java.awt.desktop.ScreenSleepEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,11 +15,18 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.JCheckBox;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class Encuesta extends JFrame {
 
@@ -38,6 +46,12 @@ public class Encuesta extends JFrame {
 	private JPanel panelCual;
 	private JSeparator separator;
 	private JScrollPane scrollDeporte;
+	private JButton  btnEnviar;
+	private JButton  btnCancelar;
+	private JSlider sliderCine;
+	private JSlider sliderCompras;
+	private JSlider sliderTv;
+	private JTextPane textPane;
 	
 	public Encuesta() {
 		setTitle("Encuesta");
@@ -92,7 +106,7 @@ public class Encuesta extends JFrame {
 		rdbtnGroup.add(rdbtnHombre);
 		rdbtnGroup.add(rdbtnMujer);
 		
-		chckbxpracticaAlgnDeporte = new JCheckBox("¿Practica algún deporte?");
+		chckbxpracticaAlgnDeporte = new JCheckBox("Practico algún deporte");
 		chckbxpracticaAlgnDeporte.setBounds(23, 158, 201, 23);
 		contentPane.add(chckbxpracticaAlgnDeporte);
 		
@@ -128,7 +142,7 @@ public class Encuesta extends JFrame {
 		lblIrAlCine.setBounds(23, 595, 65, 15);
 		contentPane.add(lblIrAlCine);
 		
-		JSlider sliderCompras = new JSlider();
+		sliderCompras = new JSlider();
 		sliderCompras.setPaintTicks(true);
 		sliderCompras.setPaintLabels(true);
 		sliderCompras.setMinorTickSpacing(1);
@@ -139,7 +153,7 @@ public class Encuesta extends JFrame {
 		sliderCompras.setBounds(134, 328, 200, 51);
 		contentPane.add(sliderCompras);
 		
-		JSlider sliderTv = new JSlider();
+		sliderTv = new JSlider();
 		sliderTv.setPaintTicks(true);
 		sliderTv.setPaintLabels(true);
 		sliderTv.setMinorTickSpacing(1);
@@ -150,7 +164,7 @@ public class Encuesta extends JFrame {
 		sliderTv.setBounds(134, 453, 200, 37);
 		contentPane.add(sliderTv);
 		
-		JSlider sliderCine = new JSlider();
+		sliderCine = new JSlider();
 		sliderCine.setMinorTickSpacing(1);
 		sliderCine.setMajorTickSpacing(1);
 		sliderCine.setPaintTicks(true);
@@ -161,6 +175,76 @@ public class Encuesta extends JFrame {
 		sliderCine.setBounds(134, 583, 200, 37);
 		contentPane.add(sliderCine);
 		
+		btnEnviar = new JButton("Enviar");
+		btnEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String motivoError = "";
+				boolean error = false;
+				
+				//Comprobamos si ha introducido profesion
+				if(textFieldProfesion.getText().isEmpty()) {
+					motivoError += "debes introducir una profesión ";
+					error = true;
+				}
+				
+				//Comprobamos si ha seleccionado sexo
+				if (!rdbtnHombre.isSelected() && !rdbtnMujer.isSelected()) {
+					motivoError += "debes marcar tu sexo ";
+					error = true;
+				}
+				
+				//Verificamos si es deportista pero no ha marcado ningun deporte
+				if(chckbxpracticaAlgnDeporte.isSelected() && listDeportes.isSelectionEmpty()) {
+					motivoError += "introduce el deporte que practicas ";
+					error = true;
+				}
+				//Objetos necesarios para manipular el color del resultado mostrado en el textpane
+				StyledDocument doc = textPane.getStyledDocument();
+				SimpleAttributeSet color = new SimpleAttributeSet();
+				
+				if (error) {
+					textPane.setText("ERROR <" + motivoError + ">");
+					 StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+				}else {
+					textPane.setText("ENVIADO CORRECTAMENTE");
+					 StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+				}
+				doc.setCharacterAttributes(0, doc.getLength(), color, false);
+			}
+		});
+		btnEnviar.setBounds(73, 669, 89, 23);
+		contentPane.add(btnEnviar);
+		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarCampos();
+			}
+		});
+		btnCancelar.setBounds(282, 669, 89, 23);
+		contentPane.add(btnCancelar);
+		
+		textPane = new JTextPane();
+		textPane.setBounds(10, 703, 414, 47);
+		contentPane.add(textPane);
+		
 		setVisible(true);
 	}
+	
+	private void limpiarCampos() {
+		textFieldProfesion.setText("");
+		spinner.setValue(0);
+		rdbtnGroup.clearSelection();
+		
+		if  (chckbxpracticaAlgnDeporte.isSelected()) {
+			chckbxpracticaAlgnDeporte.setSelected(false);
+			listDeportes.clearSelection();
+		}
+		sliderCompras.setValue(5);
+		sliderTv.setValue(5);
+		sliderCine.setValue(5);
+		textPane.setText("");
+	}
 }
+
+
