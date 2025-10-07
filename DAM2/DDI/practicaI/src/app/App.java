@@ -15,16 +15,17 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.JPasswordField;
 
 public class App extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
-	private JTextField textFieldClave;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JTextPane jTextResultado;
+	private JPasswordField passwordField;
 	
 	public App() {
 		setTitle("Formulario");
@@ -45,11 +46,6 @@ public class App extends JFrame {
 		contentPane.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
-		textFieldClave = new JTextField();
-		textFieldClave.setColumns(10);
-		textFieldClave.setBounds(265, 66, 295, 19);
-		contentPane.add(textFieldClave);
-		
 		JLabel lblIngreseClave = new JLabel("Ingrese clave:");
 		lblIngreseClave.setBounds(12, 68, 214, 15);
 		contentPane.add(lblIngreseClave);
@@ -61,7 +57,7 @@ public class App extends JFrame {
 				StyledDocument doc = jTextResultado.getStyledDocument();
 				SimpleAttributeSet color = new SimpleAttributeSet();
 
-				if (textFieldNombre.getText().isEmpty() || textFieldClave.getText().isEmpty() || !textFieldClave.getText().equals("Aloha1234")) {
+				if (textFieldNombre.getText().isEmpty() || passwordField.getPassword().length < 1 || !new String(passwordField.getPassword()).equals("Aloha1234")) {
 					jTextResultado.setText("ERROR");
 			        StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
 				}else {
@@ -78,7 +74,7 @@ public class App extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textFieldNombre.setText("");
-				textFieldClave.setText("");
+				passwordField.setText("");
 				jTextResultado.setText("");
 			}
 		});
@@ -89,6 +85,10 @@ public class App extends JFrame {
 		jTextResultado.setEditable(false);
 		jTextResultado.setBounds(265, 172, 117, 25);
 		contentPane.add(jTextResultado);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(265, 66, 295, 19);
+		contentPane.add(passwordField);
 		
 
 		setVisible(true);

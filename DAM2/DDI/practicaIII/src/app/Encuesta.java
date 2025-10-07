@@ -1,7 +1,5 @@
 package app;
 
-import java.awt.EventQueue;
-import java.awt.desktop.ScreenSleepEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -41,7 +39,7 @@ public class Encuesta extends JFrame {
 	private JRadioButton rdbtnMujer;
 	private JSpinner spinner;
 	private String[] opcionesDeporte = {"Ténis", "Fútbol", "Natación", "Escalada", "Alpinismo", "Pádel", "Entrenamiento de pesas"};
-	private JList listDeportes;
+	private JList<String> listDeportes;
 	private JCheckBox chckbxpracticaAlgnDeporte;
 	private JPanel panelCual;
 	private JSeparator separator;
