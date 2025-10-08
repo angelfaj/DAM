@@ -9,13 +9,12 @@ public class LanzadorPalindromo {
 
 	public static void main(String[] args) {
 		File bin = new File("bin");
-		File inputFile = new File("inputEj08.txt");
 		File outFile = new File("salida08.txt");
 
 		
 		//Type es el homonimo de cat para cmd
-		//En linux sustituir por: "cat", "../inputEj08.txt"
-		ProcessBuilder pbVolcado = new ProcessBuilder("cmd.exe", "/c", "type ..\\inputEj08.txt");
+//		ProcessBuilder pbVolcado = new ProcessBuilder("cmd.exe", "/c", "type ..\\inputEj08.txt");
+		ProcessBuilder pbVolcado = new ProcessBuilder("cat", "../inputEj08.txt");
 		pbVolcado.directory(bin);
 		pbVolcado.redirectOutput(ProcessBuilder.Redirect.to(outFile));
 
