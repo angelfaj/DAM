@@ -154,7 +154,7 @@ public class App extends JFrame {
 		contentPane.add(btnPagar);
 		
 		textPaneResul = new JTextPane();
-		textPaneResul.setBounds(176, 181, 260, 25);
+		textPaneResul.setBounds(176, 165, 260, 41);
 		contentPane.add(textPaneResul);
 		
 		setVisible(true);
