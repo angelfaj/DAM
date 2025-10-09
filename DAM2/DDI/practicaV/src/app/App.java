@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JRadioButton;
@@ -12,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class App extends JFrame {
 
@@ -24,7 +29,10 @@ public class App extends JFrame {
 	private JLabel lblEuros;
 	private JLabel lblCntimos;
 	private JButton btnPagar;
-	private JComboBox comboBoxCents, comboBoxEuros;
+	private Integer[] euros = {0, 1, 2, 3, 4, 5};
+	private Double[] centimos = {0.0, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90};
+	private JComboBox<Double> comboBoxCents;
+	private JComboBox<Integer> comboBoxEuros;
 	private JTextPane textPaneResul;
 	
 	public App() {
@@ -74,15 +82,74 @@ public class App extends JFrame {
 		lblCntimos.setBounds(12, 71, 66, 15);
 		panelPrecio.add(lblCntimos);
 		
-		comboBoxEuros = new JComboBox();
+		comboBoxEuros = new JComboBox<Integer>(euros);
 		comboBoxEuros.setBounds(94, 24, 91, 20);
 		panelPrecio.add(comboBoxEuros);
 		
-		comboBoxCents = new JComboBox();
+		comboBoxCents = new JComboBox<Double>(centimos);
 		comboBoxCents.setBounds(94, 66, 91, 20);
 		panelPrecio.add(comboBoxCents);
 		
 		btnPagar = new JButton("Pagar");
+		btnPagar.addActionListener(new ActionListener() {
+			/*Se sabe que :
+			Bebida A tiene un costo de 0 euros 80 centimos.
+			Bebida B tiene un costo de 1 euros 20 centimos.
+			Bebida C tiene un costo de 3 euros 10 centimos
+			*/
+			public void actionPerformed(ActionEvent e) {
+				double cantidadIntroducida = ((Integer) comboBoxEuros.getSelectedItem()) + ((Double) comboBoxCents.getSelectedItem());
+				double bebidaA = 0.80;
+				double bebidaB = 1.20;
+				double bebidaC = 3.10;
+				String correcto = "Correcto, extrayendo bebida";
+				String incorrectoFalta = "Incorrecto faltan ";
+				String incorrectoSobra = "Incorrecto sobran ";
+				//Para cambiar el color del texto
+				StyledDocument doc = textPaneResul.getStyledDocument();
+				SimpleAttributeSet color = new SimpleAttributeSet();
+				
+//				FALTA AÑADIR CANTIDAD RESTANTE/SOBRANTE
+				if (rdbtnBebidaA.isSelected()) {
+					if (cantidadIntroducida == bebidaA) {
+						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+						textPaneResul.setText(correcto);
+					}else if(cantidadIntroducida > bebidaA){
+						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+						textPaneResul.setText(incorrectoSobra + (cantidadIntroducida - bebidaA));
+					}else {
+						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+						textPaneResul.setText(incorrectoFalta + (bebidaA - cantidadIntroducida));
+					}
+				}else if (rdbtnBebidaB.isSelected()) {
+					if(cantidadIntroducida == bebidaB) {
+						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+						textPaneResul.setText(correcto);
+					}else if(cantidadIntroducida > bebidaB){
+						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+						textPaneResul.setText(incorrectoSobra + (cantidadIntroducida - bebidaB));
+					}else {
+						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+						textPaneResul.setText(incorrectoFalta + (bebidaB - cantidadIntroducida));
+					}
+				}else if (rdbtnBebidaC.isSelected()) {
+					if (cantidadIntroducida == bebidaC) {
+						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+						textPaneResul.setText(correcto);
+					}else if (cantidadIntroducida > bebidaC){
+						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+						textPaneResul.setText(incorrectoSobra + (cantidadIntroducida - bebidaC));
+					}else {
+						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+						textPaneResul.setText(incorrectoFalta + (bebidaC - cantidadIntroducida));
+					}
+				}else {
+					StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
+					textPaneResul.setText("error desconocido");
+				}
+				doc.setCharacterAttributes(0, doc.getLength(), color, false);
+			}
+		});
 		btnPagar.setBounds(27, 181, 117, 25);
 		contentPane.add(btnPagar);
 		

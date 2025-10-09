@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 
 public class Encuesta extends JFrame {
 
@@ -37,6 +38,7 @@ public class Encuesta extends JFrame {
 	private ButtonGroup rdbtnGroup;		//Necesario para evitar la seleccion multiple de radiobuton
 	private JRadioButton rdbtnHombre;
 	private JRadioButton rdbtnMujer;
+	private SpinnerNumberModel modelSpiner = new SpinnerNumberModel(0, 0, 100, 1);
 	private JSpinner spinner;
 	private String[] opcionesDeporte = {"Ténis", "Fútbol", "Natación", "Escalada", "Alpinismo", "Pádel", "Entrenamiento de pesas"};
 	private JList<String> listDeportes;
@@ -78,7 +80,7 @@ public class Encuesta extends JFrame {
 		contentPane.add(textFieldProfesion);
 		textFieldProfesion.setColumns(10);
 		
-		spinner = new JSpinner();
+		spinner = new JSpinner(modelSpiner);
 		spinner.setBounds(134, 51, 40, 20);
 		contentPane.add(spinner);
 		

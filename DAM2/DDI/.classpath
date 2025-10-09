@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="practicaI/src"/>
+	<classpathentry kind="src" path="practicaII/src"/>
+	<classpathentry kind="src" path="practicaIII/src"/>
+	<classpathentry kind="src" path="practicaIV/src"/>
+	<classpathentry kind="src" path="practicaV/src"/>
+	<classpathentry kind="output" path="ppracticaII/bin"/>
+</classpath>
