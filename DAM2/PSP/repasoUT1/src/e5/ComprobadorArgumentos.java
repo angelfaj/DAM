@@ -1,4 +1,4 @@
-package e2y3y4;
+package e5;
 
 public class ComprobadorArgumentos {
 
@@ -12,30 +12,35 @@ public class ComprobadorArgumentos {
 		devolver 3.
 		• Si recibe un argumento y el argumento es un número entero mayor que 0 debe
 		devolver 4.
-		• En cualquier otra situación debe devolver 0.Realiza un segundo programa Java que ejecute al anterior. Este segundo programa
+		• En cualquier otra situación debe devolver 0.
+		Realiza un segundo programa Java que ejecute al anterior. Este segundo programa
 		deberá mostrar en pantalla lo que pasa dependiendo del valor devuelto al ejecutar el
 		programa anterior.
 		*/
 		String cadena = "";
 		
 		if (args.length < 1) {
+			System.out.println("No se han introducido argumentos");
 			System.exit(1);
 		}else if (args.length == 1){
 			try {
 				if (Integer.parseInt(args[0]) < 0 ) {
+					System.out.println("Has introducido un entero menor que cero");
 					System.exit(3);
 				}else if(Integer.parseInt(args[0]) > 0 ) {
+					System.out.println("Has introducido un entero mayor que cero");
 					System.exit(4);
 				}
 			}catch (NumberFormatException e) {
 				if(args[0].getClass().equals(cadena.getClass())) {
+					System.out.println("Has introducido una cadena");
 					System.exit(2);
 				}
 			}
 		}else {
+			System.out.println("Has introducido un valor no contemplado");
 			System.exit(0);
 		}
-		 String borrame = "";
 	}
 
 }
