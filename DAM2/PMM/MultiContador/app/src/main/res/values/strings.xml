@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MultiContador</string>
+    <string name="resetAll_btn">RESET ALL</string>
+    <string name="reset_btn">RESET</string>
+    <string name="addOne">+1</string>
+    <string name="contador">0</string>
+
 </resources>
