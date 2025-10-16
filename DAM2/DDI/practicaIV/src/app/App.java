@@ -31,7 +31,7 @@ public class App extends JFrame {
 		btn4 = new JButton("4");
 		btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblDirPiso.setText("Subiendo");
+				accionAscensor(btn4);
 				lblNPiso.setText(btn4.getText());
 			}
 		});
@@ -61,7 +61,7 @@ public class App extends JFrame {
 		btn1 = new JButton("1");
 		btn1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblDirPiso.setText("Bajando");
+				accionAscensor(btn1);
 				lblNPiso.setText(btn1.getText());
 			}
 		});
@@ -87,7 +87,7 @@ public class App extends JFrame {
 		panelAscensor.add(lblNPiso);
 		
 		lblDirPiso = new JLabel("");
-		lblDirPiso.setBounds(122, 90, 70, 15);
+		lblDirPiso.setBounds(122, 90, 121, 15);
 		panelAscensor.add(lblDirPiso);
 		
 		setVisible(true);
@@ -95,7 +95,11 @@ public class App extends JFrame {
 
 	private static void accionAscensor(JButton btn) {
 		try {
-			if (Integer.parseInt(lblNPiso.getText()) > Integer.parseInt(btn.getText())) {
+			if (lblNPiso.getText().isEmpty()) {
+				lblDirPiso.setText("Planta actual");
+			}else if (lblNPiso.getText().equals(btn.getText())) {
+				lblDirPiso.setText("Planta actual");
+			}else if (Integer.parseInt(lblNPiso.getText()) > Integer.parseInt(btn.getText())) {
 				lblDirPiso.setText("Bajando");
 			}else {
 				lblDirPiso.setText("Subiendo");

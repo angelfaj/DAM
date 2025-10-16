@@ -81,11 +81,11 @@ public class App extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int solicitado = (int) comboBoxDinero.getSelectedItem();
 				String cuenta = (String) comboBoxCuenta.getSelectedItem();
-				saldo -= solicitado;
 				
 				if (saldo >= 0) {
 					if (cuenta.equals("Caja de ahorro")) {
 						if (solicitado <= maxAhorro) {
+							saldo -= solicitado;
 							textPane.setText("Correcto");
 							textSaldo.setText(saldo + "");
 						}else {
@@ -93,6 +93,7 @@ public class App extends JFrame {
 						}
 					}else if (cuenta.equals("Cuenta corriente")) {
 						if (solicitado <= maxCorriente) {
+							saldo -= solicitado;
 							textPane.setText("Correcto");
 							textSaldo.setText(saldo + "");
 						}else {

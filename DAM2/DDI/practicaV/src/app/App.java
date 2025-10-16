@@ -104,19 +104,18 @@ public class App extends JFrame {
 				double bebidaC = 3.10;
 				String correcto = "Correcto, extrayendo bebida";
 				String incorrectoFalta = "Incorrecto faltan ";
-				String incorrectoSobra = "Incorrecto sobran ";
+				String correctoSobra = "Correcto sobran ";
 				//Para cambiar el color del texto
 				StyledDocument doc = textPaneResul.getStyledDocument();
 				SimpleAttributeSet color = new SimpleAttributeSet();
 				
-//				FALTA AÑADIR CANTIDAD RESTANTE/SOBRANTE
 				if (rdbtnBebidaA.isSelected()) {
 					if (cantidadIntroducida == bebidaA) {
 						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
 						textPaneResul.setText(correcto);
 					}else if(cantidadIntroducida > bebidaA){
-						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
-						textPaneResul.setText(incorrectoSobra + (cantidadIntroducida - bebidaA));
+						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+						textPaneResul.setText(correctoSobra + (cantidadIntroducida - bebidaA));
 					}else {
 						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
 						textPaneResul.setText(incorrectoFalta + (bebidaA - cantidadIntroducida));
@@ -126,8 +125,8 @@ public class App extends JFrame {
 						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
 						textPaneResul.setText(correcto);
 					}else if(cantidadIntroducida > bebidaB){
-						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
-						textPaneResul.setText(incorrectoSobra + (cantidadIntroducida - bebidaB));
+						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+						textPaneResul.setText(correctoSobra + (cantidadIntroducida - bebidaB));
 					}else {
 						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
 						textPaneResul.setText(incorrectoFalta + (bebidaB - cantidadIntroducida));
@@ -137,15 +136,15 @@ public class App extends JFrame {
 						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
 						textPaneResul.setText(correcto);
 					}else if (cantidadIntroducida > bebidaC){
-						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
-						textPaneResul.setText(incorrectoSobra + (cantidadIntroducida - bebidaC));
+						StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+						textPaneResul.setText(correctoSobra + (cantidadIntroducida - bebidaC));
 					}else {
 						StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
 						textPaneResul.setText(incorrectoFalta + (bebidaC - cantidadIntroducida));
 					}
 				}else {
 					StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
-					textPaneResul.setText("error desconocido");
+					textPaneResul.setText("ERROR - Debes seleccionar una bebida");
 				}
 				doc.setCharacterAttributes(0, doc.getLength(), color, false);
 			}

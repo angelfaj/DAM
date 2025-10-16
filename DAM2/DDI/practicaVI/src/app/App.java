@@ -80,7 +80,9 @@ public class App extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int caudal = (int) spinnerC1.getValue() + (int) spinnerC2.getValue() + (int) spinnerC3.getValue(); 
 				
-				if (0 < caudal && caudal <= 100) {
+				if (caudal == 0) {
+					textPaneResultado.setText(caudal + " mts³/s caudal bajo.");
+				}else if (0 < caudal && caudal <= 100) {
 					textPaneResultado.setText(caudal + " mts³/s caudal bajo.");
 				}else if (101 <= caudal && caudal <= 200) {
 					textPaneResultado.setText(caudal + " mts³/s caudal medio.");
