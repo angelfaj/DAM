@@ -1,0 +1,7 @@
+1:Jabon:3.45:67
+2:PC:345.0:7
+3:Libreta:1.45:644
+4:Soporte:35.99:34
+5:Raton:4.45:62
+6:Taladro:75.34:6
+7:Tijeras:2.45:7
