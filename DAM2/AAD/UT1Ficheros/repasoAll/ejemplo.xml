@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listaempleados>
+<empleado edad="27">
+<nombre>Pepe Perez</nombre>
+<categoria>Empleado</categoria>
+</empleado>
+<empleado edad="34">
+<nombre>Juan Sanchez</nombre>
+<categoria plus="200">Gerente</categoria>
+</empleado>
+<empleado edad="45">
+<nombre>Juan Sanchez</nombre>
+<categoria plus="1000">Gerente</categoria>
+</empleado>
+</listaempleados><?xml version="1.0" encoding="UTF-8"?>
+<listaempleados>
+<empleado edad="27">
+<nombre>Pepe Perez</nombre>
+<categoria>Empleado</categoria>
+</empleado>
+<empleado edad="34">
+<nombre>Juan Sanchez</nombre>
+<categoria plus="200">Gerente</categoria>
+</empleado>
+<empleado edad="45">
+<nombre>Juan Sanchez</nombre>
+<categoria plus="1000">Gerente</categoria>
+</empleado>
+</listaempleados>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<listaEmpleados>
+    <listaempleados edad="13">
+        <nombre>Ramon</nombre>
+        <categoria plus="1000">Gerente</categoria>
+    </listaempleados>
+    <listaempleados edad="35">
+        <nombre>Laura</nombre>
+        <categoria plus="10000">CEO</categoria>
+    </listaempleados>
+    <listaempleados edad="52">
+        <nombre>Juna</nombre>
+        <categoria plus="0">Seguridad</categoria>
+    </listaempleados>
+</listaEmpleados>

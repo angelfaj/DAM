@@ -6,10 +6,14 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,6 +25,8 @@ public class Main {
 		boolean continuar = true;
 		File inventarioTxt = new File("inventario.txt");
 		File inventarioDat = new File("inventario.dat");
+		File inventarioObj = new File("inventarioObj.dat");
+		File inventarioRaf = new File("inventarioRaf.raf");
 		
 		ArrayList<Producto> productList = new ArrayList<Producto>();
 		
@@ -74,18 +80,64 @@ public class Main {
 			}
 			case 5 -> {
 				// Guardar en fichero de objetos
+				try {
+					saveInObjFile(productList, inventarioObj);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Guardado en fichero de objetos");
 			}
 			case 6 -> {
 				// Cargar desde fichero de objetos
+				System.out.println("Contenido del fichero: " + inventarioObj.getAbsolutePath());
+				try {
+					printFromObjFile(inventarioObj);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			case 7 -> {
 				// Guardar en fichero de acceso aleatorio
+				try {
+					saveInRafFile(productList, inventarioRaf);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Guardado en fichero raf");
 			}
 			case 8 -> {
 				// Cargar desde fichero de acceso aleatorio
+				System.out.println("Contenido del fichero: " + inventarioRaf.getAbsolutePath());
+				try {
+					printFromRafFile(inventarioRaf);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			case 9 -> {
-				// Mostrar inventario
+				// Modificar producto
+				System.out.println("Introduce el id del producto: ");
+				int id = sc.nextInt();
+				sc.nextLine();
+				try {
+					modifyProduct(id, inventarioRaf, sc);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			case 10 -> {
 				// Añadir productos
@@ -155,8 +207,98 @@ public class Main {
 		}catch (EOFException e) {}
 	}
 	
-	private static void modifyProduct() {
-
+	private static void saveInObjFile(ArrayList<Producto> productList, File inventarioObj) throws IOException {
+		FileOutputStream fo;
+		ObjectOutputStream datos;
+		
+		if (!inventarioObj.exists()) {
+			fo = new FileOutputStream(inventarioObj);
+			datos = new ObjectOutputStream(fo);
+		}else {
+			fo = new FileOutputStream(inventarioObj, true);
+			datos = new MiObjectOutputStream(fo);
+		}
+		
+		for (Producto p:productList) {
+			datos.writeObject(p);
+		}
+		
+		datos.close();
+	}
+	
+	private static void printFromObjFile(File inventarioObj) throws IOException, ClassNotFoundException {
+		try(FileInputStream fi = new FileInputStream(inventarioObj);ObjectInputStream datos = new ObjectInputStream(fi)) {
+			while (true) {
+				Producto p = (Producto) datos.readObject();
+				System.out.println(p);
+			}
+		}catch (EOFException e) {}
+	}
+	
+	private static void saveInRafFile(ArrayList<Producto> productList, File inventarioRaf) throws IOException {
+		try(RandomAccessFile raf = new RandomAccessFile(inventarioRaf, "rw")) {
+			//Colocamos el puntero al final
+			raf.seek(raf.length());
+			for (Producto p:productList) {
+				raf.writeInt(p.getId());
+				StringBuilder sb = new StringBuilder();
+				sb.append(p.getName());
+				sb.setLength(10);
+				raf.writeChars(sb.toString());
+				raf.writeDouble(p.getPrice());
+				raf.writeInt(p.getStock());
+			}
+		}
+	}
+	
+	private static void printFromRafFile(File inventarioRaf) throws IOException, ClassNotFoundException {
+		try(RandomAccessFile raf = new RandomAccessFile(inventarioRaf, "r")) {
+			char[] name = new char[10];
+			while (raf.getFilePointer() < raf.length()) {
+				int id = raf.readInt();
+				for (int i = 0; i < name.length; i++) {
+					name[i] = raf.readChar();
+				}
+				String nameS = new String(name);
+				double price = raf.readDouble();
+				int stock = raf.readInt();
+				//De no realizar trim() no se muestran los valores price y stock
+				System.out.println(id + ":" + nameS.trim() + ":" + price + ":" + stock);
+			}
+		}
+	}
+	
+	private static void modifyProduct(int id, File inventarioRaf, Scanner sc) throws FileNotFoundException, IOException {
+		//int + string + double + int
+		int registerSize = 4 + 20 + 8 + 4;
+		int position = (id - 1) * registerSize;
+		
+		try(RandomAccessFile raf = new RandomAccessFile(inventarioRaf, "rw")) {
+			raf.seek(position);
+			//Leemos y mostramos la linea a modificar
+			int id2 = raf.readInt();
+			char[] name = new char[10];
+			for (int i = 0; i < name.length; i++) {
+				name[i] = raf.readChar();
+			}
+			String nameS = new String(name);
+			double price = raf.readDouble();
+			int stock = raf.readInt();
+			//De no realizar trim() no se muestran los valores price y stock
+			System.out.println("Producto a modificar: " + id2 + ":" + nameS.trim() + ":" + price + ":" + stock);
+			
+			//Solicitamos datos
+			System.out.println("Introduce el nuevo precio: ");
+			price = sc.nextDouble();
+			System.out.println("Introduce el nuevo stock: ");
+			stock = sc.nextInt();
+			
+			//Guardamos
+			raf.seek(position);
+			raf.skipBytes(24); //Saltamos id y nombre
+			raf.writeDouble(price);
+			raf.writeInt(stock);
+		}
 	}
 	
 	private static void showMenu() {
@@ -170,7 +312,7 @@ public class Main {
 				  6. Cargar desde fichero de objetos (.dat)
 				  7. Guardar en fichero de acceso aleatorio (.raf/dat)
 				  8. Cargar desde fichero de acceso aleatorio (.raf/dat)
-				  9. Mostrar inventario
+				  9. Modificar producto
 				  10. Llenar lista de productos (PRIMER PASO)
 				  11. Eliminar producto
 				  12. Salir
