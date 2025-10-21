@@ -12,12 +12,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private int contadorGlobal, contador1, contador2, contador3, contador4;
     private TextView txtContadorGlobal, txtContador1, txtContador2, txtContador3, txtContador4;
+    private TextView[] txtContadores;
+    private int contadorGlobal = 0;
+    private int[] contadores = new int[4]; //0 sera el siguiente al contador global, 2 el siguiente ...
     private Button btnAumentarContador1, btnAumentarContador2, btnAumentarContador3, btnAumentarContador4;
     private Button btnResetAll, btnResetContador1, btnResetContador2, btnResetContador3, btnResetContador4;
-    
-    Despues de modificar el metodo aumentar y disminuir la app se cierra al hacer click en cualquier boton
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
     }
     private void enlazarElementos() {
         txtContadorGlobal = findViewById(R.id.txtContadorGlobal);
-        txtContador1 = findViewById(R.id.txtContador1);
-        txtContador2 = findViewById(R.id.txtContador2);
-        txtContador3 = findViewById(R.id.txtContador3);
-        txtContador4 = findViewById(R.id.txtContador4);
+        txtContadores = new TextView[] {
+                findViewById(R.id.txtContador1),
+                findViewById(R.id.txtContador2),
+                findViewById(R.id.txtContador3),
+                findViewById(R.id.txtContador4)
+        };
         btnAumentarContador1 = findViewById(R.id.btnContador1);
         btnAumentarContador2 = findViewById(R.id.btnContador2);
         btnAumentarContador3 = findViewById(R.id.btnContador3);
@@ -46,106 +49,97 @@ public class MainActivity extends AppCompatActivity {
         btnResetContador3 = findViewById(R.id.btnReset3);
         btnResetContador4 = findViewById(R.id.btnReset4);
         //Inicializamos los contadores
-        contadorGlobal = 0;
-        contador1 = 0;
-        contador2 = 0;
-        contador3 = 0;
-        contador4 = 0;
+        for (int i = 0; i < contadores.length; i++) {
+            contadores[i] = 0;
+        }
     }
     private void agregarListeners() {
         btnAumentarContador1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aumentarContador(contador1, txtContador1);
+                aumentarContador(0);
             }
         });
 
         btnAumentarContador2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aumentarContador(contador2, txtContador2);
+                aumentarContador(1);
             }
         });
 
         btnAumentarContador3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aumentarContador(contador3, txtContador3);
+                aumentarContador(2);
             }
         });
 
         btnAumentarContador4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aumentarContador(contador4, txtContador4);
+                aumentarContador(3);
             }
         });
 
         btnResetAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetContador(contadorGlobal, txtContadorGlobal);
+                resetAll(contadores);
             }
         });
-        
+
         btnResetContador1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetContador(contador1, txtContador1);
+                resetContador(0);
             }
         });
-        
+
         btnResetContador2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetContador(contador2, txtContador2);
+                resetContador(1);
             }
         });
 
         btnResetContador3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetContador(contador3, txtContador3);
+                resetContador(2);
             }
         });
 
         btnResetContador4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetContador(contador4, txtContador4);
+                resetContador(3);
             }
         });
     }
 
-    private void resetAll() {
-        //Reseteamos contadores
-        int[] contadores = {contador1, contador2, contador3, contador4};
-        TextView[] txtContadores = {txtContador1, txtContador2, txtContador3, txtContador4};
-
+    private void resetAll(int[] contadores) {
+        //Reseteamos los contradores
         for (int i = 0; i < contadores.length; i++) {
-            resetContador(contadores[i], txtContadores[i]);
+            resetContador(i);
         }
-        //Reseteamos contador global
-        contadorGlobal = 0;
-        //Actualizamos registros
-        txtContadorGlobal.setText(contadorGlobal);
-
     }
-    private void resetContador(int cont, TextView txtContador) {
-        //Aumentamos contadores
-        contadorGlobal -= cont;
-        cont = 0;
+    private void resetContador(int index) {
+        //Disminuimos contadores
+        contadorGlobal -= contadores[index];
+        contadores[index] = 0;
         //Actualizamos registros
-        txtContador.setText(cont);
-        txtContadorGlobal.setText(contadorGlobal);
+        txtContadores[index].setText(String.valueOf(contadores[index]));
+        txtContadorGlobal.setText(String.valueOf(contadorGlobal));
     }
-    private void aumentarContador(int cont, TextView txtContador) {
+    private void aumentarContador(int index) {
         //Aumentamos contadores
+        contadores[index] += 1;
         contadorGlobal++;
-        cont++;
+
         //Actualizamos registros
-        txtContador.setText(cont);
-        txtContadorGlobal.setText(contadorGlobal);
+        txtContadores[index].setText(String.valueOf(contadores[index]));
+        txtContadorGlobal.setText(String.valueOf(contadorGlobal));
     }
    
 }
