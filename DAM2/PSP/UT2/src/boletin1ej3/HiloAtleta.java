@@ -18,7 +18,7 @@ public class HiloAtleta extends Thread{
 				e.printStackTrace();
 			}
 		}
-		System.out.print("\n" + nombreAtleta + " llegço a la meta.");
+		System.out.print("\n" + nombreAtleta + " llegó a la meta.");
 	}
 	
 }
