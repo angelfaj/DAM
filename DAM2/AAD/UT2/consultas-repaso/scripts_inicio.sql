@@ -1,3 +1,3 @@
 alter user system identified by password;
 create user C##CURSOS identified by password;
-grant connect, resource, unlimited TABLESPACE to C##CURSOS;
+grant connect, create view, resource, unlimited TABLESPACE to C##CURSOS;
