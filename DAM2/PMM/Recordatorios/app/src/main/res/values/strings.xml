@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Recordatorios</string>
+    <string name="add_btn">+</string>
+    <string name="done_btn">Hechas</string>
+    <string name="pending_btn">Pendientes</string>
+    <string name="tarea_txt">Añadir tarea</string>
+</resources>
