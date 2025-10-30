@@ -1,0 +1,4 @@
+FALTA:
+    metodo visualizar
+    variables ndias. Inicializarlas en el condicional oportuno.
+    
