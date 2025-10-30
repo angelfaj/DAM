@@ -288,7 +288,7 @@ public class Reserva extends JFrame {
 		String tipoEvento = "";
 		String cocina = (String) comboBoxCocina.getSelectedItem();
 		String habitacion = "";
-		int nDias = ;
+		int nDias = (int) spinnerDias.getValue();
 		
 		
 		
