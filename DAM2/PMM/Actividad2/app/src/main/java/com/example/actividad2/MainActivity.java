@@ -39,12 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtView.setText(resetedText);
     }
 }
-// ====================================Pregunta: ¿Como se puede implementar un listener mediante una clase anónima?==================================================================
+// =====================Pregunta: ¿Como se puede implementar un listener mediante una clase anónima?====================
 //Respuesta breve:
-// creando un objeto anónimo dentro del métdo setOnClickListenner
-// no implementando la interfaz sobre la clase o no pasando 'this' como parámetro al establecer el listener, ya que esto hace que cada objeto que implemente ese listener se comportará de la misma forma
-// si quisieramos que al hacer click sobre otro objeto de la misma clase se realizase una acción diferente necesitariamos impementar una clase anónima del siguiente modo:
-//
+// creando un objeto anónimo del listener que queremos utilizar, por ejemplo dentro del método setOnClickListenner (también se puede crear fuera)
+// en nuestro código quedaría de la siguiente forma:
+
 // resetBtn.setOnClickListener(new View.OnClickListener() {    //Aqui estamos creando un objeto anónimo de la clase onclicklistener,
 //            @Override                                        //de este modo podemos definir cualquier acción diferente a la estableciza
 //            public void onClick(View view) {                 //por el método onClick en nuestra clase MainActivity
@@ -53,3 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                txtView.setText(resetedText);
 //            }
 //        });
+
+// Ventajas de la implementación anónima: Extiende la funcionalidad de nuestra app ya que podemos establecer comportamientos diferentes para un mismo tipo de listener
+// Ventajas de implementar el listener en la clase: Sencillez y legibilidad, es útil cuando el listener tiene un único comportamiento, también puede servirnos para definir comportamientos genéricos.

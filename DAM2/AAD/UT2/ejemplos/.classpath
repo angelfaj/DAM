@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/vespertino/angel-workspace/DAM2/AAD/resources/ojdbc11.jar"/>
+	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="lib" path="lib/ojdbc11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

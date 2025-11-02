@@ -8,29 +8,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main {
-	//Atributos necesarios para interactuar con la db
-	private static String bd = "XE"; //Nombre de la bd
+	// Atributos necesarios para interactuar con la db
+	private static String bd = "XE"; // Nombre de la bd
+//	private static String login = "system"; // Usuario de la bd
 	private static String login = "C##BIBLIOTECA"; //Usuario de la bd
-	private static String password = "password"; //Contraseña
+	private static String password = "password"; // Contraseña
 	private static Connection connection = null;
 	private static Statement st = null;
-	private static ResultSet rs = null;	//alamacenara la respuesta de la consulta lanzada
+	private static ResultSet rs = null; // alamacenara la respuesta de la consulta lanzada
 	private static String url = "jdbc:oracle:thin:@localhost:1521:" + bd;
 	private static String oracleDriver = "oracle.jdbc.driver.OracleDriver";
-	
+
 	public static void conectar() {
 		try {
-			//Driver para oracle
+			// Driver para oracle
 			Class.forName(oracleDriver);
 			connection = DriverManager.getConnection(url, login, password);
 			if (connection != null) {
 				System.out.println("Conexión realizada correctamente");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void cerrar() throws SQLException {
 		if (rs != null) {
 			rs.close();
@@ -42,7 +43,7 @@ public class Main {
 			connection.close();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		/*Ejercicio 1: Conexión y Cierre
 		Crea la clase ConexionBase con un método estático conectar() y cerrar(). En el
@@ -66,22 +67,29 @@ public class Main {
 		NACIONALIDAD de todos los autores de la tabla AUTORES. El método debe
 		iterar sobre el ResultSet y mostrar los datos por consola.*/
 		
-//		listarAutores();
-		
-		
-		
-		
-		
+//		conectar();
+//		try {
+//			listarAutores();
+//			cerrar();
+//			System.out.println("Conexión cerrada correctamente");
+//		}catch (SQLException e) {
+//			e.printStackTrace();			
+//		}	
 		
 		/*Ejercicio 3: INSERT
-		Crea un método insertarLector(int id, String nombre, String apellido, String
-				email). Este método debe crear una sentencia INSERT INTO (usando
-						concatenación de strings) y ejecutarla con Statement.executeUpdate() para
-		añadir un nuevo lector a la tabla LECTORES.
+		Crea un método insertarLector(int id, String nombre, String apellido, String email). 
+		Este método debe crear una sentencia INSERT INTO (usando concatenación de strings) 
+		y ejecutarla con Statement.executeUpdate() para	añadir un nuevo lector a la tabla LECTORES.
 		*/
 		
-		
-		
+//		conectar();
+//		try {
+//			insertarLector(2004, "Lara", "Martinez", "laramartinez@nmail.com");
+//			cerrar();
+//			System.out.println("Conexión cerrada correctamente");
+//		}catch (SQLException e) {
+//			e.printStackTrace();			
+//		}
 		
 		/*Ejercicio 4: UPDATE
 		Implementa un método actualizarEmail(int idLector, String nuevoEmail) que
@@ -185,49 +193,55 @@ public class Main {
 		PreparedStatement para buscar y listar el ID_LECTOR, NOMBRE, y
 		MULTAS_PENDIENTES de todos los lectores que tienen una multa superior a 0.*/
 		
-		conectar();
-		
-		try {
-			buscarLectoresConMultas();
-			cerrar();
-			System.out.println("Conexión cerrada correctamente");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		conectar();
+//		
+//		try {
+//			buscarLectoresConMultas();
+//			cerrar();
+//			System.out.println("Conexión cerrada correctamente");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
-		IMPORTANTE HACER COMMIT SI MODIFICAMOS DATOS EN ORACLE DEVELOPER
-		DE LO CONTRARIO JAVA SE QUEDARA COLGADO AL CONSULTAR LA BD POR TENER ESA TABLA BLOQUEADA.
+//		IMPORTANTE HACER COMMIT SI MODIFICAMOS DATOS EN ORACLE DEVELOPER
+//		DE LO CONTRARIO JAVA SE QUEDARA COLGADO AL CONSULTAR LA BD POR TENER ESA TABLA BLOQUEADA.
 	}
+
+	private static void insertarLector(int id, String nombre, String apellido, String email) throws SQLException {
+		String sql = "insert into lectores(id_lector, nombre, apellido, email) " + "values(" + id + ", '" + nombre + "', '"
+				+ apellido + "', '" + email + "')";
+		st = connection.createStatement();
+		int filasAfectadas = st.executeUpdate(sql);
+		System.out.println("Filas afectadas: " + filasAfectadas);
+	}
+
 	private static void buscarLectoresConMultas() throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(
-				"select id_lector, nombre, multas_pendientes "
-				+ "from lectores where multas_pendientes > 0");
-		
+				"select id_lector, nombre, multas_pendientes " + "from lectores where multas_pendientes > 0");
+
 		rs = ps.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			int id = rs.getInt(1);
 			String nombre = rs.getString(2);
 			int multas = rs.getInt(3);
-			
+
 			System.out.println("Persona: " + id + " " + nombre + " " + multas);
 		}
-		
+
 	}
 
 	private static void listarLibrosDeAutor(String autor) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(
-				"select l.titulo from libros l "
-				+ "join autores a on l.id_autor = a.id_autor "
-				+ "where a.nombre_autor = ?");
+		PreparedStatement ps = connection.prepareStatement("select l.titulo from libros l "
+				+ "join autores a on l.id_autor = a.id_autor " + "where a.nombre_autor = ?");
 		ps.setString(1, autor);
 		rs = ps.executeQuery();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			String titulo = rs.getString(1);
 			System.out.println("Libro: " + titulo);
 		}
-		
+
 	}
 
 	private static void cambiarCopiasDisponibles(String isbn, int copias) throws SQLException {
@@ -239,7 +253,8 @@ public class Main {
 	}
 
 	private static void registrarNuevoAutorPS(int id, String nombre, String nacionalidad) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement("insert into autores(id_autor, nombre_autor, nacionalidad) values (?, ?, ?)");
+		PreparedStatement ps = connection
+				.prepareStatement("insert into autores(id_autor, nombre_autor, nacionalidad) values (?, ?, ?)");
 		ps.setInt(1, id);
 		ps.setString(2, nombre);
 		ps.setString(3, nacionalidad);
@@ -248,10 +263,11 @@ public class Main {
 	}
 
 	private static void buscarLibrosPorAnio(int anio) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement("select titulo, isbn from libros where anio_publicacion = ?" );
+		PreparedStatement ps = connection
+				.prepareStatement("select titulo, isbn from libros where anio_publicacion = ?");
 		ps.setInt(1, anio);
 		rs = ps.executeQuery();
-		
+
 		while (rs.next()) {
 			String titulo = rs.getString(1);
 			String isbn = rs.getString(2);
@@ -267,10 +283,20 @@ public class Main {
 		System.out.println("Filas afectadas " + filasAfectadas);
 	}
 
-	private static void listarAutores() {
-		// TODO Auto-generated method stub
-		
+	private static void listarAutores() throws SQLException {
+		String sql = "select id_autor, nombre_autor, nacionalidad from autores";
+		st = connection.createStatement();
+		rs = st.executeQuery(sql);
+
+		while (rs.next()) {
+			int id = rs.getInt(1);
+			String nombre = rs.getString(2);
+			String nacionalidad = rs.getString(3);
+
+			System.out.println("Autor: " + id + " " + nombre + " " + nacionalidad);
+		}
 	}
+
 	private static void actualizarEmail(int idLector, String nuevoEmail) throws SQLException {
 		// TODO Auto-generated method stub
 		String sql = "update lectores set email='" + nuevoEmail + "' where id_lector=" + idLector;

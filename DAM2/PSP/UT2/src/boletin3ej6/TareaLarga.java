@@ -11,12 +11,10 @@ public class TareaLarga extends Thread{
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-//				Thread.currentThread().interrupt();
+				System.out.println("Hilo terminado.");
 			}
 			contador++;
 		}
-		System.out.println("Hilo terminado.");
 	}
 	
 	public static void main(String[] args) {
@@ -50,16 +48,25 @@ public class TareaLarga extends Thread{
 		
 		TareaLarga t = new TareaLarga();
 		t.start();
+		int contador = 0;
+		
 		while(t.isAlive()) {
-			System.out.println("\nLa tarea sigue en curso...");
-			try {
-				sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (contador > 5) {
+				t.interrupt();
+			}else {
+				System.out.println("\nLa tarea sigue en curso...");
+				try {
+					sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			contador += 2;
 		}
-		System.out.println("Hilo finalizado");
+		if (!t.isAlive()) {
+			System.out.println("Hilo finalizado");
+		}
 
 	}
 
