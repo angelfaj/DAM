@@ -19,11 +19,13 @@ public class JoinThread extends Thread{
 
 	@Override
 	public void run() {
-		while (!isInterrupted()) {
+		boolean finBucle = false;
+		while (!isInterrupted() && !finBucle) {
 			for (;inicioSuma < finSuma; inicioSuma++) {
 				resultadoSuma += (inicioSuma + 1);
 				System.out.println(getName() + ": " + resultadoSuma);
 			}
+			finBucle = true;
 		}
 	}
 	
@@ -51,9 +53,9 @@ public class JoinThread extends Thread{
 		ejecución.
 		*/
 		
-		JoinThread h1 = new JoinThread("H1", 1, 2000);
-		JoinThread h2 = new JoinThread("H2", 2001, 4000);
-		JoinThread h3 = new JoinThread("H1", 4001, 6000);
+		JoinThread h1 = new JoinThread("H1", 1, 20000);
+		JoinThread h2 = new JoinThread("H2", 20001, 40000);
+		JoinThread h3 = new JoinThread("H1", 40001, 60000);
 		h1.start();
 		h2.start();
 		h3.start();
@@ -68,7 +70,7 @@ public class JoinThread extends Thread{
 		
 		if (!h1.isAlive() && !h2.isAlive() && !h3.isAlive()) {
 			int resul = h1.getResultadoSuma() + h2.getResultadoSuma() + h3.getResultadoSuma();
-			System.out.println("SUMA FINAL: " + resul);
+			System.out.println("SUMA FINAL: " + resul + "\n" + "Tiempo de ejecucion: " + System.currentTimeMillis() + "mls");
 		}
 	}
 
