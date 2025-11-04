@@ -59,7 +59,7 @@ public class TareaCostosa extends Thread {
 		}
 		
 		if (t1.isAlive()) {
-			System.out.println("Tiempo limite excedido. Cancando tarea...");
+			System.out.println("Tiempo limite excedido. Cancelando tarea...");
 			t1.interrupt();
 		}else {
 			System.out.println("Tarea finalizada dentro del tiempo limite");
