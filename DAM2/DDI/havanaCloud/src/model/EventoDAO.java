@@ -19,7 +19,8 @@ public class EventoDAO {
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
 	            ps.setString(1, evento.getNombre());
 	            ps.setString(2, evento.getTelefono());
-	            ps.setString(3, evento.getFecha());
+	            java.sql.Date sqlDate = new java.sql.Date(evento.getFecha().getTime());
+	            ps.setDate(3, sqlDate);
 	            ps.setInt(4, evento.getnPersonas());
 	            ps.setString(5, evento.getTipoEvento());
 	            ps.setString(6, evento.getCocina());
@@ -41,7 +42,8 @@ public class EventoDAO {
 				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, evento.getNombre());
 			ps.setString(2, evento.getTelefono());
-			ps.setString(3, evento.getFecha());
+			java.sql.Date sqlDate = new java.sql.Date(evento.getFecha().getTime());
+            ps.setDate(3, sqlDate);
 			ps.setInt(4, evento.getnPersonas());
 			ps.setString(5, evento.getTipoEvento());
 			ps.setString(6, evento.getCocina());
@@ -68,7 +70,7 @@ public class EventoDAO {
 				EventoModel e = new EventoModel();
 				e.setNombre(rs.getString(1));
 				e.setTelefono(rs.getString(2));
-				e.setFecha(rs.getString(3));
+				e.setFecha(rs.getDate(3));
 				e.setnPersonas(rs.getInt(4));
 				e.setTipoEvento(rs.getString(5));
 				e.setCocina(rs.getString(6));

@@ -10,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+import model.EventoModel;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
@@ -131,7 +134,7 @@ public class ReservaView extends JFrame {
 		panelReserva.add(spinnerFecha);
 
 		//Establecemos formato de fecha
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerFecha, "dd/MM/yyyy");
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerFecha, "yyyy/MM/dd");
 		spinnerFecha.setEditor(dateEditor);
 		
 		valorInicialFecha = spinnerFecha.getValue();
@@ -351,16 +354,21 @@ public class ReservaView extends JFrame {
 		desactivar();
     }
 
-	public void comprobarCampos() {
+	public EventoModel comprobarCampos() {	//Si son correctos devuelve objeto reserva, sino devuelve null
+		EventoModel reserva = null;
     	String motivoError = "";
 		boolean error = false;
 		
-		//Variable para almacenar el contenido del formulario
-		
+		//Variables para almacenar el contenido del formulario
 		String nombre = textFieldNombre.getText();
 		String telefono = textFieldNumero.getText();
-		String fecha = (String) spinnerFecha.getValue();
-		String nPersonas = textFieldNumeroPersonas.getText();
+		Date fecha = (Date) spinnerFecha.getValue();
+		int nPersonas;
+		try {
+			 nPersonas = Integer.parseInt(textFieldNumeroPersonas.getText());
+		}catch (NumberFormatException e) {
+			nPersonas = 0;
+		}
 		String tipoEvento = "";
 		String cocina = (String) comboBoxCocina.getSelectedItem();
 		String habitacion = "";
@@ -384,7 +392,7 @@ public class ReservaView extends JFrame {
         }
 		
 		//Comprobamos si ha introducido numero de personas
-		if(nPersonas.isEmpty()) {
+		if(textFieldNumeroPersonas.getText().isEmpty()) {
 			motivoError += "Debes indicar el número de asistentes. ";
 			error = true;
 		}
@@ -420,11 +428,13 @@ public class ReservaView extends JFrame {
 			verificacionCamposTextPane.setText("ERROR <" + motivoError + ">");
 			 StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
 		}else {
+			reserva = new EventoModel(nombre, telefono, fecha , nPersonas, tipoEvento, cocina, nDias, habitacion);
 			verificacionCamposTextPane.setText("ENVIADO CORRECTAMENTE");
-			 StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
+			StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
 		}
 		doc.setCharacterAttributes(0, doc.getLength(), color, false);
 		
+		return reserva;
 	}
 
 	public void desactivar() {

@@ -5,17 +5,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import model.EventoDAO;
 import model.EventoModel;
-import view.MenuView;
 import view.ReservaView;
 
 public class EventoController {
-	private MenuView menuView;
 	private ReservaView reservaView;
 	private EventoModel eventoModel;
 
-	public EventoController(MenuView menuView, ReservaView reservaView, EventoModel eventoModel) {
-		this.menuView = menuView;
+	public EventoController(ReservaView reservaView, EventoModel eventoModel) {
 		this.reservaView = reservaView;
 		this.eventoModel = eventoModel;
 		
@@ -23,13 +21,6 @@ public class EventoController {
 	}
 
 	public void addListeners() {
-		menuView.getBtnRealizarUnaReserva().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new ReservaView();
-				menuView.setVisible(false);
-			}
-		});
-		
 		//Únicamente permitimos introducir numeros
 		reservaView.getTextFieldNumero().addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -74,7 +65,14 @@ public class EventoController {
 		
 		reservaView.getBtnAceptar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				reservaView.comprobarCampos();
+				EventoModel reserva = reservaView.comprobarCampos();
+				if (reserva != null) {
+					if (reserva.getTipoEvento().equalsIgnoreCase("congreso")) {
+						System.out.println("Añadiendo reserva, filas modificadas: " + EventoDAO.addEventoCongreso(reserva)); 
+					}else {
+						System.out.println("Añadiendo reserva, filas modificadas: " + EventoDAO.addEventoGeneral(reserva)); 
+					}
+				}
 			}
 		});
 		

@@ -1,14 +1,17 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 
 public class EventoModel {
-	private String nombre, telefono, fecha, tipoEvento, cocina, habitacion;
+	private String nombre, telefono, tipoEvento, cocina, habitacion;
+	Date fecha;
 	private int nPersonas, nDias;
 	
 	public EventoModel() {}
 
-	public EventoModel(String nombre, String telefono, String fecha, int nPersonas, String tipoEvento, String cocina) {
+	public EventoModel(String nombre, String telefono, Date fecha, int nPersonas, String tipoEvento, String cocina) {
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.fecha = fecha;
@@ -17,7 +20,7 @@ public class EventoModel {
 		this.cocina = cocina;
 	}
 	
-	public EventoModel(String nombre, String telefono, String fecha, int nPersonas, String tipoEvento, String cocina, int nDias, String habitacion) {
+	public EventoModel(String nombre, String telefono, Date fecha, int nPersonas, String tipoEvento, String cocina, int nDias, String habitacion) {
 		this(nombre, telefono, fecha, nPersonas, tipoEvento, cocina);
 		this.nDias = nDias;
 		this.habitacion = habitacion;
@@ -39,11 +42,11 @@ public class EventoModel {
 		this.telefono = telefono;
 	}
 
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
@@ -94,7 +97,7 @@ public class EventoModel {
 		EventoModel evento = listaEventos.get(posicion);
 		eventoArreglo[0] = evento.getNombre();
 		eventoArreglo[1] = evento.getTelefono();
-		eventoArreglo[2] = evento.getFecha();
+		eventoArreglo[2] = evento.getFecha().toString();
 		eventoArreglo[3] = evento.getnPersonas() + "";
 		eventoArreglo[4] = evento.getTipoEvento();
 		eventoArreglo[5] = evento.getCocina();
