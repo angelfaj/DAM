@@ -25,15 +25,25 @@ public class MenuView extends JFrame {
 		getContentPane().setLayout(null);
 		
 		btnRealizarUnaReserva = new JButton("Realizar una reserva");
-		btnRealizarUnaReserva.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new ReservaView();
-				setVisible(false);
-			}
-		});
 		btnRealizarUnaReserva.setBounds(143, 96, 181, 25);
 		contentPane.add(btnRealizarUnaReserva);
 		
 		setVisible(true);
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JButton getBtnRealizarUnaReserva() {
+		return btnRealizarUnaReserva;
+	}
+
+	public void setBtnRealizarUnaReserva(JButton btnRealizarUnaReserva) {
+		this.btnRealizarUnaReserva = btnRealizarUnaReserva;
 	}
 }

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -17,6 +18,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -59,16 +61,18 @@ public class ReservaView extends JFrame {
 	private JSpinner spinnerDias;
 	private JButton btnAceptar, btnCancelar; 
 	private JCheckBox chckbxNecesitarnHabitacion;
-	private JTextPane textPane;
+	private JTextPane verificacionCamposTextPane;
 	private Object valorInicialFecha;
 	private Object valorInicialDias;
-	private JTable table;
+	private JTable reservasTabla;
 	private JButton btnVisualizar;
+	private DefaultTableModel modeloTabla;
+	private JScrollPane scrollTabla;
 	
 	public ReservaView() {
 		setTitle("Reserva");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 850, 650);
+		setBounds(100, 100, 1050, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -97,17 +101,6 @@ public class ReservaView extends JFrame {
 		textFieldNumero = new JTextField();
 		textFieldNumero.setColumns(10);
 		textFieldNumero.setBounds(85, 48, 133, 19);
-		//Únicamente permitimos introducir numeros
-		textFieldNumero.addKeyListener(new KeyAdapter() {
-		    public void keyTyped(KeyEvent e) {
-		        char c = e.getKeyChar();
-
-		        // Solo permite dígitos
-		        if (!Character.isDigit(c)) {
-		            e.consume();
-		        }
-		    }
-		});
 		panelContacto.add(textFieldNumero);
 		
 		panelReserva = new JPanel();
@@ -127,17 +120,6 @@ public class ReservaView extends JFrame {
 		textFieldNumeroPersonas = new JTextField();
 		textFieldNumeroPersonas.setColumns(10);
 		textFieldNumeroPersonas.setBounds(197, 44, 102, 19);
-		//Únicamente permitimos introducir numeros
-		textFieldNumeroPersonas.addKeyListener(new KeyAdapter() {
-		    public void keyTyped(KeyEvent e) {
-		        char c = e.getKeyChar();
-
-		        // Solo permite dígitos
-		        if (!Character.isDigit(c)) {
-		            e.consume();
-		        }
-		    }
-		});
 		panelReserva.add(textFieldNumeroPersonas);
 		
 		LocalDate localTomorrow = LocalDate.now().plusDays(1);
@@ -162,29 +144,14 @@ public class ReservaView extends JFrame {
 		
 		rdbtnBanquete = new JRadioButton("Banquete");
 		rdbtnBanquete.setBounds(8, 22, 94, 23);
-		rdbtnBanquete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				desactivar();
-			}
-		});
 		panelTipoEvento.add(rdbtnBanquete);
 		
 		rdbtnJornada = new JRadioButton("Jornada");
 		rdbtnJornada.setBounds(8, 49, 94, 23);
-		rdbtnJornada.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				desactivar();
-			}
-		});
 		panelTipoEvento.add(rdbtnJornada);
 		
 		rdbtnCongreso = new JRadioButton("Congreso");
 		rdbtnCongreso.setBounds(8, 76, 93, 23);
-		rdbtnCongreso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				activar();
-			}
-		});
 		panelTipoEvento.add(rdbtnCongreso);
 		
 		btnGroup = new ButtonGroup();
@@ -215,20 +182,10 @@ public class ReservaView extends JFrame {
 		panelReserva.add(chckbxNecesitarnHabitacion);
 		
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				comprobarCampos();
-			}
-		});
 		btnAceptar.setBounds(86, 469, 117, 25);
 		contentPane.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarCampos();
-			}
-		});
 		btnCancelar.setBounds(250, 469, 117, 25);
 		contentPane.add(btnCancelar);
 		
@@ -237,10 +194,10 @@ public class ReservaView extends JFrame {
 		lblReservasDelSaln.setBounds(28, 23, 361, 41);
 		contentPane.add(lblReservasDelSaln);
 		
-		textPane = new JTextPane();
-		textPane.setEditable(false);
-		textPane.setBounds(28, 508, 394, 62);
-		contentPane.add(textPane);
+		verificacionCamposTextPane = new JTextPane();
+		verificacionCamposTextPane.setEditable(false);
+		verificacionCamposTextPane.setBounds(28, 508, 394, 62);
+		contentPane.add(verificacionCamposTextPane);
 		
 		JLabel lblVisualizarReservas = new JLabel("Visualizar reservas");
 		lblVisualizarReservas.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 20));
@@ -248,27 +205,141 @@ public class ReservaView extends JFrame {
 		contentPane.add(lblVisualizarReservas);
 		
 		btnVisualizar = new JButton("Visualizar");
-		btnVisualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				visualizar();
-			}
-		});
-		btnVisualizar.setBounds(694, 23, 117, 35);
+		btnVisualizar.setBounds(722, 23, 117, 35);
 		contentPane.add(btnVisualizar);
 		
-		table = new JTable();
-		table.setBounds(450, 83, 363, 364);
-		contentPane.add(table);
+		String[] columnas = {"Nombre", "Telefono", "Fecha", "Personas", "Evento", "Cocina", "Dias", "Habitacion"};
+		modeloTabla = new DefaultTableModel(null, columnas);
+		reservasTabla = new JTable(modeloTabla);
+		scrollTabla = new JScrollPane(reservasTabla);
+		scrollTabla.setBounds(450, 83, 556, 364);
+		contentPane.add(scrollTabla);
 		
 		desactivar();
 		setVisible(true);
 	}
 
-    protected void visualizar() {
-    	
+    public JTextField getTextFieldNombre() {
+		return textFieldNombre;
 	}
 
-	protected void limpiarCampos() {
+	public void setTextFieldNombre(JTextField textFieldNombre) {
+		this.textFieldNombre = textFieldNombre;
+	}
+
+	public JTextField getTextFieldNumero() {
+		return textFieldNumero;
+	}
+
+	public void setTextFieldNumero(JTextField textFieldNumero) {
+		this.textFieldNumero = textFieldNumero;
+	}
+
+	public JTextField getTextFieldNumeroPersonas() {
+		return textFieldNumeroPersonas;
+	}
+
+	public void setTextFieldNumeroPersonas(JTextField textFieldNumeroPersonas) {
+		this.textFieldNumeroPersonas = textFieldNumeroPersonas;
+	}
+
+	public JSpinner getSpinnerFecha() {
+		return spinnerFecha;
+	}
+
+	public void setSpinnerFecha(JSpinner spinnerFecha) {
+		this.spinnerFecha = spinnerFecha;
+	}
+
+	public ButtonGroup getBtnGroup() {
+		return btnGroup;
+	}
+
+	public void setBtnGroup(ButtonGroup btnGroup) {
+		this.btnGroup = btnGroup;
+	}
+
+	public JRadioButton getRdbtnBanquete() {
+		return rdbtnBanquete;
+	}
+
+	public void setRdbtnBanquete(JRadioButton rdbtnBanquete) {
+		this.rdbtnBanquete = rdbtnBanquete;
+	}
+
+	public JRadioButton getRdbtnJornada() {
+		return rdbtnJornada;
+	}
+
+	public void setRdbtnJornada(JRadioButton rdbtnJornada) {
+		this.rdbtnJornada = rdbtnJornada;
+	}
+
+	public JRadioButton getRdbtnCongreso() {
+		return rdbtnCongreso;
+	}
+
+	public void setRdbtnCongreso(JRadioButton rdbtnCongreso) {
+		this.rdbtnCongreso = rdbtnCongreso;
+	}
+
+	public JComboBox<String> getComboBoxCocina() {
+		return comboBoxCocina;
+	}
+
+	public void setComboBoxCocina(JComboBox<String> comboBoxCocina) {
+		this.comboBoxCocina = comboBoxCocina;
+	}
+
+	public JSpinner getSpinnerDias() {
+		return spinnerDias;
+	}
+
+	public void setSpinnerDias(JSpinner spinnerDias) {
+		this.spinnerDias = spinnerDias;
+	}
+
+	public JButton getBtnAceptar() {
+		return btnAceptar;
+	}
+
+	public void setBtnAceptar(JButton btnAceptar) {
+		this.btnAceptar = btnAceptar;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	public void setBtnCancelar(JButton btnCancelar) {
+		this.btnCancelar = btnCancelar;
+	}
+
+	public JCheckBox getChckbxNecesitarnHabitacion() {
+		return chckbxNecesitarnHabitacion;
+	}
+
+	public void setChckbxNecesitarnHabitacion(JCheckBox chckbxNecesitarnHabitacion) {
+		this.chckbxNecesitarnHabitacion = chckbxNecesitarnHabitacion;
+	}
+
+	public JTextPane getTextPane() {
+		return verificacionCamposTextPane;
+	}
+
+	public void setTextPane(JTextPane textPane) {
+		this.verificacionCamposTextPane = textPane;
+	}
+
+	public JButton getBtnVisualizar() {
+		return btnVisualizar;
+	}
+
+	public void setBtnVisualizar(JButton btnVisualizar) {
+		this.btnVisualizar = btnVisualizar;
+	}
+
+	public void limpiarCampos() {
 		textFieldNombre.setText("");
 		textFieldNumero.setText("");
 		textFieldNumeroPersonas.setText("");
@@ -280,7 +351,7 @@ public class ReservaView extends JFrame {
 		desactivar();
     }
 
-	protected void comprobarCampos() {
+	public void comprobarCampos() {
     	String motivoError = "";
 		boolean error = false;
 		
@@ -342,14 +413,14 @@ public class ReservaView extends JFrame {
 		
 		
         //Objetos necesarios para manipular el color del resultado mostrado en el textpane
-		StyledDocument doc = textPane.getStyledDocument();
+		StyledDocument doc = verificacionCamposTextPane.getStyledDocument();
 		SimpleAttributeSet color = new SimpleAttributeSet();
 		
 		if (error) {
-			textPane.setText("ERROR <" + motivoError + ">");
+			verificacionCamposTextPane.setText("ERROR <" + motivoError + ">");
 			 StyleConstants.setForeground(color, Color.RED); // Cambia a color rojo
 		}else {
-			textPane.setText("ENVIADO CORRECTAMENTE");
+			verificacionCamposTextPane.setText("ENVIADO CORRECTAMENTE");
 			 StyleConstants.setForeground(color, Color.GREEN); // Cambia a color verde
 		}
 		doc.setCharacterAttributes(0, doc.getLength(), color, false);
@@ -375,4 +446,12 @@ public class ReservaView extends JFrame {
             }
         }  
     }
+    
+    public void mostrarTabla(String[][] eventos) {		//Llena la tabla
+		  modeloTabla.setRowCount(0); // Limpia la tabla
+
+		    for (String[] evento : eventos) {
+		        modeloTabla.addRow(evento);
+		    }
+	}
 }

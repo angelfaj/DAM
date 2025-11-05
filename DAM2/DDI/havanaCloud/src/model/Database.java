@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
+	//Esta clase gestiona la conexion y desconexion con la base de datos
 	// Atributos necesarios para interactuar con la db
 	private static String bd = "XE"; // Nombre de la bd
 	private static String login = ""; //Usuario de la bd

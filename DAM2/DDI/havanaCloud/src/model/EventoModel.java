@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class EventoModel {
 	private String nombre, telefono, fecha, tipoEvento, cocina, habitacion;
 	private int nPersonas, nDias;
@@ -85,6 +87,34 @@ public class EventoModel {
 		this.nDias = nDias;
 	}
 
+	public String[] getEventoArray(int posicion) {	//Metodo auxiliar que devuelve un String[] de un EventoModel contenido en el ArrayList 
+		ArrayList<EventoModel> listaEventos = EventoDAO.getEventosGuardadosList(); 
+		String[] eventoArreglo = new String[8];
+			
+		EventoModel evento = listaEventos.get(posicion);
+		eventoArreglo[0] = evento.getNombre();
+		eventoArreglo[1] = evento.getTelefono();
+		eventoArreglo[2] = evento.getFecha();
+		eventoArreglo[3] = evento.getnPersonas() + "";
+		eventoArreglo[4] = evento.getTipoEvento();
+		eventoArreglo[5] = evento.getCocina();
+		eventoArreglo[6] = evento.getnDias()+ "";
+		eventoArreglo[7] = evento.getHabitacion();
+		
+		return eventoArreglo;
+	}
+	
+	public String[][] getEventoMatriz() throws ClassNotFoundException{
+		ArrayList<EventoModel> listaEventos = EventoDAO.getEventosGuardadosList(); 
+		String[][] matriz = new String[listaEventos.size()][8];
+		
+		for (int i = 0; i < matriz.length; i ++) {
+			matriz[i] = getEventoArray(i); 
+		}
+		
+		return matriz;
+	}
+	
 	@Override
 	public String toString() {
 		return "[" + nombre + ":" + telefono + ":" + fecha + ":"

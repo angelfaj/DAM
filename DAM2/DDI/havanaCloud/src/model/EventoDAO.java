@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EventoDAO {
+	//DAO Data Access Object
+	//Esta clase gestiona todas las consultas, y modificaciones de la base de datos
 	
-	public int addEventoGeneral(EventoModel evento) {
+	public static int addEventoGeneral(EventoModel evento) {
 		int filasModificadas = 0;
 		String sql = "INSERT INTO reserva(nombre, telefono, fecha, numero_personas, tipo_evento, cocina) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";
@@ -30,7 +32,7 @@ public class EventoDAO {
 		return filasModificadas;
 	}
 	
-	public int addEventoCongreso(EventoModel evento) {
+	public static int addEventoCongreso(EventoModel evento) {
 		int filasModificadas = 0;
 		String sql = "INSERT INTO reserva(nombre, telefono, fecha, numero_personas, tipo_evento, cocina, dias, habitacion) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -53,7 +55,7 @@ public class EventoDAO {
 		return filasModificadas;
 	}
 	
-	public ArrayList<EventoModel> getEventosGuardados() {
+	public static ArrayList<EventoModel> getEventosGuardadosList() {
 		ArrayList<EventoModel> eventosList = new ArrayList<EventoModel>();
 		String sql = "SELECT nombre, telefono, fecha, numero_personas, tipo_evento, cocina, dias, habitacion FROM reserva";
 		

@@ -1,5 +1,4 @@
 FALTA:
-    metodo visualizar
-    Controlador entero
     getEventos devuelve lista de eventosModel, necesario imprimir
     probar getConnection, si funciona eliminar los otros metodos
+    falta insertar en la bd: si todos los campos ojey devolvemos objeto evento
