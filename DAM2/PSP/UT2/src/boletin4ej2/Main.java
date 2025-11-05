@@ -16,10 +16,9 @@ public class Main {
 		Prueba a poner a no utilizar synchronized y comprueba los resultados, ¿qué sucede?
 		Nota: usa la interfaz Runnable para los hilos
 		*/
-		ResultadoSuma resultado = new ResultadoSuma();
 		int[] arraySuma = {1, 2, 3, 4, 5};
-		Thread hilo1 = new Thread(new HiloSumador("H1", arraySuma, resultado));
-		Thread hilo2 = new Thread(new HiloSumador("H2", arraySuma, resultado));
+		Thread hilo1 = new Thread(new HiloSumador("H1", arraySuma));
+		Thread hilo2 = new Thread(new HiloSumador("H2", arraySuma));
 		
 		hilo1.start();
 		hilo2.start();

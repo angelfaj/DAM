@@ -11,14 +11,12 @@ public class Main {
 		vea afectada por operación que ha hecho el otro hilo sobre la variable estática.
 		Nota: usa la interfaz Runnable para los hilos.
 		*/
-		Cuenta c = new Cuenta();
-		HiloSuma h1 = new HiloSuma(3, 4, c);
-		HiloResta h2 = new HiloResta(3, 4, c);
-		Thread hilo1 = new Thread(h1);
-		Thread hilo2 = new Thread(h2);
 		
-		hilo1.start();
-		hilo2.start();
+		Thread hiloSuma = new Thread(new MiHilo("H1", 3, 4, "suma"));
+		Thread hiloResta = new Thread(new MiHilo("H2", 3, 4, "resta"));
+		
+		hiloSuma.start();
+		hiloResta.start();
 	}
 
 }
