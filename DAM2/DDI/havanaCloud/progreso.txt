@@ -1,4 +1,5 @@
 FALTA:
     metodo visualizar
-    variables ndias. Inicializarlas en el condicional oportuno.
-    
+    Controlador entero
+    getEventos devuelve lista de eventosModel, necesario imprimir
+    probar getConnection, si funciona eliminar los otros metodos

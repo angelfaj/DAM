@@ -1,4 +1,4 @@
-package app;
+package view;
 
 
 import javax.swing.ButtonGroup;
@@ -23,6 +23,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -32,7 +37,7 @@ import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.JTable;
 
-public class Reserva extends JFrame {
+public class ReservaView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -60,7 +65,7 @@ public class Reserva extends JFrame {
 	private JTable table;
 	private JButton btnVisualizar;
 	
-	public Reserva() {
+	public ReservaView() {
 		setTitle("Reserva");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 650);
@@ -260,7 +265,7 @@ public class Reserva extends JFrame {
 	}
 
     protected void visualizar() {
-		
+    	
 	}
 
 	protected void limpiarCampos() {
