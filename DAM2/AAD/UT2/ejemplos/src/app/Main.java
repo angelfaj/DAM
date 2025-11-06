@@ -1,11 +1,13 @@
 package app;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 public class Main {
 	// Atributos necesarios para interactuar con la db
@@ -206,6 +208,109 @@ public class Main {
 
 //		IMPORTANTE HACER COMMIT SI MODIFICAMOS DATOS EN ORACLE DEVELOPER
 //		DE LO CONTRARIO JAVA SE QUEDARA COLGADO AL CONSULTAR LA BD POR TENER ESA TABLA BLOQUEADA.
+		
+		/*Ejercicio 11: CallableStatement (Parámetro OUT)
+		Implementa el método procesarDevolucion(int idPrestamo) que llama al
+		procedimiento almacenado REGISTRAR_DEVOLUCION de Oracle. Debes usar
+		CallableStatement, registrar el parámetro OUT con registerOutParameter(), y
+		recuperar el título del libro devuelto tras la ejecución.*/
+		
+//		conectar();
+//		
+//		try {
+//			procesarDevolucion(2);
+//			cerrar();
+//			System.out.println("Conexión cerrada correctamente");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		/*Ejercicio 12: CallableStatement (Llamada a Función)
+		Crea el método obtenerMulta(int idLector). Este método debe llamar a la
+		función de Oracle CALCULAR_MULTA_LECTOR (usando la sintaxis {? = call
+		FUNCION_PLSQL(?) }). Muestra el valor numérico devuelto por la función.*/
+		
+		
+		
+		/*Ejercicio 13: Transacciones (COMMIT)
+		Implementa registrarPrestamoSeguro(int idLector, String isbn). Deshabilita
+		el auto-commit. Dentro de un bloque try, realiza dos operaciones (Insert y
+		Update) usando PreparedStatement. Si ambas son exitosas, llama a
+		connection.commit().*/
+		
+		conectar();
+		
+		try {
+			registrarPrestamoSeguro(2001, "9788497592208");
+			cerrar();
+			System.out.println("Conexión cerrada correctamente");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*Ejercicio 14: Transacciones (ROLLBACK)
+		Modifica el ejercicio anterior para que, si el UPDATE falla (ej. si el número de
+		copias es insuficiente y se genera una excepción en Java o al intentar actualizar
+		a un número negativo), se ejecute connection.rollback() en el bloque catch.
+		Imprime un mensaje indicando que la transacción fue revertida.*/
+		
+		
+		/*Ejercicio 15: CallableStatement (Parámetro IN/OUT)
+		Desarrolla aplicarMulta(int idLector, double montoAdicional). Este método
+		debe llamar al procedimiento ACTUALIZAR_MULTA_INOUT. El parámetro
+		montoAdicional se debe registrar como IN/OUT. Debes: 1) Establecer su valor
+		de entrada con cs.setDouble(), 2) Ejecutar, y 3) Recuperar el nuevo saldo total
+		de la multa del lector con cs.getDouble().*/
+
+//		conectar();
+//		
+//		try {
+//			aplicarMulta(2001, 10.25);
+//			cerrar();
+//			System.out.println("Conexión cerrada correctamente");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	}
+
+	private static void registrarPrestamoSeguro(int id, String isbn) throws SQLException {
+		try {
+			connection.setAutoCommit(false);
+			String sql = "UPDATE prestamos SET isbn = ? WHERE id_prestamo = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, sql);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+			
+			sql = "INSERT INTO prestamos(id_prestamo, isbn) VALUES(?, ?)";
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.setString(2, sql);
+			ps.executeUpdate();
+			connection.commit();
+		}catch (SQLException e) {
+			connection.rollback();
+		}
+	}
+
+	private static void aplicarMulta(int id, double multa) throws SQLException {
+		CallableStatement cs = connection.prepareCall("{call actualizar_multa_inout(?, ?)}");
+		cs.setInt(1, id);
+		cs.registerOutParameter(2, Types.DOUBLE);
+		cs.setDouble(2, multa);
+		cs.execute();
+		System.out.println("Multa actualizada, total: " + cs.getDouble(2));
+	}
+
+	private static void procesarDevolucion(int id) throws SQLException {
+		CallableStatement cs = connection.prepareCall("{call registrar_devolucion(?, ?)}");	//Primer parametro entrada segundo salida
+		cs.setInt(1, id);
+		cs.registerOutParameter(2, Types.VARCHAR);
+		cs.execute();
+		System.out.println("Libro " + cs.getString(2) + " devuelto correctamente"); 
 	}
 
 	private static void insertarLector(int id, String nombre, String apellido, String email) throws SQLException {
