@@ -13,7 +13,7 @@ public class TicTac {
 				e.printStackTrace();
 			}
 		}
-		System.out.print("TIC");
+		System.out.print("TIC ");
 		disponible = true;
 		notify();
 	}
@@ -27,7 +27,7 @@ public class TicTac {
 				e.printStackTrace();
 			}
 		}
-		System.out.print("TAC");
+		System.out.print("TAC\n");
 		disponible = false;
 		notify();
 	}

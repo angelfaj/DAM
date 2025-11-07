@@ -6,6 +6,7 @@ public class CompartirInf1 {
 		HiloA a = new HiloA("HiloA", cont);
 		HiloB b = new HiloB("HiloB", cont);
 		a.start();
-		b.start();       
+		b.start();   
+		
 	}
 }

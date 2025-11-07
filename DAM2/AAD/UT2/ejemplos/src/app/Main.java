@@ -231,18 +231,10 @@ public class Main {
 		función de Oracle CALCULAR_MULTA_LECTOR (usando la sintaxis {? = call
 		FUNCION_PLSQL(?) }). Muestra el valor numérico devuelto por la función.*/
 		
-		
-		
-		/*Ejercicio 13: Transacciones (COMMIT)
-		Implementa registrarPrestamoSeguro(int idLector, String isbn). Deshabilita
-		el auto-commit. Dentro de un bloque try, realiza dos operaciones (Insert y
-		Update) usando PreparedStatement. Si ambas son exitosas, llama a
-		connection.commit().*/
-		
 		conectar();
 		
 		try {
-			registrarPrestamoSeguro(2001, "9788497592208");
+			obtenerMulta(2001);
 			cerrar();
 			System.out.println("Conexión cerrada correctamente");
 		} catch (SQLException e) {
@@ -250,12 +242,28 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		/*Ejercicio 13: Transacciones (COMMIT)
+		Implementa registrarPrestamoSeguro(int idLector, String isbn). Deshabilita
+		el auto-commit. Dentro de un bloque try, realiza dos operaciones (Insert y
+		Update) usando PreparedStatement. Si ambas son exitosas, llama a
+		connection.commit().*/
 		/*Ejercicio 14: Transacciones (ROLLBACK)
 		Modifica el ejercicio anterior para que, si el UPDATE falla (ej. si el número de
 		copias es insuficiente y se genera una excepción en Java o al intentar actualizar
 		a un número negativo), se ejecute connection.rollback() en el bloque catch.
 		Imprime un mensaje indicando que la transacción fue revertida.*/
 		
+		
+//		conectar();
+//		
+//		try {
+//			registrarPrestamoSeguro(4, "9788437604947");
+//			cerrar();
+//			System.out.println("Conexión cerrada correctamente");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		/*Ejercicio 15: CallableStatement (Parámetro IN/OUT)
 		Desarrolla aplicarMulta(int idLector, double montoAdicional). Este método
@@ -276,23 +284,35 @@ public class Main {
 //		}
 	}
 
+	private static void obtenerMulta(int id) throws SQLException {
+		CallableStatement cs = connection.prepareCall("{? = call calcular_multa_lector(?)}");
+		cs.registerOutParameter(1, Types.DOUBLE);
+		cs.setInt(2, id);
+		cs.execute();
+		System.out.println("Cuantia de la multa: " + cs.getDouble(1));
+	}
+
 	private static void registrarPrestamoSeguro(int id, String isbn) throws SQLException {
 		try {
 			connection.setAutoCommit(false);
-			String sql = "UPDATE prestamos SET isbn = ? WHERE id_prestamo = ?";
+			String sql = "INSERT INTO prestamos(id_prestamo, isbn, fecha_limite) VALUES(?, ?, '27/10/25')";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setString(1, sql);
-			ps.setInt(2, id);
-			ps.executeUpdate();
-			
-			sql = "INSERT INTO prestamos(id_prestamo, isbn) VALUES(?, ?)";
+			ps.setInt(1, id);
+			ps.setString(2, isbn);
+			int filasModificadas2 = ps.executeUpdate();
+			System.out.println("Filas modificadas segunda consulta: " + filasModificadas2);
+
+			sql = "UPDATE prestamos SET fecha_limite = '27/10/26' WHERE id_prestamo = ?";
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
-			ps.setString(2, sql);
-			ps.executeUpdate();
+			int filasModificadas1 = ps.executeUpdate();
+			System.out.println("Filas modificadas primera consulta: " + filasModificadas1);
+			
 			connection.commit();
 		}catch (SQLException e) {
+			e.printStackTrace();
 			connection.rollback();
+			System.out.println("Ejecutando rollback");
 		}
 	}
 
