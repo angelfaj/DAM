@@ -3,7 +3,7 @@ package boletin4ej4;
 public class EntrandoSaliendo {
 	private boolean entrando = false;
 //	private boolean saliendo = false;
-	private static Integer numSaliendo = 0;
+	private static Integer numSaliendo = 0; //jugar con la cantidad y restar de nuevo hasta llegar ac ero para saber que han terminado de salir
 	
 	public synchronized void entrar(String nombre) {
 		while (entrando) {
