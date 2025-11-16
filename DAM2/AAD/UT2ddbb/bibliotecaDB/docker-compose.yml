@@ -1,0 +1,15 @@
+services:
+  oracle-xe:
+    image: gvenzl/oracle-xe
+    container_name: oracle-xe
+    ports:
+      - "1521:1521"   # Puerto para JDBC
+      - "5500:5500"   # Enterprise Manager (opcional)
+    environment:
+      ORACLE_PASSWORD: password
+    volumes:
+      - oracle_data:/opt/oracle/oradata  # Persistencia de datos
+    restart: unless-stopped
+
+volumes:
+  oracle_data:

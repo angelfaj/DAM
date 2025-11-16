@@ -4,13 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main {
-	private static Connection conn = null;
+//	private static Connection conn = null;
 	
 	public static Connection conectarSQLite() {
+		Connection conn = null;
 		try {
 			String url = "jdbc:sqlite:miDB.db";
 			conn = DriverManager.getConnection(url);
@@ -21,18 +23,19 @@ public class Main {
 		return conn;
 	}
 	
-	public static void desconectar() {
-		try {
-			if (conn != null) {
-				conn.close();
-				System.out.println("Conexión cerrada.");
-			}
-		} catch (SQLException e) {
-			System.out.println("Error al cerrar conexión: " + e.getMessage());
-		}
-	}
+//	public static void desconectar() {
+//		try {
+//			if (conn != null) {
+//				conn.close();
+//				System.out.println("Conexión cerrada.");
+//			}
+//		} catch (SQLException e) {
+//			System.out.println("Error al cerrar conexión: " + e.getMessage());
+//		}
+//	}
 	
 	public static Connection conectarOracle() {
+		Connection conn = null;
 		try {
 			String bd = "XE"; // Nombre de la bd
 			String login = "C##BIBLIOTECA"; //Usuario de la bd
@@ -60,7 +63,8 @@ public class Main {
 						+ "    duracion_segundos INTEGER,\r\n"
 						+ "    año_lanzamiento INTEGER\r\n"
 						+ ")";
-		try (Statement stmt = conn.createStatement()) {
+		try (Connection conn = conectarSQLite();
+				Statement stmt = conn.createStatement()) {
 			stmt.execute(sql);
 			System.out.println("Tabla 'canciones' creada correctamente.");
 		} catch (SQLException e) {
@@ -71,7 +75,8 @@ public class Main {
 	
 	public static void añadirCancion(String titulo, String artista, String genero, int duracion, int año) {
 		String sql = "INSERT INTO canciones(titulo, artista, genero, duracion_segundos, año_lanzamiento) VALUES(?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = conectarSQLite();
+        		PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, titulo);
             ps.setString(2, artista);
             ps.setString(3, genero);
@@ -83,6 +88,114 @@ public class Main {
         } catch (SQLException e) {
             System.out.println("Error al insertar cancion: " + e.getMessage());
         }
+	}
+	
+	public static void selectAllFrom(String tabla) {
+		String sql = "SELECT * FROM " + tabla;
+		
+		try (Connection conn = conectarSQLite();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();) {
+
+			ResultSetMetaData rsm = rs.getMetaData();
+			int columnas = rsm.getColumnCount();
+			//Cabecera
+			for (int i = 1; i <= columnas; i++ ) {
+				System.out.print(rsm.getColumnName(i));
+				if (i < columnas) System.out.print(" | ");
+			}
+			System.out.println();
+
+			//Filas
+			while (rs.next()) {
+				for (int i = 1; i < columnas; i++) {
+					System.out.print(rs.getString(i));
+					if (i < columnas-1) System.out.print(" | ");
+				}
+				System.out.println();				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void listarTodasLasCanciones() {
+		String sql = "SELECT * FROM canciones";
+		
+		try (Connection conn = conectarSQLite();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			
+			ResultSet rs = ps.executeQuery();
+			
+			System.out.println("ID" + ":" + "TITULO" + ":" + "ARTISTA" + ":" + "GENERO" + ":" + "DURACION" + ":" + "AÑO");				
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String titulo = rs.getString(2);
+				String artista = rs.getString(3);
+				String genero = rs.getString(4);
+				int duracion = rs.getInt(5);
+				int año = rs.getInt(6);
+				System.out.println(id + ":" + titulo + ":" + artista + ":" + genero + ":" + duracion + ":" + año);				
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void consultarCancionesPorGenero(String genero) {
+		String sql = "SELECT titulo, artista, duracion_segundos FROM canciones WHERE genero = ?";
+		
+		try (Connection conn = conectarSQLite();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			
+			ps.setString(1, genero);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String titulo = rs.getString(1);
+				String artista = rs.getString(2);
+				int duracion = rs.getInt(3);
+				System.out.println(titulo + ":" + artista + ":" + duracion);
+			}
+			rs.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void actualizarDuracionCancion(int idCancion, int nuevaDuracion) {
+		String sql = "UPDATE canciones SET duracion_segundos = ? WHERE id = ?";
+		
+		try (Connection conn = conectarSQLite(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			conn.setAutoCommit(false);
+			ps.setInt(1, nuevaDuracion);			
+			ps.setInt(2, idCancion);
+			int filasModificadas = ps.executeUpdate();
+			if (filasModificadas == 1 ) {
+				conn.commit();
+				System.out.println("UPDATE exitoso, filas modificadas: " + filasModificadas);
+			}else {
+				conn.rollback();
+				System.out.println("UPDATE fallido, filas modificadas: " + filasModificadas);
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void eliminarCancionesAntiguas(int añoLimite) {
+		String sql = "DELETE FROM canciones WHERE año_lanzamiento < ?";
+		
+		try(Connection conn = conectarSQLite();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, añoLimite);
+			int filas = ps.executeUpdate();
+			System.out.println("Filas afectadas: " + filas);
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -109,7 +222,7 @@ public class Main {
 		3. Inserta al menos 4 canciones distintas, asegurándote de usar los
 		métodos setXXX() del PreparedStatement para evitar inyección SQL.*/
 		
-//		conectarSQLite();
+//		conectarSQLite(); 
 //		añadirCancion("She Will", "Lil Wayne", "Trap", 5, 2011);
 //		desconectar();
 
@@ -122,8 +235,7 @@ public class Main {
 		Duración de cada canción encontrada.
 		4. Asegúrate de cerrar el ResultSet y el PreparedStatement.*/
 		
-//		conectarSQLite();
-//		desconectar();
+//		consultarCancionesPorGenero("Trap");
 		
 		/*4. Ejercicio de Modificación de Datos (UPDATE - Actualización)
 		1. Crea un método llamado actualizarDuracionCancion(int idCancion, int
@@ -133,8 +245,7 @@ public class Main {
 		3. Verifica que el método executeUpdate() devuelva 1 (una fila afectada)
 		para confirmar la modificación.*/
 		
-//		conectarSQLite();
-//		desconectar();
+//		actualizarDuracionCancion(1, 4);
 		
 		/*5. Ejercicio de Consulta General (READ - Listado Completo)
 		1. Crea un método llamado listarTodasLasCanciones() que no reciba
@@ -143,8 +254,7 @@ public class Main {
 		3. Recorre el ResultSet y muestra por consola un listado completo y legible
 		con todos los campos de cada canción.*/
 		
-//		conectarSQLite();
-//		desconectar();
+//		listarTodasLasCanciones();
 		
 		/*6. Ejercicio de Eliminación de Datos (DELETE - Bajas)
 		1. Crea un método llamado eliminarCancionesAntiguas(int añoLimite) que
@@ -154,8 +264,7 @@ public class Main {
 		3. Muestra por consola el número de canciones que han sido eliminadas
 		(valor devuelto por executeUpdate()).*/
 		
-//		conectarSQLite();
-//		desconectar();
+//		eliminarCancionesAntiguas(2010);
 	}
 
 }
