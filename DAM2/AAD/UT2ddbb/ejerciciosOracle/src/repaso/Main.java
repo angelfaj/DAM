@@ -1,10 +1,13 @@
 package repaso;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 public class Main {
 
@@ -286,6 +289,47 @@ public class Main {
 		}
 	}
 	
+	public static void buscarLectoresConMultas() {
+		String sql = "select id_lector, nombre, multas_pendientes from lectores where multas_pendientes > 0";
+		
+		try (Connection conn = conectarOracle(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String nombre = rs.getString(2);
+				double cantidad = rs.getDouble(3);
+				System.out.println(id + ":" + nombre + ":" + cantidad);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void procesarDevolucion(int idPrestamo) {
+		try (Connection con = conectarOracle();
+				CallableStatement cs = con.prepareCall("{call registrar_devolucion (?, ?)}")) {
+			cs.setInt(1, idPrestamo);
+			cs.registerOutParameter(2, Types.VARCHAR);
+			cs.execute();
+			System.out.println("Titulo: " + cs.getString(2));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void obtenerMulta(int idLector) {
+		try (Connection conn = conectarOracle(); 
+				CallableStatement cs = conn.prepareCall("{? = call calcular_multa_lector(?)}")) {
+			cs.registerOutParameter(1, Types.DOUBLE);
+			cs.setInt(2, idLector);
+			cs.execute();
+			System.out.println("Multa por valor de: " + cs.getDouble(1));
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 //		try {
 //			crearBibliotecaDB();
@@ -301,7 +345,7 @@ public class Main {
 		NACIONALIDAD de todos los autores de la tabla AUTORES. El método debe
 		iterar sobre el ResultSet y mostrar los datos por consola.*/
 		
-		listarAutores();
+//		listarAutores();
 		
 		/*Ejercicio 3: INSERT
 		Crea un método insertarLector(int id, String nombre, String apellido, String
@@ -333,14 +377,19 @@ public class Main {
 		Ejercicio 10: Ejercicio Desafío (SELECT con WHERE)
 		Crea un método buscarLectoresConMultas(). Debe usar un
 		PreparedStatement para buscar y listar el ID_LECTOR, NOMBRE, y
-		MULTAS_PENDIENTES de todos los lectores que tienen una multa superior a 0.
-		III. Nivel Alto (Ejercicios 11-15): CallableStatement y Transacciones
-		Ejercicio 11: CallableStatement (Parámetro OUT)
+		MULTAS_PENDIENTES de todos los lectores que tienen una multa superior a 0.*/
+
+//		buscarLectoresConMultas();
+		
+		/*Ejercicio 11: CallableStatement (Parámetro OUT)
 		Implementa el método procesarDevolucion(int idPrestamo) que llama al
 		procedimiento almacenado REGISTRAR_DEVOLUCION de Oracle. Debes usar
 		CallableStatement, registrar el parámetro OUT con registerOutParameter(), y
-		recuperar el título del libro devuelto tras la ejecución.
-		Ejercicio 12: CallableStatement (Llamada a Función)
+		recuperar el título del libro devuelto tras la ejecución.*/
+		
+//		procesarDevolucion(1);
+		
+		/*Ejercicio 12: CallableStatement (Llamada a Función)
 		Crea el método obtenerMulta(int idLector). Este método debe llamar a la
 		función de Oracle CALCULAR_MULTA_LECTOR (usando la sintaxis {? = call
 		FUNCION_PLSQL(?) }). Muestra el valor numérico devuelto por la función.
@@ -348,8 +397,11 @@ public class Main {
 		Implementa registrarPrestamoSeguro(int idLector, String isbn). Deshabilita
 		el auto-commit. Dentro de un bloque try, realiza dos operaciones (Insert y
 		Update) usando PreparedStatement. Si ambas son exitosas, llama a
-		connection.commit().
-		Ejercicio 14: Transacciones (ROLLBACK)
+		connection.commit().*/
+		
+		obtenerMulta(2005);
+		
+		/*Ejercicio 14: Transacciones (ROLLBACK)
 		Modifica el ejercicio anterior para que, si el UPDATE falla (ej. si el número de
 		copias es insuficiente y se genera una excepción en Java o al intentar actualizar
 		a un número negativo), se ejecute connection.rollback() en el bloque catch.
