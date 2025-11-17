@@ -398,8 +398,8 @@ public class Main {
 		el auto-commit. Dentro de un bloque try, realiza dos operaciones (Insert y
 		Update) usando PreparedStatement. Si ambas son exitosas, llama a
 		connection.commit().*/
-		
-		obtenerMulta(2005);
+		conectarOracle();
+//		obtenerMulta(2005);
 		
 		/*Ejercicio 14: Transacciones (ROLLBACK)
 		Modifica el ejercicio anterior para que, si el UPDATE falla (ej. si el número de
