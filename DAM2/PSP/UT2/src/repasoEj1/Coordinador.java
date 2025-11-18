@@ -1,27 +1,29 @@
 package repasoEj1;
 
 public class Coordinador {
-	private static int contador;
+	 private int contador = 0;       // contador de hilos que han llegado
+	    private int esperando = 0;      // hilos que están esperando en la barrera
 
-	
-	public synchronized void aumentarContador(int numeroHilos) {
-		contador++;
-		if (contador == numeroHilos) {
-			System.out.println("Fase completada");
-		}
+	    public synchronized void esperar(int numeroHilos) {
+	        contador++;                 // este hilo ha llegado
+	        esperando++;                // este hilo se apunta a la espera
+
+	        if (contador == numeroHilos) {
+	            System.out.println("Fase completada");
+	            notifyAll();            // despierta a todos
+	        } else {
+	            while (contador < numeroHilos) {
+	                try {
+	                    wait();         // espera hasta que todos lleguen
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+
+	        esperando--;                // este hilo ya pasó la barrera
+	        if (esperando == 0) {       // último hilo que sale reinicia el contador
+	            contador = 0;
+	        }
+	    }
 	}
-	
-	public synchronized void esperar(int numeroHilos) {
-		if(contador < numeroHilos) {			//con una condicion whle se queda congelado, buscar explicacion
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else {
-			contador = 0;
-			notifyAll();
-		}
-	}
-}

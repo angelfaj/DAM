@@ -14,36 +14,21 @@ public class HiloFases implements Runnable{
 	@Override
 	public void run() {
 		try {
-			preparar();
+			muestraInfo("preparar");
 			coordinador.esperar(numeroHilos);
-			ejecutar();
+			muestraInfo("ejecutar");
 			coordinador.esperar(numeroHilos);
-			finalizar();
+			muestraInfo("finalizar");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	public void preparar() throws InterruptedException {
+	
+	public void muestraInfo(String fase) throws InterruptedException {
 		System.out.println(nombre + " preparando...");
 		Thread.sleep(1000);
-		System.out.println(nombre + " ha terminado la fase preparar");
-		coordinador.aumentarContador(numeroHilos);
-	}
-
-	public void ejecutar() throws InterruptedException {
-		System.out.println(nombre + " ejecutando...");
-		Thread.sleep(1000);
-		System.out.println(nombre + " ha terminado la fase ejecutar");
-		coordinador.aumentarContador(numeroHilos);
-	}
-
-	public void finalizar() throws InterruptedException {
-		System.out.println(nombre + " finalizando...");
-		Thread.sleep(1000);
-		System.out.println(nombre + " ha terminado la fase finalizar");
-		coordinador.aumentarContador(numeroHilos);
+		System.out.println(nombre + " ha terminado la fase " + fase);
 	}
 	
 	public String getNombre() {
