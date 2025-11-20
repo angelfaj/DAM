@@ -1,0 +1,805 @@
+ 🏗️ **1. Crear Base de Datos y Tablas**
+
+SQLite crea la BD al conectarse por primera vez desde Java.
+
+### **SQL – Crear tablas**
+
+```sql
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    email TEXT UNIQUE,
+    edad INTEGER,
+    fecha_registro TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER,
+    producto TEXT NOT NULL,
+    precio REAL,
+    fecha TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+);
+```
+
+---
+
+# ➕ **2. Insertar Datos**
+
+```sql
+INSERT INTO usuarios (nombre, email, edad) 
+VALUES ('Carlos', 'carlos@mail.com', 30);
+
+INSERT INTO pedidos (usuario_id, producto, precio)
+VALUES (1, 'Teclado', 25.99);
+```
+
+### **INSERT multiple**
+
+```sql
+INSERT INTO usuarios (nombre, email, edad) VALUES
+('Ana', 'ana@mail.com', 22),
+('Luis', 'luis@mail.com', 28);
+```
+
+---
+
+# 🔍 **3. Consultas SELECT**
+
+### **SELECT básico**
+
+```sql
+SELECT * FROM usuarios;
+```
+
+### **SELECT con WHERE**
+
+```sql
+SELECT nombre, email 
+FROM usuarios
+WHERE edad > 25;
+```
+
+### **WHERE con operadores**
+
+```sql
+SELECT * FROM usuarios
+WHERE edad BETWEEN 18 AND 30;
+
+SELECT * FROM usuarios
+WHERE nombre LIKE '%a%';
+
+SELECT * FROM usuarios
+WHERE email IS NOT NULL;
+```
+
+### **Ordenar resultados**
+
+```sql
+SELECT * FROM usuarios
+ORDER BY edad DESC, nombre ASC;
+```
+
+### **Limitar y paginar**
+
+```sql
+SELECT * FROM usuarios
+LIMIT 10 OFFSET 20;
+```
+
+---
+
+# 🔗 **4. JOINS**
+
+### **INNER JOIN**
+
+```sql
+SELECT u.nombre, p.producto, p.precio
+FROM usuarios u
+INNER JOIN pedidos p
+ON u.id = p.usuario_id;
+```
+
+### **LEFT JOIN**
+
+```sql
+SELECT u.nombre, p.producto
+FROM usuarios u
+LEFT JOIN pedidos p ON u.id = p.usuario_id;
+```
+
+---
+
+# ✏️ **5. UPDATE (modificaciones)**
+
+### **Actualizar un campo**
+
+```sql
+UPDATE usuarios
+SET edad = 31
+WHERE id = 1;
+```
+
+### **Actualizar múltiples campos**
+
+```sql
+UPDATE usuarios
+SET nombre = 'Carlos Gómez', edad = 32
+WHERE email = 'carlos@mail.com';
+```
+
+### **UPDATE con condiciones complejas**
+
+```sql
+UPDATE usuarios
+SET edad = edad + 1
+WHERE edad < 30 AND email LIKE '%mail%';
+```
+
+---
+
+# 🗑️ **6. DELETE**
+
+```sql
+DELETE FROM usuarios
+WHERE id = 3;
+```
+
+### **Borrar todo**
+
+```sql
+DELETE FROM usuarios;
+```
+
+---
+
+# 🧱 **7. ALTER TABLE**
+
+SQLite tiene funciones limitadas, pero permite:
+
+### **Agregar columna**
+
+```sql
+ALTER TABLE usuarios
+ADD COLUMN telefono TEXT;
+```
+
+### **Renombrar tabla**
+
+```sql
+ALTER TABLE usuarios
+RENAME TO usuarios_backup;
+```
+
+---
+
+# ⚡ **8. Índices**
+
+```sql
+CREATE INDEX idx_usuarios_email
+ON usuarios (email);
+
+CREATE INDEX idx_pedidos_usuario
+ON pedidos (usuario_id);
+```
+
+---
+
+# 🔒 **9. Transacciones**
+
+```sql
+BEGIN TRANSACTION;
+
+INSERT INTO usuarios (nombre) VALUES ('Mario');
+UPDATE usuarios SET edad = 20 WHERE nombre = 'Mario';
+
+COMMIT;
+```
+
+O para cancelar:
+
+```sql
+ROLLBACK;
+```
+
+---
+
+# ☕ **10. Uso de SQLite desde Java**
+
+### **Conexión**
+
+```java
+Connection conn = DriverManager.getConnection("jdbc:sqlite:miBD.db");
+```
+
+---
+
+# ✔️ **Ejemplo completo en Java**
+
+```java
+import java.sql.*;
+
+public class EjemploSQLite {
+    public static void main(String[] args) {
+        String url = "jdbc:sqlite:miBD.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            // Crear tabla
+            String create = """
+            CREATE TABLE IF NOT EXISTS usuarios (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT NOT NULL,
+                email TEXT UNIQUE,
+                edad INTEGER
+            );""";
+            conn.createStatement().execute(create);
+
+            // INSERT con PreparedStatement
+            String insert = "INSERT INTO usuarios (nombre, email, edad) VALUES (?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(insert);
+            ps.setString(1, "Juan");
+            ps.setString(2, "juan@mail.com");
+            ps.setInt(3, 25);
+            ps.executeUpdate();
+
+            // SELECT
+            String select = "SELECT id, nombre, edad FROM usuarios WHERE edad > ?";
+            PreparedStatement ps2 = conn.prepareStatement(select);
+            ps2.setInt(1, 20);
+
+            ResultSet rs = ps2.executeQuery();
+            while (rs.next()) {
+                System.out.println(
+                    rs.getInt("id") + " - " + 
+                    rs.getString("nombre") + " - " + 
+                    rs.getInt("edad")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+---
+
+Perfecto — aquí tienes **subconsultas (subqueries)** de todos los tipos: en `WHERE`, en `SELECT`, en `FROM`, correlacionadas, no correlacionadas, y con agregaciones.
+Están diseñadas para **SQLite**, pero aplican igual a la mayoría de motores SQL.
+
+Usaremos estos ejemplos de tablas:
+
+**usuarios(id, nombre, email, edad, fecha_registro)**
+**pedidos(id, usuario_id, producto, precio, fecha)**
+
+---
+
+# 🟦 **1. Subconsultas en cláusula WHERE**
+
+## **1.1 Usuarios que han hecho al menos un pedido**
+
+```sql
+SELECT *
+FROM usuarios
+WHERE id IN (SELECT usuario_id FROM pedidos);
+```
+
+## **1.2 Usuarios que NO han hecho pedidos**
+
+```sql
+SELECT *
+FROM usuarios
+WHERE id NOT IN (SELECT usuario_id FROM pedidos);
+```
+
+## **1.3 Usuarios con gasto total > 100**
+
+```sql
+SELECT *
+FROM usuarios
+WHERE id IN (
+    SELECT usuario_id
+    FROM pedidos
+    GROUP BY usuario_id
+    HAVING SUM(precio) > 100
+);
+```
+
+## **1.4 Usuarios cuyo último pedido fue después del 2024**
+
+```sql
+SELECT nombre
+FROM usuarios
+WHERE id IN (
+    SELECT usuario_id
+    FROM pedidos
+    GROUP BY usuario_id
+    HAVING MAX(fecha) > '2024-01-01'
+);
+```
+
+---
+
+# 🟩 **2. Subconsultas en SELECT (columnas derivadas)**
+
+## **2.1 Número de pedidos por usuario (sin JOIN)**
+
+```sql
+SELECT 
+    nombre,
+    (SELECT COUNT(*) FROM pedidos p WHERE p.usuario_id = u.id) AS total_pedidos
+FROM usuarios u;
+```
+
+## **2.2 Última fecha de pedido por usuario**
+
+```sql
+SELECT 
+    nombre,
+    (SELECT MAX(fecha) FROM pedidos p WHERE p.usuario_id = u.id) AS ultimo_pedido
+FROM usuarios u;
+```
+
+## **2.3 Total gastado por usuario**
+
+```sql
+SELECT 
+    nombre,
+    (SELECT SUM(precio) FROM pedidos p WHERE p.usuario_id = u.id) AS total_gastado
+FROM usuarios u;
+```
+
+---
+
+# 🟨 **3. Subconsultas en FROM (tablas derivadas)**
+
+## **3.1 Gasto por usuario usando una tabla derivada**
+
+```sql
+SELECT u.nombre, g.total
+FROM usuarios u
+JOIN (
+    SELECT usuario_id, SUM(precio) AS total
+    FROM pedidos
+    GROUP BY usuario_id
+) g ON g.usuario_id = u.id;
+```
+
+## **3.2 Producto más vendido**
+
+```sql
+SELECT producto, cantidad
+FROM (
+    SELECT producto, COUNT(*) AS cantidad
+    FROM pedidos
+    GROUP BY producto
+) t
+ORDER BY cantidad DESC
+LIMIT 1;
+```
+
+---
+
+# 🟧 **4. Subconsultas correlacionadas (dependen de la fila externa)**
+
+## **4.1 Pedido más caro de cada usuario**
+
+```sql
+SELECT 
+    u.nombre,
+    p.producto,
+    p.precio
+FROM usuarios u
+JOIN pedidos p
+    ON p.usuario_id = u.id
+WHERE p.precio = (
+    SELECT MAX(precio)
+    FROM pedidos
+    WHERE usuario_id = u.id
+);
+```
+
+## **4.2 Gasto promedio por usuario (con comparación)**
+
+Usuarios cuyo gasto total es mayor a su propio promedio:
+
+```sql
+SELECT u.nombre
+FROM usuarios u
+WHERE (
+    SELECT SUM(precio) FROM pedidos p WHERE p.usuario_id = u.id
+) >
+(
+    SELECT AVG(precio) FROM pedidos p WHERE p.usuario_id = u.id
+);
+```
+
+## **4.3 Fechas del primer pedido por usuario**
+
+```sql
+SELECT 
+    u.nombre,
+    (SELECT MIN(fecha) FROM pedidos p WHERE p.usuario_id = u.id) AS primer_pedido
+FROM usuarios u;
+```
+
+---
+
+# 🟥 **5. Subconsultas con agregaciones**
+
+## **5.1 Usuarios cuyo pedido más caro es mayor al promedio general**
+
+```sql
+SELECT nombre
+FROM usuarios
+WHERE (
+    SELECT MAX(precio)
+    FROM pedidos p
+    WHERE p.usuario_id = usuarios.id
+) > (
+    SELECT AVG(precio) FROM pedidos
+);
+```
+
+## **5.2 Usuarios cuyo total gastado está por encima de todos los demás**
+
+```sql
+SELECT nombre
+FROM usuarios u
+WHERE (
+    SELECT SUM(precio) FROM pedidos p WHERE p.usuario_id = u.id
+) = (
+    SELECT MAX(suma)
+    FROM (
+        SELECT usuario_id, SUM(precio) AS suma
+        FROM pedidos
+        GROUP BY usuario_id
+    )
+);
+```
+
+---
+
+# 🟪 **6. Subconsultas complejas tipo examen**
+
+## **6.1 Usuarios que han comprado el producto más caro del sistema**
+
+```sql
+SELECT nombre
+FROM usuarios
+WHERE id IN (
+    SELECT usuario_id
+    FROM pedidos
+    WHERE precio = (SELECT MAX(precio) FROM pedidos)
+);
+```
+
+## **6.2 Productos comprados por usuarios que nunca han comprado nada de más de 50€**
+
+```sql
+SELECT producto
+FROM pedidos
+WHERE usuario_id IN (
+    SELECT usuario_id
+    FROM pedidos
+    GROUP BY usuario_id
+    HAVING MAX(precio) < 50
+);
+```
+
+## **6.3 Usuarios que tienen más pedidos que el promedio de pedidos**
+
+```sql
+SELECT nombre
+FROM usuarios
+WHERE (
+    SELECT COUNT(*) FROM pedidos p WHERE p.usuario_id = usuarios.id
+) > (
+    SELECT AVG(cant) 
+    FROM (
+        SELECT COUNT(*) AS cant
+        FROM pedidos
+        GROUP BY usuario_id
+    )
+);
+```
+
+---
+
+# 🧩 ¿Quieres más?
+
+Puedo prepararte:
+
+✅ subconsultas *solo* correlacionadas
+✅ subconsultas *solo* en `SELECT` o `FROM`
+✅ ejercicios tipo examen con solución
+✅ tareas para practicar
+
+¿Quieres más ejemplos o quieres resolver algunos ejercicios?
+
+
+
+
+
+---
+Para los ejemplos usaré dos tablas ya conocidas:
+
+**usuarios(id, nombre, email, edad, fecha_registro)**
+**pedidos(id, usuario_id, producto, precio, fecha)**
+
+---
+
+# 🧠 **1. Subconsultas (Subqueries)**
+
+### **1.1 Usuarios que han hecho al menos un pedido**
+
+```sql
+SELECT *
+FROM usuarios
+WHERE id IN (SELECT usuario_id FROM pedidos);
+```
+
+### **1.2 Usuarios que NO han hecho pedidos**
+
+```sql
+SELECT *
+FROM usuarios
+WHERE id NOT IN (SELECT usuario_id FROM pedidos);
+```
+
+### **1.3 Pedido más caro de cada usuario**
+
+```sql
+SELECT u.nombre, p.producto, p.precio
+FROM usuarios u
+JOIN pedidos p ON p.usuario_id = u.id
+WHERE p.precio = (
+    SELECT MAX(precio)
+    FROM pedidos
+    WHERE usuario_id = u.id
+);
+```
+
+---
+
+# 📊 **2. Funciones de agregado + GROUP BY**
+
+### **2.1 Cantidad de pedidos por usuario**
+
+```sql
+SELECT u.nombre, COUNT(p.id) AS total_pedidos
+FROM usuarios u
+LEFT JOIN pedidos p ON u.id = p.usuario_id
+GROUP BY u.id
+ORDER BY total_pedidos DESC;
+```
+
+### **2.2 Suma total gastada por usuario**
+
+```sql
+SELECT u.nombre, SUM(p.precio) AS total_gastado
+FROM usuarios u
+JOIN pedidos p ON u.id = p.usuario_id
+GROUP BY u.id;
+```
+
+### **2.3 Precio promedio por producto**
+
+```sql
+SELECT producto, AVG(precio) AS precio_promedio
+FROM pedidos
+GROUP BY producto;
+```
+
+---
+
+# 🔍 **3. HAVING (filtrar grupos)**
+
+### **3.1 Usuarios que han gastado más de 100€**
+
+```sql
+SELECT u.nombre, SUM(p.precio) AS gasto_total
+FROM usuarios u
+JOIN pedidos p ON u.id = p.usuario_id
+GROUP BY u.id
+HAVING SUM(p.precio) > 100;
+```
+
+### **3.2 Productos comprados más de 3 veces**
+
+```sql
+SELECT producto, COUNT(*) AS veces
+FROM pedidos
+GROUP BY producto
+HAVING COUNT(*) > 3;
+```
+
+---
+
+# 🔗 **4. JOINs avanzados**
+
+### **4.1 JOIN triple (si hubiera otra tabla)**
+
+Ejemplo con:
+**categorias(id, nombre)** y **pedidos.categoria_id**
+
+```sql
+SELECT u.nombre, p.producto, c.nombre AS categoria, p.precio
+FROM usuarios u
+JOIN pedidos p ON u.id = p.usuario_id
+JOIN categorias c ON c.id = p.categoria_id;
+```
+
+### **4.2 Self JOIN (comparar filas de la misma tabla)**
+
+Usuarios que se registraron el mismo día:
+
+```sql
+SELECT u1.nombre AS usuario1, u2.nombre AS usuario2, u1.fecha_registro
+FROM usuarios u1
+JOIN usuarios u2 ON u1.fecha_registro = u2.fecha_registro
+WHERE u1.id < u2.id;
+```
+
+---
+
+# 🧱 **5. CTE (Common Table Expressions)**
+
+### **5.1 CTE simple**
+
+Usuarios con gasto total:
+
+```sql
+WITH gastos AS (
+    SELECT usuario_id, SUM(precio) AS total
+    FROM pedidos
+    GROUP BY usuario_id
+)
+SELECT u.nombre, g.total
+FROM usuarios u
+JOIN gastos g ON g.usuario_id = u.id;
+```
+
+### **5.2 CTE recursiva (para jerarquías)**
+
+Ejemplo inventado de tabla empleados(id, nombre, jefe_id)
+
+```sql
+WITH RECURSIVE jerarquia AS (
+    SELECT id, nombre, jefe_id, 0 AS nivel
+    FROM empleados
+    WHERE jefe_id IS NULL
+
+    UNION ALL
+
+    SELECT e.id, e.nombre, e.jefe_id, j.nivel + 1
+    FROM empleados e
+    JOIN jerarquia j ON e.jefe_id = j.id
+)
+SELECT * FROM jerarquia;
+```
+
+---
+
+# 📈 **6. Funciones de ventana (WINDOW FUNCTIONS)**
+
+SQLite **sí soporta** funciones ventana.
+
+### **6.1 Ranking de usuarios por gasto**
+
+```sql
+SELECT
+    u.nombre,
+    SUM(p.precio) AS total,
+    RANK() OVER (ORDER BY SUM(p.precio) DESC) AS posicion
+FROM usuarios u
+JOIN pedidos p ON u.id = p.usuario_id
+GROUP BY u.id;
+```
+
+### **6.2 Acumulado por usuario**
+
+```sql
+SELECT
+    usuario_id,
+    precio,
+    fecha,
+    SUM(precio) OVER (PARTITION BY usuario_id ORDER BY fecha) AS acumulado
+FROM pedidos;
+```
+
+### **6.3 Diferencia entre el pedido y el promedio del usuario**
+
+```sql
+SELECT
+    usuario_id,
+    producto,
+    precio,
+    precio - AVG(precio) OVER (PARTITION BY usuario_id) AS diferencia_promedio
+FROM pedidos;
+```
+
+---
+
+# 🚦 **7. Consultas complejas integradas**
+
+### **7.1 Top 3 usuarios que más han gastado**
+
+```sql
+SELECT nombre, total
+FROM (
+    SELECT u.nombre, SUM(p.precio) AS total
+    FROM usuarios u
+    JOIN pedidos p ON u.id = p.usuario_id
+    GROUP BY u.id
+    ORDER BY total DESC
+)
+LIMIT 3;
+```
+
+### **7.2 Producto más vendido con subconsulta + join**
+
+```sql
+SELECT producto, count
+FROM (
+    SELECT producto, COUNT(*) AS count
+    FROM pedidos
+    GROUP BY producto
+)
+ORDER BY count DESC
+LIMIT 1;
+```
+
+### **7.3 Último pedido de cada usuario**
+
+```sql
+SELECT p.*
+FROM pedidos p
+INNER JOIN (
+    SELECT usuario_id, MAX(fecha) AS ultima_fecha
+    FROM pedidos
+    GROUP BY usuario_id
+) ult ON ult.usuario_id = p.usuario_id AND ult.ultima_fecha = p.fecha;
+```
+
+---
+
+# 🔥 **8. Consultas "nivel examen avanzado"**
+
+### **8.1 Usuarios cuyo gasto está por encima del promedio general**
+
+```sql
+WITH promedio AS (
+    SELECT AVG(precio) AS avg_global
+    FROM pedidos
+)
+SELECT u.nombre, SUM(p.precio) AS total_usuario
+FROM usuarios u
+JOIN pedidos p ON u.id = p.usuario_id
+GROUP BY u.id
+HAVING total_usuario > (SELECT avg_global FROM promedio);
+```
+
+### **8.2 Usuarios cuyo pedido más caro es más barato que el pedido promedio global**
+
+```sql
+WITH max_por_usuario AS (
+    SELECT usuario_id, MAX(precio) AS max_precio
+    FROM pedidos
+    GROUP BY usuario_id
+),
+promedio_global AS (
+    SELECT AVG(precio) AS promedio
+    FROM pedidos
+)
+SELECT u.nombre, m.max_precio
+FROM max_por_usuario m
+JOIN usuarios u ON u.id = m.usuario_id
+WHERE m.max_precio < (SELECT promedio FROM promedio_global);
+```
+
+---
+
+

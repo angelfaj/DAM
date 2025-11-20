@@ -1,0 +1,23 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btnAceptar
+id lblnombre
+id lytContenedor
+id lytContenedorSaludo
+id txtNombre
+id txtSaludo
+layout activity_main
+layout activity_saludo
+mipmap ic_launcher
+mipmap ic_launcher_round
+string aceptBtn
+string app_name
+string writeName
+style Base.Theme.MyFirstApp
+style Theme.MyFirstApp
+xml backup_rules
+xml data_extraction_rules
