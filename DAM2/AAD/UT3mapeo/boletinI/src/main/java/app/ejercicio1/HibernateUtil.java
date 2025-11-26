@@ -1,4 +1,4 @@
-package app.boletinI;
+package app.ejercicio1;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;

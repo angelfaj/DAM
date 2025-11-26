@@ -1,4 +1,4 @@
-package app.boletinI;
+package app.ejercicio1;
 
 import jakarta.persistence.*;
 
@@ -27,8 +27,19 @@ public class Empleado {
 		this.nombre = nombre;
 	}
 	
+	public Empleado(String nombre, String departamento, double salario) {
+		this.nombre = nombre;
+		this.departamento = departamento;
+		this.salario = salario;
+	}
+	
 	public Empleado(int id, String nombre, String departamento, double salario) {
-		this(id, nombre);
+		this(nombre, departamento, salario);
+		this.id = id;
+	}
+	
+	public Empleado(int id, String departamento, double salario) {
+		this.id = id;
 		this.departamento = departamento;
 		this.salario = salario;
 	}

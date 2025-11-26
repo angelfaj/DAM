@@ -1,4 +1,4 @@
-package app.boletinI;
+package app.ejercicio1;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,7 +27,7 @@ public class Modelo {
 			Transaction tx = null;
 			try {
 				tx = sess.beginTransaction();// inicio mi transaccion
-				// inserto departamento
+				// inserto empleado
 				sess.persist(emp);
 
 				tx.commit(); // Se hacen efectivos los cambios en BD
@@ -41,16 +41,15 @@ public class Modelo {
 
 		}
 
-		// buscamos un departamento
-		public Departamento buscar(int id) {
+		public void actualiza(Empleado emp) {
 			Session sess = factory.openSession(); // No consume recursos de BD hasta que no es necesario
-			Departamento d = null;
+			
 			Transaction tx = null;
 			try {
 				tx = sess.beginTransaction();// inicio mi transaccion
-				// busco departamento que conozco que existe
-				d = sess.find(Departamento.class, id);
-
+				// inserto empleado
+				sess.merge(emp);
+				
 				tx.commit(); // Se hacen efectivos los cambios en BD
 			} catch (RuntimeException e) {
 				if (tx != null)
@@ -59,19 +58,40 @@ public class Modelo {
 			} finally {
 				sess.close();
 			}
-			return d;
+			
+		}
+		
+		// buscamos un empleado
+		public Empleado buscar(int id) {
+			Session sess = factory.openSession(); // No consume recursos de BD hasta que no es necesario
+			Empleado e = null;
+			Transaction tx = null;
+			try {
+				tx = sess.beginTransaction();// inicio mi transaccion
+				// busco empleado que conozco que existe
+				e = sess.find(Empleado.class, id);
+
+				tx.commit(); // Se hacen efectivos los cambios en BD
+			} catch (RuntimeException e1) {
+				if (tx != null)
+					tx.rollback();
+				throw e1; // o visualizamos mensaje de error
+			} finally {
+				sess.close();
+			}
+			return e;
 
 		}
 		
 		
-		// borramos un departamento
-		public void borrar(Departamento dep) {
+		// borramos un empleado
+		public void borrar(Empleado dep) {
 			Session sess = factory.openSession(); // No consume recursos de BD hasta que no es necesario
 
 			Transaction tx = null;
 			try {
 				tx = sess.beginTransaction();// inicio mi transaccion
-				// borro departamento
+				// borro empleado
 				sess.remove(dep);
 
 				tx.commit(); // Se hacen efectivos los cambios en BD
