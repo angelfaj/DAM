@@ -28,7 +28,8 @@
         app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713" />
+        app:layout_constraintVertical_bias="0.713"
+        android:onClick="aumentarContador"/>
 
     <Button
         android:id="@+id/botonDecremento"
@@ -40,7 +41,8 @@
         app:layout_constraintHorizontal_bias="0.813"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713" />
+        app:layout_constraintVertical_bias="0.713"
+        android:onClick="disminuirContador"/>
 
     <Button
         android:id="@+id/botonCuando"

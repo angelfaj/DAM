@@ -1,5 +1,6 @@
 package com.example.examenact1;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private Button incrementoBoton;
     private Button decrementoBoton;
     private Button cuandoBoton;
@@ -22,15 +23,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         textview = findViewById(R.id.textView);;
+       /*
         incrementoBoton = findViewById(R.id.botonIncremento);
         decrementoBoton = findViewById(R.id.botonDecremento);
         cuandoBoton = findViewById(R.id.botonCuando);
 
-        //Añadimos el listener
+
+        */
+      /*  //Añadimos el listener
         incrementoBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,8 +54,22 @@ public class MainActivity extends AppCompatActivity {
                 mostrarTiempo();
             }
         });
+
+       */
     }
 
+    public void aumentarContador(View vista) {
+        contador++;
+        mostrarTiempo();
+    }
+
+    public void disminuirContador(View vista) {
+        contador--;
+        if (contador == 0) {
+            contador++;
+        }
+        mostrarTiempo();
+    }
     private void mostrarTiempo() {
         textview.setText("Tiempo: "+ contador);
     }
