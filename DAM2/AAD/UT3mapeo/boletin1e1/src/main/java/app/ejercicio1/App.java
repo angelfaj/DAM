@@ -53,6 +53,7 @@ public class App {
 			case 3:						//Actualizar
 				System.out.print("Id del empleado a actualizar: ");
 				id = sc.nextInt();
+				sc.nextLine();
 				System.out.print("Nuevo departamento del empleado: ");
 				dept = sc.nextLine();
 				System.out.print("Nuevo salario del empleado: ");
@@ -83,12 +84,12 @@ public class App {
     }
     
     private static void mostrarMenu() {
-    	System.out.print("========MENÚ========"
-    			+ "		1. Crear Empleado\r\n"
-    			+ "		2. Leer Empleado\r\n"
-    			+ "		3. Actualizar Empleado\r\n"
-    			+ "		4. Eliminar Empleado\r\n"
-    			+ "		0. Salir"
+    	System.out.print("========MENÚ========\r\n"
+    			+ "1. Crear Empleado\r\n"
+    			+ "2. Leer Empleado\r\n"
+    			+ "3. Actualizar Empleado\r\n"
+    			+ "4. Eliminar Empleado\r\n"
+    			+ "0. Salir\r\n"
     			+ "Introduce una opción: ");
     }
 }
