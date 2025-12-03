@@ -8,22 +8,50 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/miLista"
-        android:layout_width="310dp"
-        android:layout_height="301dp"
+        android:id="@+id/miListaMultiple"
+        android:layout_width="173dp"
+        android:layout_height="352dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.372" />
 
     <TextView
-        android:id="@+id/txtResultado"
+        android:id="@+id/txtResultadoListaMultiple"
         android:layout_width="127dp"
         android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="96dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/miListaMultiple"
+        app:layout_constraintVertical_bias="0.935" />
+
+    <ListView
+        android:id="@+id/miListaSimple"
+        android:layout_width="180dp"
+        android:layout_height="350dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintStart_toEndOf="@+id/miListaMultiple"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.375" />
+
+    <TextView
+        android:id="@+id/txtResultadoListaSimple"
+        android:layout_width="133dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="36dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/miLista" />
+        app:layout_constraintTop_toBottomOf="@+id/miListaSimple"
+        app:layout_constraintVertical_bias="0.418" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.listviews.R;
+public class MainActivity extends AppCompatActivity {
+    //Esta app es un ejemplo de como utilizar listas multiples (de multiple selección) y
+    // listas simples (seleccion de un objeto que desencadena una acción)
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    ListView miLista;
+
+    ListView miListaMultiple;
+    ListView miListaSimple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,29 +27,51 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String [] provincias= new String[]{"Ciudad Real","Toledo","Guadalajara",
                 "Cuenca","Albacete","Talavera"};
 
-        ArrayAdapter<String> miAdaptador=new ArrayAdapter<String> (this,
+        ArrayAdapter<String> miAdaptadorMultiple =new ArrayAdapter<String> (this,
                 android.R.layout.simple_list_item_multiple_choice, provincias);
 
-        miLista=findViewById(R.id.miLista); //IU
-        miLista.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        miListaMultiple =findViewById(R.id.miListaMultiple); //IU
+        miListaMultiple.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         //enfuchar adaptador a la vista
-        miLista.setAdapter(miAdaptador);
-        miLista.setOnItemClickListener(this);
+        miListaMultiple.setAdapter(miAdaptadorMultiple);
+        miListaMultiple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txtResultado=findViewById(R.id.txtResultadoListaMultiple);
+                String seleccionado= "";
+                SparseBooleanArray checked = miListaMultiple.getCheckedItemPositions();
+                if(checked!=null) {
+                    for (int i = 0; i < checked.size(); i++)
+                        if (checked.valueAt(i)) {
+                            seleccionado = seleccionado +
+                                    miListaMultiple.getItemAtPosition(checked.keyAt(i)).toString()
+                                    + ";";
+                        }
+                }
+                txtResultado.setText(seleccionado);
+            }
+        });
+
+        miListaSimple =findViewById(R.id.miListaSimple); //IU
+        ArrayAdapter<String> miAdaptadorSimple = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, provincias);
+
+        //enfuchar adaptador a la vista
+        miListaSimple.setAdapter(miAdaptadorSimple);
+        miListaSimple.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(MainActivity.this,
+                        "Se ha pulsado " + provincias[position],
+                        Toast.LENGTH_SHORT).show();
+
+                TextView txtResultadoSimple = findViewById(R.id.txtResultadoListaSimple);
+                txtResultadoSimple.setText(provincias[position]);
+            }
+        });
+
+
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView txtResultado=findViewById(R.id.txtResultado);
-        String seleccionado= "";
-        SparseBooleanArray checked = miLista.getCheckedItemPositions();
-        if(checked!=null) {
-            for (int i = 0; i < checked.size(); i++)
-                if (checked.valueAt(i)) {
-                    seleccionado = seleccionado +
-                            miLista.getItemAtPosition(checked.keyAt(i)).toString()
-                            + ";";
-                }
-        }
-        txtResultado.setText(seleccionado);
-    }
 }

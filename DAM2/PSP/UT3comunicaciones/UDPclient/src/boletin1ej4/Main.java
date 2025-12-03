@@ -33,10 +33,11 @@ public class Main {
 		mensajeArr = mensaje.getBytes();
 		peticion = new DatagramPacket(mensajeArr, mensajeArr.length, serverHost, serverPort);
 		socket.send(peticion);
-		System.out.println("(CLiente) -> Datagrama enviado.");
+		System.out.println("(Cliente) -> Datagrama enviado.");
 	}
 	
 	public void recibir() throws IOException {
+		bufferArr = new byte[64];
 		System.out.println("(Cliente) -> Recibiendo datagrama...");
 		respuesta = new DatagramPacket(bufferArr, bufferArr.length, serverHost, serverPort);
 		try {
@@ -71,7 +72,7 @@ public class Main {
 		cliente sin ejecutar el servidor.*/
 		
 		try {
-			Main cliente = new Main(49171);
+			Main cliente = new Main(49172);
 			Scanner sc = new Scanner(System.in);
 			String m = "";
 			

@@ -15,13 +15,11 @@ public class Main {
 		socket = new DatagramSocket(puerto);
 	}
 	
-	public void start() {
+	public String recibirDatagrama() throws IOException {
+		bufferLectura = new byte[64];
 		System.out.println("(Servidor) -> Creando datagrama de entrada...");
 		datEntrada = new DatagramPacket(bufferLectura, bufferLectura.length);
 		System.out.println("(Servidor) -> Datagrama creado.");
-	}
-	
-	public String recibirDatagrama() throws IOException {
 		socket.receive(datEntrada);
 		System.out.println("(Servidor) -> Datagrama recibido.");
 		
@@ -59,23 +57,20 @@ public class Main {
 		cliente sin ejecutar el servidor.*/
 		
 		try {
-			Main server = new Main(49171);
+			Main server = new Main(49172);
 			String mensajeRecibido = "";
-			server.start();
 			do {
 				mensajeRecibido = server.recibirDatagrama();
 				System.out.println("(Servidor) -> Mensaje recibido: " + mensajeRecibido);
 	
-				if (!mensajeRecibido.equals("*")) server.enviarDatagrama(mensajeRecibido.toUpperCase());
+				if (!mensajeRecibido.trim().equals("*")) server.enviarDatagrama(mensajeRecibido.toUpperCase());
 
-			}while (!mensajeRecibido.equals("*"));
+			}while (!mensajeRecibido.trim().equals("*"));
 			
 			server.stop();
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
