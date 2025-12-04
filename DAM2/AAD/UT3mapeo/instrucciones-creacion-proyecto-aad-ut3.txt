@@ -45,4 +45,5 @@ Proyecto AAD:
           <mapping class="app.ejemplosMapeo.Departamento"/>
           <mapping class="app.ejemplosMapeo.Modelo"/>
           <mapping class="app.ejemplosMapeo.Principal"/>
-          <mapping class="app.ejemplosMapeo.HibernateUtil"/>}
+          <mapping class="app.ejemplosMapeo.HibernateUtil"/>
+		}
