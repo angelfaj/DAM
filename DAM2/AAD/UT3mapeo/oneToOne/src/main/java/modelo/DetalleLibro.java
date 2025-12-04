@@ -59,7 +59,7 @@ public class DetalleLibro {
 	@Override
 	public String toString() {
 		return "DetalleLibro [id=" + id + ", sinopsis=" + sinopsis + ", editorial=" + editorial + ", libro_id="
-				+ libro + "]";
+				+ libro.getId() + "]";
 	}
 	
 }

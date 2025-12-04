@@ -40,10 +40,8 @@ Proyecto AAD:
     6. hibernate.cfg.xml -> Properties -> Hibernate:
         -Show sql: true
         -Format sql: true
-        -Hbm2ddl Auto: update
+        -Hbm2ddl Auto:    - dejar en blanco mejor(Esta propiedad crea o actualiza)
     7. Mapeos -> hibernate.cfg.xml {
-          <mapping class="app.ejemplosMapeo.Departamento"/>
-          <mapping class="app.ejemplosMapeo.Modelo"/>
-          <mapping class="app.ejemplosMapeo.Principal"/>
-          <mapping class="app.ejemplosMapeo.HibernateUtil"/>
+          <mapping class="paquete.Clase"/>
+          <mapping class="paquete.Clase"/>
 		}

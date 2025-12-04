@@ -87,7 +87,8 @@ public class App {
 			}
 		}
 	}
-
+	
+	//CascadeType.ALL hace que independientemente del metodo al que llamemos (creaLibro o crearDetalleLibro se creen ambos en la base de datos.
 	private static void crearLibro() {
 		Libro l = new Libro();
 		DetalleLibro dl = new DetalleLibro();
