@@ -50,17 +50,17 @@ public class ClienteService {
             i++;
         }
 
-        dao.crear(c);
+        dao.guardar(c);
         return c.getId();
     }
 
     public Cliente obtenerCliente(Long id) {
-    	return dao.obtenerClienteConInicializacion(id);
-//        return dao.obtener(id);
+//    	return dao.obtenerClienteConInicializacion(id);
+        return dao.buscarPorId(id);
     }
 
     public void eliminarDireccion(Long idCliente) {
-        Cliente c = dao.obtener(idCliente);
+        Cliente c = dao.buscarPorId(idCliente);
         if (c == null)
             throw new IllegalArgumentException("No existe un cliente con ese ID");
 
@@ -69,7 +69,7 @@ public class ClienteService {
     }
 
     public void eliminarPedido(Long idCliente, int index) {
-        Cliente c = dao.obtener(idCliente);
+        Cliente c = dao.buscarPorId(idCliente);
         if (c == null)
             throw new IllegalArgumentException("Cliente no encontrado");
 
@@ -83,7 +83,7 @@ public class ClienteService {
     }
 
     public void modificarNombre(Long idCliente, String nuevoNombre) {
-        Cliente c = dao.obtener(idCliente);
+        Cliente c = dao.buscarPorId(idCliente);
         if (c == null)
             throw new IllegalArgumentException("Cliente no encontrado");
 

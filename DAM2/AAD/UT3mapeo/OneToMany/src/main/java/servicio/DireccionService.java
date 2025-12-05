@@ -21,12 +21,12 @@ public class DireccionService {
 
     public Long crearDireccion(Direccion d) {
         validar(d);
-        dao.crear(d);
+        dao.guardar(d);
         return d.getId();
     }
 
     public Direccion obtenerDireccion(Long id) {
-        return dao.obtener(id);
+        return dao.buscarPorId(id);
     }
 
     public void actualizarDireccion(Direccion d) {

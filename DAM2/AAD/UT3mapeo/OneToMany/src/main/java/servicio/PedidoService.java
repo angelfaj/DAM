@@ -18,12 +18,12 @@ public class PedidoService {
 
     public Long crearPedido(Pedido p) {
         validar(p);
-        dao.crear(p);
+        dao.guardar(p);
         return p.getId();
     }
 
     public Pedido obtenerPedido(Long id) {
-        return dao.obtener(id);
+        return dao.buscarPorId(id);
     }
 
     public void actualizarPedido(Pedido p) {

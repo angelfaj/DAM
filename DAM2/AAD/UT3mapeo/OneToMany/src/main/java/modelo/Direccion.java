@@ -22,6 +22,11 @@ public class Direccion {
 	
 	public Direccion() {}
 	
+	public Direccion(String calle, String ciudad) {
+		this.calle = calle;
+		this.ciudad = ciudad;
+	}
+
 	public Long getId() {
 		return id;
 	}

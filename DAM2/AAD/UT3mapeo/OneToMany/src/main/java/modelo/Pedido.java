@@ -20,6 +20,10 @@ public class Pedido {
 	
 	public Pedido() {}
 
+	public Pedido(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	public Long getId() {
 		return id;
 	}

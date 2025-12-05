@@ -53,6 +53,14 @@ public class Cliente {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	public void addPedido(Pedido p) {
+		pedidos.add(p);
+	}
+
+	public void removePedido(Pedido p) {
+		pedidos.remove(p);
+	}
 	
 	
 }
