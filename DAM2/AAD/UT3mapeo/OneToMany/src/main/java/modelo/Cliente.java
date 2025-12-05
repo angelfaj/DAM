@@ -14,10 +14,10 @@ public class Cliente {
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "DIRECCION")
-	private String direccion;
+	@OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Direccion direccion;
 
-	anotaciones aqui
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 	
 	public Cliente() {}
@@ -38,11 +38,11 @@ public class Cliente {
 		this.nombre = nombre;
 	}
 
-	public String getDireccion() {
+	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(String direccion) {
+	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
 
