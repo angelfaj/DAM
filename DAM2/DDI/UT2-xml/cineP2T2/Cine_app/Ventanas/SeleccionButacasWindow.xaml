@@ -1,4 +1,4 @@
-<Window x:Class="Cine_app.Ventanas.SeleccionButacasWindow"
+﻿<Window x:Class="Cine_app.Ventanas.SeleccionButacasWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Seleccionar Butacas - Cinema" Height="850" Width="1300"
@@ -22,7 +22,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="5"
+                                CornerRadius="8"
                                 BorderThickness="2"
                                 BorderBrush="Transparent">
                             <ContentPresenter HorizontalAlignment="Center" 
@@ -36,7 +36,7 @@
         <!-- Estilo para butaca VIP -->
         <Style x:Key="ButacaVIPStyle" TargetType="Button" BasedOn="{StaticResource ButacaNormalStyle}">
             <Setter Property="Background" Value="#FFD700"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="#1E1E1E"/>
         </Style>
 
         <!-- Estilo para butaca discapacitado -->
@@ -46,14 +46,15 @@
 
         <!-- Estilo para butaca ocupada -->
         <Style x:Key="ButacaOcupadaStyle" TargetType="Button" BasedOn="{StaticResource ButacaNormalStyle}">
-            <Setter Property="Background" Value="#9E9E9E"/>
+            <Setter Property="Background" Value="#3E3E42"/>
+            <Setter Property="Foreground" Value="#707070"/>
             <Setter Property="Cursor" Value="No"/>
             <Setter Property="IsEnabled" Value="False"/>
         </Style>
 
         <!-- Estilo para butaca seleccionada -->
         <Style x:Key="ButacaSeleccionadaStyle" TargetType="Button" BasedOn="{StaticResource ButacaNormalStyle}">
-            <Setter Property="Background" Value="#e94560"/>
+            <Setter Property="Background" Value="#E50914"/>
         </Style>
     </Window.Resources>
 
@@ -61,11 +62,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Border Grid.Row="0" Background="#1a1a2e" Padding="20">
+        <Border Grid.Row="0" Background="#1E1E1E" Padding="20" BorderBrush="#2D2D30" BorderThickness="0,0,0,1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -81,37 +81,52 @@
                     <TextBlock x:Name="txtInfoSesion" 
                               Text="Sesion Info" 
                               FontSize="14" 
-                              Foreground="#cccccc"
+                              Foreground="#B0B0B0"
                               Margin="0,5,0,0"/>
                 </StackPanel>
 
                 <Button x:Name="btnCerrar" 
                         Grid.Column="1"
-                        Content="&#x2715;" 
-                        FontFamily="Segoe UI Symbol"
+                        Content="✕"
                         Click="BtnCerrar_Click"
                         Background="Transparent"
-                        Foreground="White"
+                        Foreground="#B0B0B0"
                         BorderThickness="0"
                         FontSize="24"
+                        FontWeight="Bold"
                         Width="40"
                         Height="40"
-                        Cursor="Hand"/>
+                        Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                               CornerRadius="5">
+                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                            VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#E50914"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
         </Border>
 
         <!-- Contenido Principal -->
-        <Grid Grid.Row="1">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#f5f5f5" Offset="0"/>
-                    <GradientStop Color="#e0e0e0" Offset="1"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-
+        <Grid Grid.Row="1" Background="#252526">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="320"/>
             </Grid.ColumnDefinitions>
 
             <!-- Area de butacas -->
@@ -121,17 +136,28 @@
                          Margin="20">
                 <StackPanel HorizontalAlignment="Center">
                     <!-- Pantalla -->
-                    <Border Background="#333" 
-                           Height="50" 
+                    <Border Background="#1E1E1E" 
+                           Height="60" 
                            CornerRadius="10"
-                           Margin="0,0,0,30"
-                           Width="600">
+                           Margin="0,0,0,40"
+                           Width="650"
+                           BorderBrush="#E50914"
+                           BorderThickness="2">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.6" Color="#E50914"/>
+                        </Border.Effect>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="&#x1F3AC;" FontFamily="Segoe UI Emoji" FontSize="20" Foreground="White" Margin="0,0,10,0"/>
+                            <Viewbox Width="28" Height="28" Margin="0,0,12,0">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M18,4L20,8H17L15,4H13L15,8H12L10,4H8L10,8H7L5,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4H18M9.5,16A0.5,0.5 0 0,1 9,15.5V10.5A0.5,0.5 0 0,1 9.5,10H11.5A0.5,0.5 0 0,1 12,10.5V15.5A0.5,0.5 0 0,1 11.5,16H9.5M14.5,16A0.5,0.5 0 0,1 14,15.5V10.5A0.5,0.5 0 0,1 14.5,10H16.5A0.5,0.5 0 0,1 17,10.5V15.5A0.5,0.5 0 0,1 16.5,16H14.5Z" 
+                                          Fill="#E50914"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Text="PANTALLA" 
-                                      FontSize="20" 
+                                      FontSize="22" 
                                       FontWeight="Bold"
-                                      Foreground="White"/>
+                                      Foreground="White"
+                                      VerticalAlignment="Center"/>
                         </StackPanel>
                     </Border>
 
@@ -140,12 +166,31 @@
                                Visibility="Visible"
                                HorizontalAlignment="Center"
                                Margin="0,50,0,0">
-                        <TextBlock Text="&#x23F3;" FontFamily="Segoe UI Emoji" FontSize="48" HorizontalAlignment="Center"/>
+                        <Viewbox Width="80" Height="80">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M13,7H11V13H13V7M13,15H11V17H13V15Z" 
+                                      Fill="#E50914">
+                                    <Path.RenderTransform>
+                                        <RotateTransform Angle="0" CenterX="12" CenterY="12"/>
+                                    </Path.RenderTransform>
+                                    <Path.Triggers>
+                                        <EventTrigger RoutedEvent="Path.Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard RepeatBehavior="Forever">
+                                                    <DoubleAnimation Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                   From="0" To="360" Duration="0:0:2"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Path.Triggers>
+                                </Path>
+                            </Canvas>
+                        </Viewbox>
                         <TextBlock Text="Cargando butacas..." 
                                   FontSize="16" 
-                                  Foreground="#666"
+                                  Foreground="#B0B0B0"
                                   HorizontalAlignment="Center"
-                                  Margin="0,10,0,0"/>
+                                  Margin="0,20,0,0"/>
                     </StackPanel>
 
                     <!-- Grid de butacas -->
@@ -161,121 +206,212 @@
 
             <!-- Panel lateral derecho -->
             <Border Grid.Column="1" 
-                   Background="White" 
-                   BorderBrush="#ddd" 
+                   Background="#2D2D30" 
+                   BorderBrush="#3F3F46" 
                    BorderThickness="1,0,0,0"
                    Padding="20">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.4" Color="#000000"/>
+                </Border.Effect>
                 <StackPanel>
                     <TextBlock Text="Resumen de Reserva" 
                               FontSize="20" 
                               FontWeight="Bold"
+                              Foreground="White"
                               Margin="0,0,0,20"/>
 
                     <!-- Leyenda de colores -->
                     <TextBlock Text="Leyenda:" 
                               FontWeight="SemiBold"
                               FontSize="14"
+                              Foreground="#E0E0E0"
                               Margin="0,0,0,10"/>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <StackPanel Orientation="Horizontal" Margin="0,8">
                         <Border Background="#4CAF50" 
-                               Width="20" Height="20" 
-                               CornerRadius="3"
+                               Width="24" Height="24" 
+                               CornerRadius="5"
                                Margin="0,0,10,0"/>
                         <StackPanel>
-                            <TextBlock Text="Disponible" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                            <TextBlock x:Name="txtPrecioNormal" Text="Precio base" FontSize="10" Foreground="#666"/>
+                            <TextBlock Text="Disponible" 
+                                      VerticalAlignment="Center" 
+                                      FontWeight="SemiBold"
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock x:Name="txtPrecioNormal" 
+                                      Text="Precio base" 
+                                      FontSize="11" 
+                                      Foreground="#808080"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <StackPanel Orientation="Horizontal" Margin="0,8">
                         <Border Background="#FFD700" 
-                               Width="20" Height="20" 
-                               CornerRadius="3"
+                               Width="24" Height="24" 
+                               CornerRadius="5"
                                Margin="0,0,10,0"/>
                         <StackPanel>
-                            <TextBlock Text="VIP" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                            <TextBlock x:Name="txtPrecioVIP" Text="+3.00 EUR" FontSize="10" Foreground="#666"/>
+                            <TextBlock Text="VIP" 
+                                      VerticalAlignment="Center" 
+                                      FontWeight="SemiBold"
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock x:Name="txtPrecioVIP" 
+                                      Text="+3.00 €" 
+                                      FontSize="11" 
+                                      Foreground="#808080"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <StackPanel Orientation="Horizontal" Margin="0,8">
                         <Border Background="#2196F3" 
-                               Width="20" Height="20" 
-                               CornerRadius="3"
+                               Width="24" Height="24" 
+                               CornerRadius="5"
                                Margin="0,0,10,0"/>
                         <StackPanel>
-                            <TextBlock Text="Discapacitado" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                            <TextBlock x:Name="txtPrecioDiscapacitado" Text="Precio base" FontSize="10" Foreground="#666"/>
+                            <TextBlock Text="Discapacitado" 
+                                      VerticalAlignment="Center" 
+                                      FontWeight="SemiBold"
+                                      Foreground="#E0E0E0"/>
+                            <TextBlock x:Name="txtPrecioDiscapacitado" 
+                                      Text="Precio base" 
+                                      FontSize="11" 
+                                      Foreground="#808080"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <Border Background="#e94560" 
-                               Width="20" Height="20" 
-                               CornerRadius="3"
+                    <StackPanel Orientation="Horizontal" Margin="0,8">
+                        <Border Background="#E50914" 
+                               Width="24" Height="24" 
+                               CornerRadius="5"
                                Margin="0,0,10,0"/>
-                        <TextBlock Text="Seleccionada" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        <TextBlock Text="Seleccionada" 
+                                  VerticalAlignment="Center" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#E0E0E0"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,20">
-                        <Border Background="#9E9E9E" 
-                               Width="20" Height="20" 
-                               CornerRadius="3"
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,20">
+                        <Border Background="#3E3E42" 
+                               Width="24" Height="24" 
+                               CornerRadius="5"
                                Margin="0,0,10,0"/>
-                        <TextBlock Text="Ocupada" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        <TextBlock Text="Ocupada" 
+                                  VerticalAlignment="Center" 
+                                  FontWeight="SemiBold"
+                                  Foreground="#808080"/>
                     </StackPanel>
 
-                    <Separator Margin="0,10"/>
+                    <Separator Background="#3F3F46" Margin="0,10"/>
 
                     <!-- Butacas seleccionadas -->
                     <TextBlock Text="Butacas Seleccionadas:" 
                               FontWeight="SemiBold"
-                              Margin="0,10,0,5"/>
-                    <TextBlock x:Name="txtButacasSeleccionadas" 
-                              Text="Ninguna"
-                              Foreground="#666"
-                              TextWrapping="Wrap"
-                              Margin="0,0,0,10"/>
+                              Foreground="#E0E0E0"
+                              Margin="0,15,0,8"/>
+                    <Border Background="#1E1E1E" 
+                           Padding="10" 
+                           CornerRadius="5"
+                           BorderBrush="#3F3F46"
+                           BorderThickness="1"
+                           MinHeight="50"
+                           Margin="0,0,0,15">
+                        <TextBlock x:Name="txtButacasSeleccionadas" 
+                                  Text="Ninguna"
+                                  Foreground="#808080"
+                                  TextWrapping="Wrap"/>
+                    </Border>
 
-                    <TextBlock Text="Cantidad:" 
-                              FontWeight="SemiBold"/>
-                    <TextBlock x:Name="txtCantidad" 
-                              Text="0 butacas"
-                              FontSize="18"
-                              Foreground="#e94560"
-                              Margin="0,5,0,10"/>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Precio por butaca:" 
-                              FontWeight="SemiBold"/>
-                    <TextBlock x:Name="txtPrecioUnitario" 
-                              Text="0,00 EUR"
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Cantidad:" 
+                                      FontWeight="SemiBold"
+                                      Foreground="#E0E0E0"
+                                      FontSize="12"/>
+                            <TextBlock x:Name="txtCantidad" 
+                                      Text="0 butacas"
+                                      FontSize="16"
+                                      FontWeight="Bold"
+                                      Foreground="#E50914"
+                                      Margin="0,3,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Precio/butaca:" 
+                                      FontWeight="SemiBold"
+                                      Foreground="#E0E0E0"
+                                      FontSize="12"/>
+                            <TextBlock x:Name="txtPrecioUnitario" 
+                                      Text="0,00 €"
+                                      FontSize="16"
+                                      FontWeight="Bold"
+                                      Foreground="#B0B0B0"
+                                      Margin="0,3,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Separator Background="#3F3F46" Margin="0,15"/>
+
+                    <TextBlock Text="Total a Pagar:" 
+                              FontWeight="Bold"
                               FontSize="16"
-                              Margin="0,5,0,10"/>
-
-                    <Separator Margin="0,10"/>
-
-                    <TextBlock Text="Total:" 
-                              FontWeight="Bold"
-                              FontSize="18"/>
+                              Foreground="#E0E0E0"
+                              Margin="0,15,0,5"/>
                     <TextBlock x:Name="txtTotal" 
-                              Text="0,00 EUR"
-                              FontSize="24"
+                              Text="0,00 €"
+                              FontSize="32"
                               FontWeight="Bold"
-                              Foreground="#e94560"
-                              Margin="0,5,0,20"/>
+                              Foreground="#E50914"
+                              Margin="0,0,0,25"/>
 
                     <Button x:Name="btnConfirmarReserva" 
                            Content="Confirmar Reserva"
                            Click="BtnConfirmarReserva_Click"
-                           Background="#e94560"
+                           Background="#E50914"
                            Foreground="White"
                            BorderThickness="0"
-                           Padding="15,12"
+                           Padding="15,14"
                            FontSize="16"
                            FontWeight="Bold"
                            Cursor="Hand"
-                           IsEnabled="False"/>
+                           IsEnabled="False">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                   CornerRadius="8"
+                                                   Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Opacity" Value="1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                        <Setter Property="Background" Value="#3E3E42"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#F40612"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <TextBlock Text="* Selecciona al menos una butaca" 
+                              FontSize="11"
+                              Foreground="#707070"
+                              TextAlignment="Center"
+                              Margin="0,10,0,0"
+                              TextWrapping="Wrap"/>
                 </StackPanel>
             </Border>
         </Grid>

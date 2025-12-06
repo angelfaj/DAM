@@ -159,6 +159,7 @@ namespace Cine_app.Ventanas
 
                         _todasLasReservas.Add(new ReservaViewModel
                         {
+                            Id = r.Id,
                             Sesion = r.Sesion,
                             Total = r.Total,
                             CodigoReserva = r.CodigoReserva ?? "N/A",
@@ -196,6 +197,76 @@ namespace Cine_app.Ventanas
             finally
             {
                 pnlLoadingReservas.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private async void BtnEliminarReserva_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button btn = sender as Button;
+                if (btn?.Tag == null) return;
+
+                int reservaId = Convert.ToInt32(btn.Tag);
+
+                // Mostrar confirmación antes de eliminar
+                MessageBoxResult result = MessageBox.Show(
+                    "¿Estás seguro de que deseas eliminar esta reserva?",
+                    "Confirmar eliminación",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Mostrar indicador de carga
+                    pnlLoadingReservas.Visibility = Visibility.Visible;
+                    itemsReservas.Visibility = Visibility.Collapsed;
+                    pnlSinReservas.Visibility = Visibility.Collapsed;
+
+                    // Eliminar la reserva de la base de datos
+                    var servicioBD = new ServicioBaseDeDatos();
+                    bool eliminado = await servicioBD.EliminarReservaAsync(reservaId);
+
+                    if (eliminado)
+                    {
+                        MessageBox.Show(
+                            "Reserva eliminada correctamente",
+                            "Éxito",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information
+                        );
+
+                        // Recargar las reservas para actualizar la lista
+                        await CargarReservas();
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "No se pudo eliminar la reserva. Inténtalo de nuevo.",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+
+                        // Ocultar indicador de carga
+                        pnlLoadingReservas.Visibility = Visibility.Collapsed;
+                        itemsReservas.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al eliminar la reserva: {ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+
+                // Ocultar indicador de carga en caso de error
+                pnlLoadingReservas.Visibility = Visibility.Collapsed;
+                itemsReservas.Visibility = Visibility.Visible;
             }
         }
 

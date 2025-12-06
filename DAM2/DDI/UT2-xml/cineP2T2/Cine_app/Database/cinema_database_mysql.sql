@@ -1,16 +1,16 @@
 -- ============================================
 -- Script de Base de Datos para Cine_app (MySQL)
--- Base de Datos: Cine_nixon (AWS RDS)
+-- Base de Datos: cinedam (AWS RDS)
 -- ============================================
 
 -- Eliminar la base de datos si existe
-DROP DATABASE IF EXISTS Cine_nixon;
+DROP DATABASE IF EXISTS cinedam;
 
 -- Crear la base de datos
-CREATE DATABASE Cine_nixon CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE cinedam CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Usar la base de datos
-USE Cine_nixon;
+USE cinedam;
 
 -- ============================================
 -- Crear Tabla: Usuarios
@@ -485,7 +485,7 @@ INNER JOIN Salas sa ON s.SalaId = sa.Id
 ORDER BY r.FechaReserva DESC;
 
 SELECT '============================================' AS '';
-SELECT 'Base de datos Cine_nixon creada exitosamente en AWS RDS' AS '';
+SELECT 'Base de datos cinedam creada exitosamente en AWS RDS' AS '';
 SELECT '============================================' AS '';
 SELECT '' AS '';
 SELECT 'RESUMEN:' AS '';

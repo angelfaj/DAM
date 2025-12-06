@@ -338,6 +338,52 @@ namespace Cine_app.Servicios
             }
         }
 
+        // ============ ELIMINAR RESERVA ============
+        public async Task<bool> EliminarReservaAsync(int reservaId)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (var transaction = await conn.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        // Primero eliminar las butacas reservadas
+                        string sqlButacas = "DELETE FROM ReservasButacas WHERE ReservaId = @ReservaId";
+                        using (var cmd = new MySqlCommand(sqlButacas, conn, (MySqlTransaction)transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@ReservaId", reservaId);
+                            await cmd.ExecuteNonQueryAsync();
+                        }
+
+                        // Luego eliminar la reserva
+                        string sqlReserva = "DELETE FROM Reservas WHERE Id = @Id";
+                        using (var cmd = new MySqlCommand(sqlReserva, conn, (MySqlTransaction)transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", reservaId);
+                            int result = await cmd.ExecuteNonQueryAsync();
+
+                            if (result > 0)
+                            {
+                                await transaction.CommitAsync();
+                                return true;
+                            }
+                            else
+                            {
+                                await transaction.RollbackAsync();
+                                return false;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
+            }
+        }
+
         private async Task<List<ReservaButaca>> ObtenerButacasDeReservaAsync(int reservaId)
         {
             var butacas = new List<ReservaButaca>();
