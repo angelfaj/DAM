@@ -1,5 +1,6 @@
 package boletin2;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -92,6 +93,7 @@ public class Main {
 		imagina que quiere hacer varias peticiones y cuando envíe FIN será cuando
 		deban de cerrar las comunicaciones.*/
 
+		System.out.println("Hola Mundo");
 	}
 
 }

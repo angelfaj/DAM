@@ -1,0 +1,7 @@
+Hola mundo
+Esto es una prueba
+* Esta línea si debería mostrarse
+Esta es la ultima linea que deberia mostrarse
+*
+Esta línea no debería mostrarse
+Otra más

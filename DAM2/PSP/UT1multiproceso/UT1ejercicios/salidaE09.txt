@@ -1,0 +1,5 @@
+Contenido del fichero entradaE09.txt:
+Hola mundo
+Esto es una prueba
+* Esta línea si debería mostrarse
+Esta es la ultima linea que deberia mostrarse
