@@ -5,9 +5,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import modelo.Pedido;
+import util.HibernateUtil;
 
 public class PedidoDAOImpl implements PedidoDAO{
 	private SessionFactory factory;
+	
+	public PedidoDAOImpl() {
+		factory = HibernateUtil.getSessionFactory();
+	}
 	
 	@Override
 	public Pedido buscarPorId(Long id) {

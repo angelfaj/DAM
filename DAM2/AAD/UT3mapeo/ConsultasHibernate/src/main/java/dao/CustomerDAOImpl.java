@@ -1,28 +1,31 @@
 package dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-import modelo.Cliente;
+import modelo.Customer;
 import util.HibernateUtil;
 
-public class ClienteDAOImpl implements ClienteDAO{
+public class CustomerDAOImpl implements CustomerDAO{
 	private SessionFactory factory;
 	
-	public ClienteDAOImpl() {
+	public CustomerDAOImpl() {
 		factory = HibernateUtil.getSessionFactory();
 	}
 	
 	@Override
-	public Cliente buscarPorId(Long id) {
+	public Customer buscarPorId(Long id) {
 		Session sess = factory.openSession();
 		Transaction tx = null;
-		Cliente c = null;
+		Customer c = null;
 		
 		try {
 			tx = sess.beginTransaction();
-			c = sess.find(Cliente.class, id);
+			c = sess.find(Customer.class, id);
 			tx.commit();
 		}catch (RuntimeException e) {
 			if (tx != null) tx.rollback();
@@ -35,7 +38,7 @@ public class ClienteDAOImpl implements ClienteDAO{
 	}
 
 	@Override
-	public void actualizar(Cliente c) {
+	public void actualizar(Customer c) {
 		Session sess = factory.openSession();
 		Transaction tx = null;
 		
@@ -63,7 +66,7 @@ public class ClienteDAOImpl implements ClienteDAO{
 	}
 
 	@Override
-	public void guardar(Cliente c) {
+	public void guardar(Customer c) {
 		Transaction tx = null;
 		try (Session sess = factory.openSession()) {
 			tx = sess.beginTransaction();
@@ -72,6 +75,33 @@ public class ClienteDAOImpl implements ClienteDAO{
 		}catch (RuntimeException e) {
 			if (tx != null) tx.rollback();
 		}
+	}
+
+	@Override
+	public List<Customer> getAllCustomers() {
+		List<Customer> customersList = null;
+		
+		try(Session sess = factory.openSession()) {
+			Query consulta = sess.createQuery("select c from Customer c", Customer.class);
+			customersList = (List<Customer>) consulta.getResultList();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return customersList;
+	}
+
+	@Override
+	public List<Customer> getAllCustomersFromCountry(String country) {
+		List<Customer> customersList = null;
+		
+		try(Session sess = factory.openSession()) {
+			Query consulta = sess.createQuery("select c from Customer c where c.country = :pais", Customer.class);
+			consulta.setParameter("pais", country);
+			customersList = (List<Customer>) consulta.getResultList();
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		return customersList;
 	}
 
 }

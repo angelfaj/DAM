@@ -5,10 +5,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import modelo.Direccion;
+import util.HibernateUtil;
 
 public class DireccionDAOImpl implements DireccionDAO{
-private SessionFactory factory;
-	
+	private SessionFactory factory;
+		
+	public DireccionDAOImpl() {
+		factory = HibernateUtil.getSessionFactory();
+	}
+
 	@Override
 	public Direccion buscarPorId(Long id) {
 		Session sess = factory.openSession();
