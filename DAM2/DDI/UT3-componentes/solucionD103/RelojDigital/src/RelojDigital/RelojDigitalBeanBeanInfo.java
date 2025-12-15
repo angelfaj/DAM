@@ -217,7 +217,7 @@ public class RelojDigitalBeanBeanInfo extends SimpleBeanInfo {
             properties[PROPERTY_maximumSize] = new PropertyDescriptor ( "maximumSize", RelojDigital.RelojDigitalBean.class, "getMaximumSize", "setMaximumSize" ); // NOI18N
             properties[PROPERTY_maximumSizeSet] = new PropertyDescriptor ( "maximumSizeSet", RelojDigital.RelojDigitalBean.class, "isMaximumSizeSet", null ); // NOI18N
             properties[PROPERTY_mialarma] = new PropertyDescriptor ( "mialarma", RelojDigital.RelojDigitalBean.class, "getMialarma", "setMialarma" ); // NOI18N
-            properties[PROPERTY_mialarma].setPropertyEditorClass ( RelojDigital.alarmaPropertyEditor.class );
+            properties[PROPERTY_mialarma].setPropertyEditorClass ( RelojDigital.AlarmaPropertyEditor.class );
             properties[PROPERTY_minimumSize] = new PropertyDescriptor ( "minimumSize", RelojDigital.RelojDigitalBean.class, "getMinimumSize", "setMinimumSize" ); // NOI18N
             properties[PROPERTY_minimumSizeSet] = new PropertyDescriptor ( "minimumSizeSet", RelojDigital.RelojDigitalBean.class, "isMinimumSizeSet", null ); // NOI18N
             properties[PROPERTY_modo24] = new PropertyDescriptor ( "modo24", RelojDigital.RelojDigitalBean.class, "isModo24", "setModo24" ); // NOI18N

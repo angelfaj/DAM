@@ -1,23 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package RelojDigital;
 
 import java.awt.Component;
 import java.beans.*;
 
-/**
- *
- * @author usuario
- */
-public class alarmaPropertyEditor extends PropertyEditorSupport {
+public class AlarmaPropertyEditor extends PropertyEditorSupport {
     
-    private alarmaEditorPanel editor = null;
+    private AlarmaEditorPanel editor = null;
 
-    public alarmaPropertyEditor() {
-        this.editor = new alarmaEditorPanel();
+    public AlarmaPropertyEditor() {
+        this.editor = new AlarmaEditorPanel();
     }
 
     @Override
@@ -35,7 +26,7 @@ public class alarmaPropertyEditor extends PropertyEditorSupport {
         if(super.getValue()==null){
             setValue(null);
         }
-        alarma ret = (alarma) super.getValue();
+        Alarma ret = (Alarma) super.getValue();
         if (editor.txtHoras.getText().equals(""))
             ret.setHora(0);
         else
@@ -52,7 +43,7 @@ public class alarmaPropertyEditor extends PropertyEditorSupport {
     @Override
     public void setValue(Object alarma) {
         if(alarma==null){
-            alarma = new alarma(0,0,"");
+            alarma = new Alarma(0,0,"");
         }
         super.setValue(alarma);
 
@@ -75,9 +66,9 @@ public class alarmaPropertyEditor extends PropertyEditorSupport {
 
     @Override
     public String getJavaInitializationString() {
-        alarma bean = (alarma) getValue();
+        Alarma bean = (Alarma) getValue();
         StringBuffer ret = new StringBuffer();
-        ret.append(alarma.class.getName());
+        ret.append(Alarma.class.getName());
         ret.append(".createAlarma(\"");
         ret.append(bean.getHora());
         ret.append("\",\"");
@@ -92,7 +83,5 @@ public class alarmaPropertyEditor extends PropertyEditorSupport {
 
         return ret.toString();
     }
-
-
 
 }

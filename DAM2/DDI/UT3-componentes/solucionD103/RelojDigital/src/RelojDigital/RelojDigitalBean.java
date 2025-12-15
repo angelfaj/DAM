@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package RelojDigital;
 
 import java.awt.event.ActionEvent;
@@ -12,14 +7,9 @@ import java.util.Calendar;
 import java.util.EventListener;
 import javax.swing.*;
 
-/**
- *
- * @author usuario
- */
 public class RelojDigitalBean extends JLabel  implements ActionListener, Serializable {
 
-    //modo representa el modo en que se muestra el reloj.
-    //se establece por defecto a true que significa que se va usar el modo 24 horas.
+    private static final long serialVersionUID = 1L;
     protected boolean modo24;
     private Timer t;
     private Calendar calendario;
@@ -29,31 +19,18 @@ public class RelojDigitalBean extends JLabel  implements ActionListener, Seriali
     private String[] AMPM = {"AM", "PM"};
 
     private AlarmaListener receptor;
+    protected Alarma mialarma;
 
-    
-    /**
-     * Get the value of modo
-     *
-     * @return the value of modo
-     */
     public boolean isModo24() {
         return modo24;
     }
 
-    /**
-     * Set the value of modo
-     *
-     * @param modo new value of modo
-     */
     public void setModo24(boolean modo24) {
         this.modo24 = modo24;
     }
 
-
-    protected alarma mialarma;
-
-    public alarma getMialarma() {
-        alarma a = new alarma();
+    public Alarma getMialarma() {
+        Alarma a = new Alarma();
         a.setActiva(mialarma.isActiva());
         a.setHora(mialarma.getHora());
         a.setMinuto(mialarma.getMinuto());
@@ -61,19 +38,10 @@ public class RelojDigitalBean extends JLabel  implements ActionListener, Seriali
         return a;
     }
 
-    public void setMialarma(alarma mialarma) {
+    public void setMialarma(Alarma mialarma) {
         this.mialarma = mialarma;
     }
 
-
-
-
-
-/**
- *
- * CONSTRUCTOR DEL RELOJ DIGITAL
- *
- */
     public RelojDigitalBean() {
         //por defeto el modo es a 24 horas
         modo24 = true;
@@ -89,20 +57,14 @@ public class RelojDigitalBean extends JLabel  implements ActionListener, Seriali
 
         setText(h + ":" + m + ":" + s + " " + AM_PM);
 
-        mialarma = new alarma();
+        mialarma = new Alarma();
 
     }
 
-
-    /**
- *
- * @author usuario
-     * Código que genera el EventObject que permite la
-     * construcción de un evento cuando llega la hora de una alarma activa.
- */
 public class AlarmaEvent extends java.util.EventObject
 {
-    String msg;
+    private static final long serialVersionUID = 1L;
+	String msg;
     // constructor
     public AlarmaEvent(Object source, String msg)
     {
@@ -116,17 +78,11 @@ public class AlarmaEvent extends java.util.EventObject
     }
 }
 
-//Define la interfaz para el nuevo tipo de evento
 public interface AlarmaListener extends EventListener
 {
     void SuenaAlarma(AlarmaEvent ev);
 }
 
-
-
-
-
-    //Implementamos el Timer para que cambie la hora cada segundo
     public void actionPerformed(ActionEvent e)
     {
         String h;
@@ -152,35 +108,21 @@ public interface AlarmaListener extends EventListener
         }
         repaint();
 
-        /**
-         *
-         * Gestion de las alarmas, si coincide se lanza el evento
-         *
-         */
         if(mialarma.isActiva())
         {
-            if(mialarma.coincide(Integer.parseInt(h), Integer.parseInt(m)) )
-                receptor.SuenaAlarma( new AlarmaEvent(this, mialarma.getMensaje()) );
+        	if (mialarma.coincide(Integer.parseInt(h), Integer.parseInt(m))) {
+        	    mialarma.setActiva(false);  
+        	    receptor.SuenaAlarma(new AlarmaEvent(this, mialarma.getMensaje()));
+        	}
+
         }
     }
 
-
-
-    /**
-     * Añade un oyente para el evento AlarmaEvent
-     *
-     * @param receptor
-     */
     public void addAlarmaListener(AlarmaListener receptor)
     {
         this.receptor = receptor;
     }
 
-    /**
-     * Elimina un oyente del evento AlarmaEvent
-     *
-     * @param receptor
-     */
     public void removeAlarmaListener(AlarmaListener receptor)
     {
         this.receptor=null;
