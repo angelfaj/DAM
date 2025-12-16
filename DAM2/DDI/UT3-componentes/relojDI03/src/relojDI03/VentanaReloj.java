@@ -48,6 +48,7 @@ public class VentanaReloj extends JFrame {
         reloj.setFont(new Font("Arial", Font.BOLD, 28));
 
         reloj.addAlarmaListener(evt -> {
+        	reproducirSonido();
             JOptionPane.showMessageDialog(this, evt.getMsg(), "ALARMA",
                     JOptionPane.INFORMATION_MESSAGE);
             actualizarAlarmaActiva(); 
@@ -157,6 +158,21 @@ public class VentanaReloj extends JFrame {
             }
         }
         reloj.setMialarma(new Alarma()); // ninguna activa
+    }
+
+    private void reproducirSonido() {
+        try {
+            javax.sound.sampled.AudioInputStream audio =
+                javax.sound.sampled.AudioSystem.getAudioInputStream(
+                    getClass().getResource("/sonidos/alarma.wav")
+                );
+            javax.sound.sampled.Clip clip =
+                javax.sound.sampled.AudioSystem.getClip();
+            clip.open(audio);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     

@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myfirstapp"
-    compileSdk = 36
+    namespace = "com.example.controlesseleccion"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myfirstapp"
+        applicationId = "com.example.controlesseleccion"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
