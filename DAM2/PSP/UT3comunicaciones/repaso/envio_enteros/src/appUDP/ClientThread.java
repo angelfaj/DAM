@@ -11,7 +11,7 @@ public class ClientThread extends Thread {
 	private int serverPort;
 	private int localPort = 50000;
 	private InetAddress serverIP; 
-	private DatagramSocket socket;
+	private DatagramSocket datagramSocket;
 	private DatagramPacket datSalida;
 	private DatagramPacket datEntrada;
 	private byte[] buffEntrada;
@@ -20,7 +20,7 @@ public class ClientThread extends Thread {
 	public ClientThread(String serverIP, int port) throws SocketException, UnknownHostException {
 		this.serverPort = port;
 		this.serverIP = InetAddress.getByName(serverIP);
-		socket = new DatagramSocket(localPort);
+		datagramSocket = new DatagramSocket(localPort);
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ClientThread extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (socket!= null) closeComs();
+		if (datagramSocket!= null) closeComs();
 	}
 	
 	private void sendMsj(String msj) throws IOException {
 		System.out.println("(Cliente) - Enviando mensaje");
 		buffSalida = msj.getBytes();
 		datSalida = new DatagramPacket(buffSalida, buffSalida.length, serverIP, serverPort);
-		socket.send(datSalida);
+		datagramSocket.send(datSalida);
 		System.out.println("(Cliente) - Mensaje enviado");
 	}
 	
@@ -46,14 +46,14 @@ public class ClientThread extends Thread {
 		System.out.println("(Cliente) - Recibiendo mensaje");
 		buffEntrada = new byte[64];
 		datEntrada = new DatagramPacket(buffEntrada, buffEntrada.length);
-		socket.receive(datEntrada);
+		datagramSocket.receive(datEntrada);
 		System.out.println("(Cliente) - Mensaje recibido");
 		
 		return new String(buffEntrada);
 	}
 	
 	private void closeComs() {
-		socket.close();
+		datagramSocket.close();
 		System.out.println("(Cliente) - Conexiones cerradas");
 	}
 	

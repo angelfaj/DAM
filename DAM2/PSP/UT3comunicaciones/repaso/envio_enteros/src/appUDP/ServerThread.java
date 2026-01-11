@@ -7,7 +7,7 @@ import java.net.SocketException;
 
 public class ServerThread extends Thread{
 	private int port;
-	private DatagramSocket socket;
+	private DatagramSocket datagramSocket;
 	private DatagramPacket datagramaEntrada;
 	private DatagramPacket datagramaSalida;
 	private byte[] bufferLectura;
@@ -15,7 +15,7 @@ public class ServerThread extends Thread{
 	
 	public ServerThread(int port) throws SocketException {
 		this.port = port;
-		socket = new DatagramSocket(port);
+		datagramSocket = new DatagramSocket(port);
 	}
 	
 	@Override
@@ -31,14 +31,14 @@ public class ServerThread extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (socket != null) closeComs();
+		if (datagramSocket != null) closeComs();
 	}
 	
 	public String getMessage() throws IOException {
 		System.out.println("(Servidor) - Recibiendo datagrama");
 		bufferLectura = new byte[64];
 		datagramaEntrada = new DatagramPacket(bufferLectura, bufferLectura.length);
-		socket.receive(datagramaEntrada);
+		datagramSocket.receive(datagramaEntrada);
 		System.out.println("(Servidor) - Datagrama recibido");
 		
 		return new String(bufferLectura);
@@ -48,12 +48,12 @@ public class ServerThread extends Thread{
 		System.out.println("(Servidor) - Enviando datagrama");
 		bufferEscritura = msg.getBytes();
 		datagramaSalida = new DatagramPacket(bufferEscritura, bufferEscritura.length, datagramaEntrada.getAddress(), datagramaEntrada.getPort());
-		socket.send(datagramaSalida);
+		datagramSocket.send(datagramaSalida);
 		System.out.println("(Servidor) - Datagrama enviado");
 	}
 	
 	public void closeComs() {
-		socket.close();
+		datagramSocket.close();
 		System.out.println("(Servidor) - Conexiones cerradas");
 	}
 	
