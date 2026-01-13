@@ -7,7 +7,7 @@ import dao.EmpleadoDAO;
 import dao.LibroDAO;
 import model.Autor;
 import model.Departamento;
-import model.Empleado;
+import model.Jugador;
 import model.Libro;
 
 public class App {
@@ -64,17 +64,19 @@ public class App {
 //		EmpleadoDAO.getEmpleadosFromDep10();
 //		EmpleadoDAO.getEmpleadosOfPedroLopez();
 //		EmpleadoDAO.getNumEmpleadosVentas();
-		EmpleadoDAO.getNumEmpleadosPorDep();
+//		EmpleadoDAO.getNumEmpleadosPorDep();
 		
 		/*EJERCICIO 4
 		Realiza un programa Java que utilice NeoDatis para ejecutar las siguientes consultas sobre la
 		base de datos biblioteca:
-		A) Obtener los libros que cuyo número de páginas es mayor que 30.
+		A) Obtener los libros cuyo número de páginas es mayor que 30.
 		B) Obtener los autores de nacionalidad española.
 		C) Obtener los títulos y los años de los libros escritos por aquellos autores cuyo apellido
 		empieza con la letra S. (OPCIONAL)*/
 		
-		//BOLETIN 2 0-4
+//		LibroDAO.getLibrosMas30Pag();
+//		AutorDAO.getEspañoles();
+//		AutorDAO.getLibrosDeAutoresEmpiezanPorS();
 	}
 
 }

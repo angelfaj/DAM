@@ -8,7 +8,7 @@ import org.neodatis.odb.ODB;
 import org.neodatis.odb.ODBFactory;
 
 import model.Departamento;
-import model.Empleado;
+import model.Jugador;
 
 public class InsertarDatosPersonal {
     public static void main(String[] args) {
@@ -23,17 +23,17 @@ public class InsertarDatosPersonal {
         odb.store(dep3);
 
         // 📌 Insertar Empleados
-        Empleado jefe1 = new Empleado(1, "López", "Gerente", new Date(), 2500.0f, 0, null, dep1);  // Jefe
-        Empleado emp1 = new Empleado(2, "Gómez", "Vendedor", new Date(), 1200.0f, 200.0f, jefe1, dep1);
-        Empleado emp2 = new Empleado(3, "Martínez", "Vendedor", new Date(), 900.0f, 100.0f, jefe1, dep1);
-        Empleado emp3 = new Empleado(4, "Fernández", "Programador", new Date(), 1800.0f, 0, null, dep2);
-        Empleado emp4 = new Empleado(5, "Sánchez", "Técnico", new Date(), 1600.0f, 150.0f, null, dep2);
-        Empleado emp5 = new Empleado(6, "Pérez", "Recursos Humanos", new Date(), 1100.0f, 50.0f, null, dep3);
+        Jugador jefe1 = new Jugador(1, "López", "Gerente", new Date(), 2500.0f, 0, null, dep1);  // Jefe
+        Jugador emp1 = new Jugador(2, "Gómez", "Vendedor", new Date(), 1200.0f, 200.0f, jefe1, dep1);
+        Jugador emp2 = new Jugador(3, "Martínez", "Vendedor", new Date(), 900.0f, 100.0f, jefe1, dep1);
+        Jugador emp3 = new Jugador(4, "Fernández", "Programador", new Date(), 1800.0f, 0, null, dep2);
+        Jugador emp4 = new Jugador(5, "Sánchez", "Técnico", new Date(), 1600.0f, 150.0f, null, dep2);
+        Jugador emp5 = new Jugador(6, "Pérez", "Recursos Humanos", new Date(), 1100.0f, 50.0f, null, dep3);
        
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 15); // 15 de junio de 2015
         Date fecha = calendar.getTime();
-        Empleado emp6 = new Empleado(7, "Luisa", "Recursos Humanos", fecha, 1100.0f, 50.0f, null, dep3);
+        Jugador emp6 = new Jugador(7, "Luisa", "Recursos Humanos", fecha, 1100.0f, 50.0f, null, dep3);
 
         odb.store(jefe1);
         odb.store(emp1);

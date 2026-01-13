@@ -2,24 +2,24 @@ package model;
 
 import java.util.Date;
 
-public class Empleado {
+public class Jugador {
 	private int id_emp;
 	private String apellido;
 	private String oficio;
 	private Date fecha_alta;
 	private float salario;
 	private float comision;
-	private Empleado jefe;
+	private Jugador jefe;
 	private Departamento departamento;
 	
-	public Empleado() {}
+	public Jugador() {}
 	
-	public Empleado(int id_emp, String apellido) {
+	public Jugador(int id_emp, String apellido) {
 		this.id_emp = id_emp;
 		this.apellido = apellido;
 	}
 
-	public Empleado(int id_emp, String apellido, String oficio, Date fecha_alta, float salario, float comision, Empleado jefe, Departamento departamento) {
+	public Jugador(int id_emp, String apellido, String oficio, Date fecha_alta, float salario, float comision, Jugador jefe, Departamento departamento) {
 		this(id_emp, apellido);
 		this.oficio = oficio;
 		this.fecha_alta = fecha_alta;
@@ -77,11 +77,11 @@ public class Empleado {
 		this.comision = comision;
 	}
 
-	public Empleado getJefe() {
+	public Jugador getJefe() {
 		return jefe;
 	}
 
-	public void setJefe(Empleado jefe) {
+	public void setJefe(Jugador jefe) {
 		this.jefe = jefe;
 	}
 

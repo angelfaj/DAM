@@ -14,10 +14,10 @@ import org.neodatis.odb.core.query.criteria.Where;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 import org.neodatis.odb.impl.core.query.values.ValuesCriteriaQuery;
 
-import model.Empleado;
+import model.Jugador;
 
 public class EmpleadoDAO {
-	public static void addEmpleado(Empleado e) {
+	public static void addEmpleado(Jugador e) {
 		ODB odb = ODBFactory.open("personal.db");
 		odb.store(e);	
 		odb.close();
@@ -25,11 +25,11 @@ public class EmpleadoDAO {
 	
 	public static void getAllEmpleados() {
 		ODB odb = ODBFactory.open("personal.db");
-		Objects<Empleado> empleados = null;
+		Objects<Jugador> empleados = null;
 		
-		empleados = odb.getObjects(Empleado.class);
+		empleados = odb.getObjects(Jugador.class);
 		while(empleados.hasNext()) {
-			Empleado e = empleados.next();
+			Jugador e = empleados.next();
 			System.out.println(e);
 		}
 		
@@ -40,11 +40,11 @@ public class EmpleadoDAO {
 		ODB odb = ODBFactory.open("personal.db");
 		
 		ICriterion critSalario = Where.gt("salario", 1000);
-		CriteriaQuery query = new CriteriaQuery(Empleado.class, critSalario);
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, critSalario);
 		query.orderByAsc("salario");
 		
-		Objects<Empleado> empleadosPorSalario = odb.getObjects(query);
-		for (Empleado e: empleadosPorSalario) {
+		Objects<Jugador> empleadosPorSalario = odb.getObjects(query);
+		for (Jugador e: empleadosPorSalario) {
 			System.out.println(e);
 		}
 		odb.close();
@@ -65,11 +65,11 @@ public class EmpleadoDAO {
         Date ultimoDia2015 = cal.getTime();
         
 		ICriterion critDate = new And().add(Where.ge("fecha_alta", primerDia2015)).add(Where.le("fecha_alta", ultimoDia2015));
-		CriteriaQuery query = new CriteriaQuery(Empleado.class, critDate);
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, critDate);
 		query.orderByAsc("fecha_alta");
 		
-		Objects<Empleado> empleados2015 = odb.getObjects(query);
-		for (Empleado e: empleados2015) {
+		Objects<Jugador> empleados2015 = odb.getObjects(query);
+		for (Jugador e: empleados2015) {
 			System.out.println(e);
 		}
 		odb.close();
@@ -79,10 +79,10 @@ public class EmpleadoDAO {
 		ODB odb = ODBFactory.open("personal.db");
 		
 		ICriterion critNombre = Where.equal("departamento.id_dep", 10);
-		CriteriaQuery query = new CriteriaQuery(Empleado.class, critNombre);
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, critNombre);
 		
-		Objects<Empleado> empleadosDep10 = odb.getObjects(query);
-		for (Empleado e: empleadosDep10) {
+		Objects<Jugador> empleadosDep10 = odb.getObjects(query);
+		for (Jugador e: empleadosDep10) {
 			System.out.println(e);
 		}
 		odb.close();
@@ -92,10 +92,10 @@ public class EmpleadoDAO {
 		ODB odb = ODBFactory.open("personal.db");
 		
 		ICriterion critBoss = Where.equal("jefe.apellido", "López");
-		CriteriaQuery query = new CriteriaQuery(Empleado.class, critBoss);
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, critBoss);
 		
-		Objects<Empleado> empleadosOfBoss = odb.getObjects(query);
-		for (Empleado e: empleadosOfBoss) {
+		Objects<Jugador> empleadosOfBoss = odb.getObjects(query);
+		for (Jugador e: empleadosOfBoss) {
 			System.out.println(e);
 		}
 		odb.close();
@@ -105,9 +105,9 @@ public class EmpleadoDAO {
 		ODB odb = ODBFactory.open("personal.db");
 		
 		ICriterion critVentas = Where.equal("departamento.nombre", "Ventas");
-		CriteriaQuery query = new CriteriaQuery(Empleado.class, critVentas);
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, critVentas);
 		
-		Objects<Empleado> empleadosVentas = odb.getObjects(query);
+		Objects<Jugador> empleadosVentas = odb.getObjects(query);
 		System.out.println("Numero de empleados del departamento Ventas: " + empleadosVentas.size());
 		
 		odb.close();
@@ -117,7 +117,7 @@ public class EmpleadoDAO {
 		ODB odb = ODBFactory.open("personal.db");
 		
 		//Arroja error si algun empleado no tine departamento
-		Values vals = odb.getValues(new ValuesCriteriaQuery(Empleado.class)
+		Values vals = odb.getValues(new ValuesCriteriaQuery(Jugador.class)
 				.field("departamento.nombre","nombre_departamento")
 				.count("id_emp")
 				.groupBy("departamento.nombre"));
