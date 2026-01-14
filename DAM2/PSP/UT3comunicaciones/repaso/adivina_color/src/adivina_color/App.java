@@ -15,20 +15,28 @@ public class App {
 		UDP → información rápida sobre puntuación al final de ronda (no se asegura entrega).
 		Multicast → anuncio del ganador a todos los clientes y anuncio fin del programa*/
 
-		int portTCP = 2020;
-		int portUDP = 4040;
+		int portTCP = 3020;
+		int portUDPserver = 4040;
+		int portMulticast = 4060;
 		int nClientes = 1;
 		String serverIP = "127.0.0.1";
 		String multicastIP = "224.0.0.2";
 		
-		new Server(portTCP, portUDP, nClientes).start();
-		/*new ClientListenerThread(portUDP, multicastIP).start();
+		new Server(portTCP, portUDPserver, portMulticast, multicastIP, nClientes).start();
+		
+		//esperamos a que el serviudor arranque o lanzara conection refusred
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		new ClientListenerThread(portMulticast, multicastIP).start();
+
 		
 		for (int i = 0; i< nClientes; i++) {
-			new ClientPlayerThread(portTCP, portUDP, serverIP).start();
+			new ClientPlayerThread(portTCP, portUDPserver, serverIP).start();
 		}
-		*/
-		no va ;)
 		
 	}
 

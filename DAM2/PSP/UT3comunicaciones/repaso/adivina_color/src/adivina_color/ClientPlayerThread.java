@@ -15,14 +15,14 @@ public class ClientPlayerThread extends Thread{
 	private DataInputStream dis;
 	private String serverIP;
 
-	private int portUDP;
+	private int portUDPServer;
 	private byte[] buff;
 	private DatagramSocket dSocket;
 	private DatagramPacket dPacket;
 	
-	public ClientPlayerThread(int portTCP, int portUDP, String serverIP) {
+	public ClientPlayerThread(int portTCP, int portUDPserver, String serverIP) {
 		this.portTCP = portTCP;
-		this.portUDP = portUDP;
+		this.portUDPServer = portUDPserver;
 		this.serverIP = serverIP;
 	}
 	
@@ -34,18 +34,18 @@ public class ClientPlayerThread extends Thread{
 			dos = new DataOutputStream(socket.getOutputStream());
 			
 			//UDP
-			dSocket = new DatagramSocket(portUDP);
+			dSocket = new DatagramSocket();
 			
 			//Leemos peticion y enviamos nombre por TCP 
 			String  solicitaNombre = dis.readUTF();
 			System.out.println("(Cliente-Lee)- " + solicitaNombre);
-			int n = (int) Math.random() * 11;
+			int n = (int) (Math.random() * 11);
 			String nombre = "Rebeca-"+n;
 			dos.writeUTF(nombre);
 			
 			//Enviamos nombre por UDP 
 			buff = nombre.getBytes();
-			dPacket = new DatagramPacket(buff, buff.length, InetAddress.getByName(serverIP), portUDP);
+			dPacket = new DatagramPacket(buff, buff.length, InetAddress.getByName(serverIP), portUDPServer);
 			dSocket.send(dPacket);
 			
 			//A jugarrr
@@ -64,7 +64,7 @@ public class ClientPlayerThread extends Thread{
 				
 				//Leemos puntuacion por UDP
 				buff = new byte[128];
-				dPacket = new DatagramPacket(buff, buff.length, InetAddress.getByName(serverIP), portUDP);
+				dPacket = new DatagramPacket(buff, buff.length, InetAddress.getByName(serverIP), portUDPServer);
 				dSocket.receive(dPacket);
 				
 				//Mostramos puntuacion leida

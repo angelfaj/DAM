@@ -17,12 +17,11 @@ public class ServerThread extends Thread{
 	
 	private DatagramPacket datPacket;
 	private DatagramSocket datSocket;
-	private int portUDP;
 	private byte[] buffer;
 
-	public ServerThread(int portUDP, Socket socket, Server server) {
-		this.portUDP = portUDP;
+	public ServerThread(Socket socket, DatagramSocket datSocket, Server server) {
 		this.socket = socket;
+		this.datSocket = datSocket;
 		this.server = server;
 	}
 	
@@ -36,7 +35,7 @@ public class ServerThread extends Thread{
 			//Inicializamos recursos
 			dos = new DataOutputStream(socket.getOutputStream());
 			dis = new DataInputStream(socket.getInputStream());
-			datSocket = new DatagramSocket(portUDP);
+			buffer = new byte[128];
 			datPacket = new DatagramPacket(buffer, buffer.length);
 			
 			//Recogemos nombre, ip y puerto del cliente

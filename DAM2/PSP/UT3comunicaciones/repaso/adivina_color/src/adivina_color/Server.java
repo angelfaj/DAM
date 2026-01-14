@@ -2,6 +2,7 @@ package adivina_color;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
@@ -12,11 +13,13 @@ import java.util.ArrayList;
 public class Server extends Thread{
 	private ServerSocket serverSocket;
 	private int portTCP;
-	private int portUDP;
-
+	private int portMulticast;
+	
+	private int portUDPserver;
 	private MulticastSocket multiSocket;
 	private NetworkInterface interfaz;
 	private InetAddress grupo;
+	private final String ipMulticast;
 	private DatagramPacket dPacket;
 	private byte[] buffer;
 	
@@ -50,24 +53,27 @@ public class Server extends Thread{
     };
 	
 
-	public Server(int portTCP, int portUDP, int nClientes) {
+	public Server(int portTCP, int portUDPserver, int portMulticast, String ipMulticast, int nClientes) {
 		this.portTCP = portTCP;
-		this.portUDP = portUDP;
+		this.portUDPserver = portUDPserver;
+		this.portMulticast = portMulticast;
+		this.ipMulticast = ipMulticast;
 		this.nClientes = nClientes;
 	}
 	
 	private void arrancar() throws IOException {
 		//Multicast
-		multiSocket = new MulticastSocket(portUDP);
+		multiSocket = new MulticastSocket(portMulticast);
 		interfaz = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
-		grupo = InetAddress.getByName("235.10.10.1");
+		grupo = InetAddress.getByName(ipMulticast);
 		multiSocket.setNetworkInterface(interfaz);
 		
 		//TCP
 		serverSocket = new ServerSocket(portTCP);
 		for (int i = 0; i < nClientes; i++) {
 			Socket socket = serverSocket.accept();
-			ServerThread hilo = new ServerThread(portUDP, socket, this);
+			DatagramSocket datSocket = new DatagramSocket(portUDPserver);
+			ServerThread hilo = new ServerThread(socket, datSocket, this);
 			hilo.start();
 			hilos.add(hilo);
 		}
@@ -79,7 +85,7 @@ public class Server extends Thread{
 			String mensajeFin = "El jugador " + clientName + " ha conseguido " + points + " puntos. Felicitaciones";
 			buffer = mensajeFin.getBytes();
 			
-			dPacket = new DatagramPacket(buffer, buffer.length, grupo, portUDP);
+			dPacket = new DatagramPacket(buffer, buffer.length, grupo, portMulticast);
 			multiSocket.send(dPacket);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -91,7 +97,7 @@ public class Server extends Thread{
 			String mensajeFin = "Se acabaron las preguntas. FIN del programa.";
 			buffer = mensajeFin.getBytes();
 			
-			dPacket = new DatagramPacket(buffer, buffer.length, grupo, portUDP);
+			dPacket = new DatagramPacket(buffer, buffer.length, grupo, portMulticast);
 			multiSocket.send(dPacket);
 		} catch (IOException e) {
 			e.printStackTrace();
