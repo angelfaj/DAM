@@ -53,8 +53,8 @@ public class ServerThread extends Thread{
 			
 			for (int i = 0; i < preguntas.length; i++) {
 				//Pregunta
-				dos.writeUTF("====Ronda " + (i+1) + " de " + preguntas.length + "====");
-				dos.writeUTF(preguntas[i]);
+				String pregunta = "====Ronda " + (i+1) + " de " + preguntas.length + "====" + "\n" + preguntas[i]; 
+				dos.writeUTF(pregunta);
 				String respuesta = dis.readUTF();
 				//Comprobacion
 				if (respuesta.equalsIgnoreCase(respuestas[i])) {
@@ -86,7 +86,8 @@ public class ServerThread extends Thread{
 		try {
 			dis.close();
 			dos.close();
-			socket.close();
+			if (socket != null && !socket.isClosed()) socket.close();
+			if (datSocket != null && !datSocket.isClosed()) datSocket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,3 +100,4 @@ public class ServerThread extends Thread{
 		parar();
 	}
 }
+ 

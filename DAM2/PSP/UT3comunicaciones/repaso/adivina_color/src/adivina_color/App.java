@@ -12,9 +12,23 @@ public class App {
 		Los clientes pueden ver sus puntuaciones, los intentos de otros y el ganador en tiempo real.
 		Detalles técnicos:
 		TCP → comunicación confiable uno a uno (respuestas de los clientes).
-		UDP → información rápida sobre puntuación (no se asegura entrega).
-		Multicast → anuncio del ganador a todos los clientes.*/
+		UDP → información rápida sobre puntuación al final de ronda (no se asegura entrega).
+		Multicast → anuncio del ganador a todos los clientes y anuncio fin del programa*/
 
+		int portTCP = 2020;
+		int portUDP = 4040;
+		int nClientes = 1;
+		String serverIP = "127.0.0.1";
+		String multicastIP = "224.0.0.2";
+		
+		new Server(portTCP, portUDP, nClientes).start();
+		/*new ClientListenerThread(portUDP, multicastIP).start();
+		
+		for (int i = 0; i< nClientes; i++) {
+			new ClientPlayerThread(portTCP, portUDP, serverIP).start();
+		}
+		*/
+		no va ;)
 		
 	}
 

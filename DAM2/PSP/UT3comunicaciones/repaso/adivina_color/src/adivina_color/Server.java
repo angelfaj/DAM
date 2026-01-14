@@ -2,7 +2,6 @@ package adivina_color;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
@@ -66,7 +65,6 @@ public class Server extends Thread{
 		
 		//TCP
 		serverSocket = new ServerSocket(portTCP);
-		
 		for (int i = 0; i < nClientes; i++) {
 			Socket socket = serverSocket.accept();
 			ServerThread hilo = new ServerThread(portUDP, socket, this);
@@ -84,7 +82,18 @@ public class Server extends Thread{
 			dPacket = new DatagramPacket(buffer, buffer.length, grupo, portUDP);
 			multiSocket.send(dPacket);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void comunicarFinPuntuacion() {
+		try {
+			String mensajeFin = "Se acabaron las preguntas. FIN del programa.";
+			buffer = mensajeFin.getBytes();
+			
+			dPacket = new DatagramPacket(buffer, buffer.length, grupo, portUDP);
+			multiSocket.send(dPacket);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -95,10 +104,12 @@ public class Server extends Thread{
 			try {
 				hilo.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		//Comunicamos fin del programa por muklticast para que el listener se pare
+		comunicarFinPuntuacion();
+		
 		//Cerramos coms
 		if (!serverSocket.isClosed() && serverSocket != null) serverSocket.close();
 		if (multiSocket != null && !multiSocket.isClosed()) multiSocket.close();
