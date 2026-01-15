@@ -32,7 +32,7 @@ public class JugadorDAO {
 		ODB odb = ODBFactory.open("equipos.db");
 
 		ICriterion crit = new And()
-				.add(Where.ge("edad", 20))
+				.add(Where.gt("edad", 20))
 				.add(Where.equal("deporte", "fútbol"));
 		CriteriaQuery query = new CriteriaQuery(Jugador.class, crit);
 		query.orderByAsc("nombre");
@@ -88,4 +88,54 @@ public class JugadorDAO {
 		odb.close();
 	}
 	
+	public static void getFootballBetween18and25() {
+		ODB odb = ODBFactory.open("equipos.db");
+
+		ICriterion crit = new And()
+				.add(Where.equal("deporte", "fútbol"))
+				.add(Where.ge("edad", 18))
+				.add(Where.le("edad", 25));
+		
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, crit);
+		query.orderByAsc("nombre");
+		
+		Objects<Jugador> jugadores = odb.getObjects(query);
+		for (Jugador e: jugadores) {
+			System.out.println(e);
+		}
+		odb.close();
+	}
+	
+	public static void getBasketUnder22() {
+		ODB odb = ODBFactory.open("equipos.db");
+		
+		ICriterion crit = new And()
+				.add(Where.equal("deporte", "baloncesto"))
+				.add(Where.not(Where.gt("edad", 22)));
+		
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, crit);
+		query.orderByAsc("nombre");
+		
+		Objects<Jugador> jugadores = odb.getObjects(query);
+		for (Jugador e: jugadores) {
+			System.out.println(e);
+		}
+		odb.close();
+	}
+	
+	public static void getFrenchOrTennis() {
+		ODB odb = ODBFactory.open("equipos.db");
+		
+		ICriterion crit = new Or()
+				.add(Where.equal("deporte", "tenis"))
+				.add(Where.equal("pais.nombrepais", "FRANCIA"));
+		
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, crit);
+		Values vals = odb.getValues(new ValuesCriteriaQuery(query)
+				.count("nombre"));
+		
+		System.out.println("Total jugadores: " + vals.next().getByIndex(0)); 
+
+		odb.close();
+	}
 }
