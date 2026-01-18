@@ -138,4 +138,51 @@ public class JugadorDAO {
 
 		odb.close();
 	}
+	
+	public static void getMinMaxAge() {
+		ODB odb = ODBFactory.open("equipos.db");
+		
+		Values val1 = odb.getValues(new ValuesCriteriaQuery(Jugador.class).max("edad", "edad_max"));
+		ObjectValues eMax = val1.nextValues();
+		Values val2 = odb.getValues(new ValuesCriteriaQuery(Jugador.class).min("edad", "edad_min"));
+		ObjectValues eMin = val2.nextValues();
+		
+		System.out.println("Edad minima: " + eMin.getByAlias("edad_min") + " \nEdad maxima: " + eMax.getByAlias("edad_max")); 
+		
+		odb.close();
+	}
+	
+	public static void getFrenchOrItalian() {
+		ODB odb = ODBFactory.open("equipos.db");
+		
+		ICriterion crit = new Or()
+				.add(Where.equal("pais.nombrepais", "ITALIA"))
+				.add(Where.equal("pais.nombrepais", "FRANCIA"));
+		
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, crit);
+		query.orderByAsc("nombre");
+		
+		Objects<Jugador> jugadores = odb.getObjects(query);
+		for (Jugador j:jugadores) {
+			System.out.println(j); 
+		}
+		
+		odb.close();
+	}
+	
+	public static void getAvgTennisOrMoreThan22() {
+		ODB odb = ODBFactory.open("equipos.db");
+		
+		ICriterion crit = new Or()
+				.add(Where.equal("deporte", "tenis"))
+				.add(Where.gt("edad", 22));
+		
+		CriteriaQuery query = new CriteriaQuery(Jugador.class, crit);
+		Values vals = odb.getValues(new ValuesCriteriaQuery(query)
+				.avg("edad"));
+		
+		System.out.println("Edad media de jugadores de tenis o mayores de 22: " + vals.next().getByIndex(0)); 
+		
+		odb.close();
+	}
 }

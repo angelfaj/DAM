@@ -28,13 +28,13 @@ public class App {
 
 		//5, 7 y 10 pa casita :)
 //		5. Obtener la edad mínima y máxima de los jugadores	
-		
+//		JugadorDAO.getMinMaxAge();
 		
 //		6. Obtener jugadores que juegan fútbol y tienen entre 18 y 25 años (AND con rango de valores)
 //		JugadorDAO.getFootballBetween18and25();
 		
 //		7. Obtener jugadores de FRANCIA o ITALIA (OR con múltiples valores)
-		
+//		JugadorDAO.getFrenchOrItalian();
 		
 //		8. Obtener jugadores que juegan baloncesto y no tienen más de 22 años (AND+ NOT)
 //		JugadorDAO.getBasketUnder22();
@@ -45,6 +45,7 @@ public class App {
 		
 		
 //		10. Obtener la edad promedio de jugadores que juegan tenis o tienen más de 22 años (AVG + OR)
+//		JugadorDAO.getAvgTennisOrMoreThan22();
 	}
 
 }
