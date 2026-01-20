@@ -53,12 +53,14 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+
     }
 
     private  void crearDB(Context c, String nombreDB) {
         Datos d = new Datos(c, nombreDB, null, 1);
         SQLiteDatabase db = d.getWritableDatabase();
         d.ejecutarSQL(db);
+        d.mostrarTablaJugador(db);
         db.close();
     }
 }
