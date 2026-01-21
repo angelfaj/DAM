@@ -1,20 +1,19 @@
 package com.example.ejerciciossqlite;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity{
 
+    private Datos dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,25 +41,56 @@ public class MainActivity extends AppCompatActivity{
         * Para ello debes crear una función ejecutarSQL en la clase que gestione la bbdd (herede de SQLiteOpenHelper) que realice la ejecución de las sentencias escritas por el usuario.
         * Mediante mensajes se deberá informar de los errores que ocurran durante la ejecución.*/
 
-        EditText entrada = findViewById(R.id.editText);
-        Button btn = findViewById(R.id.crearBtn);
+        EditText dbName = findViewById(R.id.txtDbName);
+        TextView mostrarTabla = findViewById(R.id.txtTable);
+        Button createBtn = findViewById(R.id.crearBtn);
+        Button showBtn = findViewById(R.id.mostrarBtn);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nombreDb = entrada.getText().toString().trim();
-                crearDB(MainActivity.this, nombreDb);
+                String nombreDb = dbName.getText().toString().trim();
+                if (dao != null && dao.getDatabaseName().equalsIgnoreCase(nombreDb)) {
+                    mostrarTabla.setText("La base de datos " + nombreDb + " ya existe, inserta un nombre diferente.");
+                }else {
+                    dao = new Datos(MainActivity.this, nombreDb, null, 1);
+                    mostrarTabla.setText("Base de datos " + nombreDb + " creada.");
+                }
+            }
+        });
+
+        showBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dao == null) {
+                    mostrarTabla.setText("Debes crear la base de dabos primero");
+                }else {
+                    Cursor c = dao.mostrarTablaJugador();
+                    if (c != null && c.moveToFirst()) {
+                        StringBuilder resul = new StringBuilder();
+                        int i = 0;
+                        do {
+                            int id = c.getInt(0);
+                            String name = c.getString(1);
+                            String pais = c.getString(2);
+                            resul.append("Resultado")
+                                    .append(i)
+                                    .append(": ")
+                                    .append(id)
+                                    .append(":")
+                                    .append(name)
+                                    .append(":")
+                                    .append(pais)
+                                    .append("\n");
+                        }while (c.moveToNext());
+
+                        mostrarTabla.setText(resul.toString());
+                    }
+                    c.close();
+                }
             }
         });
 
 
-    }
-
-    private  void crearDB(Context c, String nombreDB) {
-        Datos d = new Datos(c, nombreDB, null, 1);
-        SQLiteDatabase db = d.getWritableDatabase();
-        d.ejecutarSQL(db);
-        d.mostrarTablaJugador(db);
-        db.close();
     }
 }
