@@ -167,3 +167,151 @@ set precio = 30
 where nombre = 'Monnitor';
 select * from ventas;
 */
+
+/*Ejercicio 11: La Cuenta Bancaria (Modificando el estado con SELF)
+• Objetivo: Diferenciar entre una función (retorna dato, SELF es IN) y un
+procedimiento (realiza acción, SELF es IN OUT).
+• Enunciado:
+1. Crea la especificación y el cuerpo de un tipo T_CUENTA con
+atributos titular (VARCHAR2) y saldo (NUMBER).
+2. Define un Procedimiento llamado ingresar que reciba una
+cantidad y modifique el atributo saldo sumándole dicha cantidad.
+(Nota: Recuerda que aquí SELF es modificable).
+3. Define una Función llamada obtener_estado que devuelva un
+VARCHAR2. Si el saldo es negativo, debe devolver 'ROJOS', si es
+positivo 'VERDES'.
+• Ayuda: En el procedimiento debes usar una asignación tipo SELF.saldo
+:= SELF.saldo + cantidad;.*/
+/*
+CREATE OR REPLACE TYPE T_CUENTA AS OBJECT (
+    titular VARCHAR2(20),
+    saldo NUMBER,
+    
+    MEMBER PROCEDURE ingresar(incremento NUMBER),
+    MEMBER FUNCTION obtener_estado RETURN VARCHAR2
+);
+/
+
+CREATE OR REPLACE TYPE BODY T_CUENTA AS 
+    MEMBER FUNCTION obtener_estado RETURN VARCHAR2 IS
+    BEGIN
+        IF SELF.saldo < 0 THEN
+            RETURN 'ROJOS';
+        ELSE 
+            RETURN 'VERDES';
+        END IF;
+    END obtener_estado;
+    
+    MEMBER PROCEDURE ingresar(incremento NUMBER) IS
+    BEGIN
+        SELF.saldo := SELF.saldo + incremento;
+    END ingresar;
+END;
+/
+*/
+
+/*Ejercicio 12: Bloque PL/SQL e Persistencia
+• Objetivo: Manipular objetos en memoria dentro de un bloque anónimo
+antes de guardarlos en disco.
+• Enunciado:
+1. Crea una Tabla de Objetos llamada TABLA_CUENTAS del tipo
+T_CUENTA.
+2. Escribe un bloque anónimo (DECLARE-BEGIN-END) que haga lo
+siguiente:
+▪ Declare una variable v_cta de tipo T_CUENTA
+inicializándola con un saldo de 100€ usando el constructor.
+▪ Llame al método ingresar para sumar 50€ a la variable en
+memoria.
+▪ Imprima por pantalla el resultado del método
+obtener_estado.
+▪ Finalmente, inserte la variable v_cta (que ya tendrá 150€)
+en la TABLA_CUENTAS.
+• Reto: Comprueba con un SELECT si se guardó 100 o 150.*/
+/*
+CREATE TABLE TABLA_CUENTAS OF T_CUENTA;
+
+SET SERVEROUTPUT ON;
+DECLARE
+    v_cta T_CUENTA;
+BEGIN
+    v_cta := T_CUENTA('Raquel Munoz', 100);
+    
+    v_cta.ingresar(50);
+    
+    DBMS_OUTPUT.PUT_LINE('Estado de la cuenta: ' || v_cta.obtener_estado());
+    DBMS_OUTPUT.PUT_LINE('Saldo de la cuenta: ' || v_cta.saldo);
+    
+    INSERT INTO TABLA_CUENTAS VALUES(v_cta);
+    
+    COMMIT;
+    
+END;
+/
+*/
+
+/*Bloque 7: Manipulación de Objetos Anidados
+Ejercicio 13: Updates sobre Atributos Anidados
+• Objetivo: Aprender a actualizar un campo específico que está "enterrado"
+dentro de otro objeto sin reemplazar toda la fila.
+• Enunciado:
+1. Utiliza los tipos T_PROVEEDOR y T_DIRECCION (creados en el
+boletín anterior).
+2. Crea una tabla de objetos TABLA_PROVEEDORES of
+T_PROVEEDOR.
+3. Inserta un proveedor (ej: 'Logística SL') que esté ubicado en
+'Madrid'.
+4. Realiza una sentencia UPDATE que cambie solamente la ciudad
+de ese proveedor a 'Barcelona', accediendo a través de la notación
+punto (p.ubicacion.ciudad).*/
+/*
+CREATE TABLE TABLA_PROVEEDORES OF T_PROVEEDOR;
+
+INSERT INTO TABLA_PROVEEDORES VALUES(T_PROVEEDOR(1, 'Raton Perez', T_DIRECCION(28045, 'Alianza', 'Madrid')));
+
+UPDATE TABLA_PROVEEDORES p
+    SET p.ubicacion.ciudad = 'Barcelona'
+    WHERE p.nombre = 'Raton Perez';
+
+commit;
+*/
+
+/*Ejercicio 14: Copia de Objetos entre Tablas
+• Objetivo: Entender la diferencia entre seleccionar columnas sueltas y
+seleccionar el objeto completo con VALUE().
+• Enunciado:
+1. Crea una tabla relacional (normal) llamada
+HISTORICO_PROVEEDORES que tenga una columna fecha_baja
+(DATE) y una columna datos_prov de tipo T_PROVEEDOR.
+2. Realiza un INSERT en esta tabla histórica seleccionando datos de
+la TABLA_PROVEEDORES (del Ejercicio 13).
+Clave: En el SELECT del insert, debes usar el operador VALUE(p) para tomar el
+objeto completo de la tabla origen y guardarlo en la columna de la tabla destino.*/
+
+
+/*Ejercicio 15: Restricción de Ámbito (SCOPE IS)
+• Objetivo: Crear punteros robustos que solo apunten a una tabla
+específica para mejorar el rendimiento y la integridad.
+• Enunciado:
+1. Crea una tabla relacional PEDIDOS con:
+▪ id_pedido (NUMBER)
+▪ proveedor_ref: Una referencia (REF) al tipo
+T_PROVEEDOR.
+2. Al definir la tabla, añade la restricción SCOPE IS para obligar a que
+las referencias apunten exclusivamente a tu tabla de objetos
+principal (TABLA_PROVEEDORES).
+3. Inserta una fila obteniendo el puntero con REF() a partir de una
+subconsulta.
+4. Consulta la tabla PEDIDOS mostrando el id_pedido y el nombre
+del cliente/proveedor, usando DEREF para traer el objeto
+completo*/
+
+CREATE TABLE pedidos (
+    id_pedido NUMBER PRIMARY KEY,
+    proveedor_ref ref T_PROVEEDOR scope is TABLA_PROVEEDORES
+);
+
+
+
+
+
+
