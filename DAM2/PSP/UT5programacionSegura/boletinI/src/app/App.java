@@ -51,6 +51,44 @@ public class App {
 		privada en este proceso?*/ 
 		
 		// Juan utilizará la clave pública de María para cifrar el mensaje. Si Juan perdiese su clave privada no podría recibir mensajes cifrados de María.
+		
+		/*Ejercicio 5: El Detective del Hash: Accede a la web de CyberChef
+		mencionada en los apuntes. Genera el hash SHA-256 de "Hola Mundo" y
+		luego de "hola mundo" (en minúsculas). Observa la diferencia y explica
+		cómo esta "sensibilidad extrema" ayuda a detectar si un archivo ha sido
+		modificado por un atacante .*/
+		
+		//..
+		
+		/*Ejercicio 6: La Firma Inversa: La firma digital se define como "el mundo
+		al revés" de la criptografía asimétrica. Escribe los 3 pasos para firmar un
+		PDF y explica por qué el receptor necesita la clave pública del emisor
+		para verificar que el documento es auténtico .*/
+		
+		// 1. Se genera un hash del PDF
+		// 2. Se firma el hash con la clave privada.
+		// 3. Se envia mensjae y firma.
+		
+		//Es necesaria la clave publica porque es la que permite descifrar la clave privada y viceversa.
+		
+		/*Ejercicio 7: El Guardián del Keystore: Imagina que programas una app
+		que guarda tarjetas de crédito. Explica por qué es un error crítico dejar la
+		clave de cifrado en una variable String dentro del código y describe cómo
+		el archivo .jks (Keystore) soluciona este problema de seguridad.*/
+		
+		//Guardar la clave en el propio codigo la dejaria expuesta a cualquier atacante o usuario
+		//El keystore es un baul seguro de claves que permite almacenar contraseñas de forma segura 
+		
+		/*Ejercicio 8: Análisis de la "Radiografía" SSL: Observa el comando
+		openssl s_client del segundo PDF. Si al ejecutarlo ves un depth=0 con una
+		fecha de NotAfter pasada, ¿qué le ocurriría al usuario que intenta entrar
+		en esa web? . Identifica en el ejemplo cuál es el algoritmo simétrico que
+		se usará para la transferencia masiva de datos una vez hecho el
+		handshake .*/
+		
+		//Si el certificado esta caducado el navegador nos informara de que la conexion no es segura
+		//Tras el handshake se utilizara el cifrado simetrico AES256
+		
 	}
 
 }
