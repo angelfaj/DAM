@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,22 +28,29 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        Button downloadBtn = (Button)findViewById(R.id.downloadBtn);
+        downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descargar(v);
+            }
+        });
     }
 
-    //método onclick del botón descargar para poner en la clase MainActiviry (1/2)
     public void descargar(View v){
-        edURL=(EditText)findViewById(R.id.edURL);
-        txtDescarga=(TextView) findViewById(R.id.txtDescarga);
-        txtDescarga.setMovementMethod(new ScrollingMovementMethod());
+        EditText urlTxt =(EditText)findViewById(R.id.urlTxt);
+        TextView resultTxt=(TextView) findViewById(R.id.resultTxt);
+
+        resultTxt.setMovementMethod(new ScrollingMovementMethod());
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        //método onclick del botón descargar para poner en la clase MainActiviry (2/2)
+
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DescargaPaginaWeb().execute(edURL.getText().toString());
+            new DescargaThread(resultTxt)
+                    .execute(urlTxt.getText().toString());
         } else {
-            edURL.setText("No se ha podido establecer conexión a internet");
+            urlTxt.setText("No se ha podido establecer conexión a internet");
         }
     }
 }
